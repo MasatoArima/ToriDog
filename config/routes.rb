@@ -14,9 +14,9 @@ Rails.application.routes.draw do
   scope module: :customer do
     get "/about", to: "homes#about"
 
-    get "/customers/:id/withdraw_confirm", to: "customer#withdraw_confirm"
-    get "/customers/:id/mypage", to: "customer#mypage"
-    patch "/customer/:id/withdraw", to: "customer#withdraw"
+    get "/customers/withdraw_confirm", to: "customers#withdraw_confirm"
+    get "/customers/mypage", to: "customers#mypage"
+    patch "/customers/withdraw", to: "customers#withdraw"
     resources :customers, only:[:index, :show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'

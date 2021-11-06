@@ -1,0 +1,17 @@
+
+<p><%= @customer.profile_image %></p>
+<p><%= @customer.last_name %><%= @customer.first_name %></p>
+<p><%= @customer.last_name_kana %><%= @customer.first_name_kana %></p>
+<p><%= @customer.prefecture_code %></p>
+<p><%= @customer.city %></p>
+<p><%= @customer.street %></p>
+<p><%= @customer.user_status%></p>
+<p><%= @customer.introduction%></p>
+
+
+<% if is_trimmer? %>
+　過去トリミング画像！！！！！！！！！！！！
+<% else %>
+　依頼案件！！！<br>
+　愛犬情報！！！！！！！！！！
+<% end %>

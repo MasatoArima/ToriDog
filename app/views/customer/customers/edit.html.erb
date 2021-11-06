@@ -1,13 +1,6 @@
-<h2>新規会員登録</h2>
+<h2>編集画面</h2>
 
-<%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
-  <%= render "customer/shared/error_messages", resource: resource %>
-  <div class="field">
-    <%= f.label :user_status_dog_owner, "飼い主" %>
-    <%= f.radio_button :user_status, :dog_owner %>
-    <%= f.label :user_status_trimmer, "トリマー" %>
-    <%= f.radio_button :user_status, :trimmer %>
-  </div>
+<%= form_with model: @customer, url: customer_path, local: true do |f| %>
   <div class="field">
     <%= f.label :last_name, "(姓)" %>
     <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name" %>
@@ -54,21 +47,13 @@
   </div>
 
   <div class="field">
-    <%= f.label :password, "パスワード" %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> 文字以上)</em>
-    <% end %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.label :introduction, "自己紹介文" %>
+    <%= f.text_field :introduction, autofocus: true %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "パスワード(確認用)" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  <div>画像追加フォーム</div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "編集を保存" %>
   </div>
 <% end %>
 
-<%= render "customer/shared/links" %>

@@ -4,3 +4,7 @@
         user_status:
           dog_owner: "飼い主"
           trimmer: "トリマー"
+    activerecord:
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
