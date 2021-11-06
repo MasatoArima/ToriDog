@@ -1,0 +1,2 @@
+module Customer::ApplicationsHelper
+end

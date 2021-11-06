@@ -1,0 +1,6 @@
+  ja:
+    enums:
+      customer:
+        user_status:
+          dog_owner: "飼い主"
+          trimmer: "トリマー"
