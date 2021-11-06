@@ -1,0 +1,38 @@
+
+<p><%= @myself.profile_image %></p>
+<p><%= @myself.last_name %></p>
+<p><%= @myself.first_name %></p>
+<p><%= @myself.last_name_kana %></p>
+<p><%= @myself.first_name_kana %></p>
+<p><%= @myself.prefecture_code %></p>
+<p><%= @myself.city %></p>
+<p><%= @myself.street %></p>
+<p><%= @myself.other_address %></p>
+<p><%= @myself.post_code %></p>
+<p><%= @myself.phone_number %></p>
+<p><%= @myself.user_status%></p>
+<p><%= @myself.introduction%></p>
+
+
+<% if is_trimmer? %>
+　トリミング画像！！！！！！！！！！！！
+<% else %>
+　愛犬画像！！！！！！！！！！
+<% end %>
+
+<% if is_trimmer? %>
+　依頼一覧！！！！！！！！！！！！
+<% else %>
+　カット依頼一覧！！！！！！！！！！
+　依頼作成ボタン！！！！
+<% end %>
+
+<div>過去の契約情報</div>
+
+
+<div class="text-center mt-4">
+  <%= link_to "編集する", edit_customer_path(@myself), class: "btn btn-success", style: "width:150px" %>
+</div>
+<div class="text-center mt-4">
+  <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:150px" %>
+</div>

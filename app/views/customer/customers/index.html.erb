@@ -1,0 +1,15 @@
+<h4>検索画面作成する！！！！</h4>
+
+<% if is_trimmer? %>
+  <h3>依頼一覧</h3>
+  <h3>飼い主一覧</h3>
+<% else %>
+  <h3>トリマー一覧</h3>
+<% end %>
+
+<% @customers.each do |customer| %>
+  <%= link_to customer_path(customer.id) do %>
+    <p><%= customer.first_name %></p>
+  <% end %>
+<% end %>
+
