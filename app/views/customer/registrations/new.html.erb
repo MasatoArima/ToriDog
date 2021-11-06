@@ -1,3 +1,4 @@
+<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
 <h2>新規会員登録</h2>
 
 <%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
@@ -29,8 +30,12 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
   <div class="field">
+    <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
+    <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
+  </div>
+  <div class="field">
     <%= f.label :prefecture_code, "都道府県" %>
-    <%= f.text_field :prefecture_code, autofocus: true %>
+    <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県' %>
   </div>
   <div class="field">
     <%= f.label :city, "町村" %>
@@ -43,10 +48,6 @@
   <div class="field">
     <%= f.label :other_address, "その他" %>
     <%= f.text_field :other_address, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
-    <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
   </div>
   <div class="field">
     <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
@@ -67,7 +68,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.button 'Sign up', type: 'button', onclick: 'submit();' %>
   </div>
 <% end %>
 

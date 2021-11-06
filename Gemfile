@@ -71,3 +71,5 @@ gem 'kaminari'
 gem 'dotenv-rails'
 gem 'ransack'
 gem 'pry-byebug'
+
+gem 'jp_prefecture'
