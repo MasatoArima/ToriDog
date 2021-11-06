@@ -10,6 +10,20 @@
   </head>
 
   <body>
+    <% if customer_signed_in? %>
+      <li>
+        <%= link_to "飼い主ログアウト", destroy_customer_session_path, method: :delete %>
+      </li>
+    <% elsif torima_signed_in? %>
+      <li>
+        <%= link_to "トリマログアウト", destroy_torima_session_path, method: :delete %>
+      </li>
+    <% else %>
+    <% end %>
+      <li>
+        <%= link_to "top", root_path %>
+      </li>
+
     <%= yield %>
   </body>
 </html>

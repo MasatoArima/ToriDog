@@ -1,7 +1,6 @@
 <h2>Log in</h2>
 
-
-<%= form_with model: @customer, url: customer_session_path, local: true do |f| %>
+<%= form_with model: @torima, url: torima_session_path, local: true do |f| %>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -24,4 +23,4 @@
   </div>
 <% end %>
 
-<%= render "customer/shared/links" %>
+<%= render "torima/shared/links" %>

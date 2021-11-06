@@ -1,8 +1,7 @@
 <h2>Sign up</h2>
 
-
-<%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
-  <%= render "customer/shared/error_messages", resource: resource %>
+<%= form_with model: @torima, url: torima_registration_path, local: true do |f| %>
+  <%= render "torima/shared/error_messages", resource: resource %>
 
   <div class="field">
     <%= f.label :email %><br />
@@ -27,4 +26,4 @@
   </div>
 <% end %>
 
-<%= render "customer/shared/links" %>
+<%= render "torima/shared/links" %>
