@@ -1,0 +1,49 @@
+<p><%= @customer.last_name %><%= @customer.first_name %></p>
+<p><%= @customer.post_code %></p>
+<p><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></p>
+
+<p>名前　<%= @dog.name %></p>
+<p>犬種　<%= @dog.breed %></p>
+<p>性別　<% if @dog.sex? %>おす<% else %>めす<% end %></p>
+<p>サイズ　<%= @dog.size_i18n %></p>
+<p>ワクチン　<%if @dog.is_inoculate? %>接種済み<%= @dog.inoculation_date %><% else %>未接種<% end %></p>
+<p>誕生日　<%= @dog.birthday %></p>
+<p>既往歴　<%= @dog.medical_history %></p>
+
+<p>コメント <%= @request.comment %></p>
+
+
+<% if is_trimmer? %>
+  <% if @application.request_id.nil? %>
+  <h3>応募する</h3>
+    <%= form_with model: @application, url: applications_path, local: true do |f| %>
+      <div class="field">
+        <%= f.label :comment, "対応可能な日付およびコメント" %>
+        <%= f.text_field :comment, autofocus: true %>
+        <%= f.hidden_field :request_id, :value => @request.id %>
+      </div>
+      <div class="actions">
+        <%= f.button '応募登録', type: 'button', onclick: 'submit();' %>
+      </div>
+    <% end %>
+  <% else %>
+  <h3>応募済み</h3>
+    <%= form_with model: @application, url: application_path, local: true do |f| %>
+      <div class="field">
+        <%= f.label :comment, "対応可能な日付およびコメント" %>
+        <%= f.text_field :comment, autofocus: true %>
+        <%= f.hidden_field :request_id, :value => @request.id %>
+      </div>
+      <div class="actions">
+        <%= f.button '変更', type: 'button', onclick: 'submit();' %>
+      </div>
+    <% end %>
+  <% end %>
+
+<% else %>
+　<h3>応募トリマー</h3>
+　<% @applications.each do |application| %>
+　  <p><%= application.customer.first_name %>
+      <%= link_to "契約に進む", new_contract_path(id: application.customer.id), class: "btn btn-success", style: "width:150px" %></p>
+　<% end %>
+<% end %>
