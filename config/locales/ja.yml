@@ -4,6 +4,11 @@
         user_status:
           dog_owner: "飼い主"
           trimmer: "トリマー"
+      dog:
+        size:
+          large: "大型犬"
+          medium: "中型犬"
+          small: "小型犬"
     activerecord:
     errors:
       messages:

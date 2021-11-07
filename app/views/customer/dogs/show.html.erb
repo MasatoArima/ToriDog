@@ -1,0 +1,15 @@
+<p><%= @dog.name %></p>
+<p><%= @dog.name_kana %></p>
+<p><%= @dog.breed %></p>
+<p><%= @dog.sex %></p>
+<p><%= @dog.size %></p>
+<p><%= @dog.is_inoculate %></p>
+<p><%= @dog.inoculation_date %></p>
+<p><%= @dog.birthday %></p>
+<p><%= @dog.medical_history %></p>
+<p><%= @dog.introduction %></p>
+
+
+
+<%= link_to "愛犬編集", edit_dog_path(@dog) %>
+<%= link_to "愛犬情報削除", dog_path(@dog), method: :delete %>
