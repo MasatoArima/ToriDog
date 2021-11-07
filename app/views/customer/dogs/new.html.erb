@@ -1,0 +1,58 @@
+<h2>愛犬登録画面</h2>
+
+<%= form_with model: @dog, url: dogs_path, local: true do |f| %>
+
+  <div class="field">
+    <%= f.label :name, "名前" %>
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label :name_kana, "フリガナ" %>
+    <%= f.text_field :name_kana, autofocus: true, autocomplete: "name" %>
+  </div>
+  <div class="field">
+    <%= f.label :breed, "犬種" %>
+    <%= f.text_field :breed, autofocus: true, autocomplete: "family-name" %>
+  </div>
+  <div class="field">
+    <%= f.label :sex_true, "オス" %>
+    <%= f.radio_button :sex, :true %>
+    <%= f.label :sex_false, "メス" %>
+    <%= f.radio_button :sex, :false %>
+  </div>
+  <div class="field">
+    <%= f.label :size_large, "大型犬" %>
+    <%= f.radio_button :size, :large %>
+    <%= f.label :size_medium, "中型犬" %>
+    <%= f.radio_button :size, :medium %>
+    <%= f.label :size_small, "小型犬" %>
+    <%= f.radio_button :size, :small %>
+  </div>
+  <div class="field">
+    <%= f.label :is_inoculate_true, "接種済" %>
+    <%= f.radio_button :is_inoculate, :true %>
+    <%= f.label :is_inoculate_false, "未接種" %>
+    <%= f.radio_button :is_inoculate, :false %>
+    <%= f.label :inoculation_date, "接種日" %>
+    <%= f.text_field :inoculation_date, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label :birthday, "生年月日" %>
+    <%= f.text_field :birthday, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label :medical_history, "既往歴" %>
+    <%= f.text_field :medical_history, autofocus: true %>
+  </div>
+  <div class="field">
+    <%= f.label :introduction, "紹介文" %>
+    <%= f.text_field :introduction, autofocus: true %>
+  </div>
+  <div class="actions">
+    <%= f.button '愛犬登録', type: 'button', onclick: 'submit();' %>
+  </div>
+<% end %>
+
+
+
+

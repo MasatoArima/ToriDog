@@ -1,0 +1,12 @@
+
+<% @dogs.each do |dog| %>
+  <%= link_to dog_path(dog.id) do %>
+    <p><%= dog.name %></p>
+  <% end %>
+  <p><%= dog.breed%></p>
+  <p><%= dog.birthday %></p>
+<% end %>
+
+
+<%= link_to "マイページに戻る", customers_mypage_path %>
+<%= link_to "愛犬登録", new_dog_path %>

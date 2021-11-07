@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2021_11_06_075752) do
   create_table "dogs", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.string "name", null: false
+    t.string "name_kana", null: false
     t.string "breed", null: false
     t.boolean "sex", null: false
     t.integer "size", null: false

@@ -5,6 +5,10 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
+  has_many :dogs, dependent: :destroy
+  has_many :requests, dependent: :destroy
+  has_many :applications, dependent: :destroy
+
   #住所自動入力
   include JpPrefecture
   jp_prefecture :prefecture_code
