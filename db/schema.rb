@@ -143,10 +143,12 @@ ActiveRecord::Schema.define(version: 2021_11_06_075752) do
 
   create_table "requests", force: :cascade do |t|
     t.integer "customer_id", null: false
+    t.integer "dog_id", null: false
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_requests_on_customer_id"
+    t.index ["dog_id"], name: "index_requests_on_dog_id"
   end
 
   create_table "rooms", force: :cascade do |t|

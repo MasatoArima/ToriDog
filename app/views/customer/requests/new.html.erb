@@ -2,3 +2,23 @@
 <p><%= @customer.last_name %><%= @customer.first_name %></p>
 <p><%= @customer.post_code %></p>
 <p><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></p>
+
+<p>プルダウン選択で自動で犬情報が入るようにする</p>
+<%= form_with model: @request, url: requests_path, local: true do |f| %>
+  <div class="field">
+    <%= f.label :dog_id, "愛犬選択" %>
+    <%= f.collection_select :dog_id, Dog.where(customer_id: current_customer.id), :id, :name, include_blank: "選択して下さい" %>
+  </div>
+  <div class="field">
+    <%= f.label :comment, "追記事項" %>
+    <%= f.text_field :comment, autofocus: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.button '依頼登録', type: 'button', onclick: 'submit();' %>
+  </div>
+<% end %>
+
+
+
+
