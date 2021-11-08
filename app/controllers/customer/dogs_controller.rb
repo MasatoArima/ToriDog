@@ -12,11 +12,10 @@ class Customer::DogsController < ApplicationController
   end
 
   def create
-    @dog = current_customer.dogs.new(dog_params)
-    if @dog.save
-      redirect_to dog_path(@dog), notice: '登録しました'
+    dog = current_customer.dogs.new(dog_params)
+    if dog.save
+      redirect_to dog_path(dog)
     else
-      flash[:alert] = '登録に失敗しました'
       render :new
     end
   end
@@ -26,9 +25,9 @@ class Customer::DogsController < ApplicationController
   end
 
   def update
-    @dog = Dog.find(params[:id])
-    @dog.update(dog_params)
-    redirect_to dog_path(@dog.id)
+    dog = Dog.find(params[:id])
+    dog.update(dog_params)
+    redirect_to dog_path(dog.id)
   end
 
   def destroy
@@ -38,8 +37,7 @@ class Customer::DogsController < ApplicationController
   end
 
   private
-
   def dog_params
-    params.require(:dog).permit(:name, :name_kana, :breed, :sex, :size, :is_inoculate, :inoculation_date, :birthday, :medical_history, :introduction)
+    params.require(:dog).permit(:name, :name_kana,:breed,:sex,:size,:is_inoculate,:inoculation_date,:birthday,:medical_history,:introduction,:profile_image)
   end
 end

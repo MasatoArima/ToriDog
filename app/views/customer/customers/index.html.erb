@@ -1,15 +1,53 @@
-<h4>検索画面作成する！！！！</h4>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      検索画面作成
+      <p>都道府県</p>
+      <p>町村</p>
+      <p>犬種</p>
+      <p>検索</p>
+    </div>
+    <div class="col-8">
+      <% if is_trimmer? %>
+        <h4>依頼一覧</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>依頼日</th>
+              <th>トリミング犬</th>
+              <th>依頼主</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @requests.each do |request| %>
+              <% if request.is_complete == false %>
+                <tr>
+                  <td>
+                    <%= link_to request_path(request.id) do %>
+                      <%= request.updated_at.to_s(:datetime_jp) %>
+                    <% end %>
+                  </td>
+                  <td><%= @dogs.find(request.dog_id).name %></td>
+                  <td><%= @dogs.find(request.dog_id).name %></td>
+                </tr>
+              <% end %>
+          　<% end %>
+          </tbody>
+        </table>
+        <h3>飼い主一覧</h3>
+      <% else %>
+        <h3>トリマー一覧</h3>
+      <% end %>
+      <% @customers.each do |customer| %>
+        <%= link_to customer_path(customer.id) do %>
+          <p><%= customer.last_name %><%= customer.first_name %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<% if is_trimmer? %>
-  <h3>依頼一覧</h3>
-  <h3>飼い主一覧</h3>
-<% else %>
-  <h3>トリマー一覧</h3>
-<% end %>
 
-<% @customers.each do |customer| %>
-  <%= link_to customer_path(customer.id) do %>
-    <p><%= customer.first_name %></p>
-  <% end %>
-<% end %>
+
+
 

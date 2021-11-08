@@ -29,9 +29,10 @@ Rails.application.routes.draw do
     resources :dogs
     resources :requests, expect: [:index]
     resources :applications, only: [:create, :destroy, :edit, :update]
+    get "/contracts/complete", to: "contracts#complete"
+    get "/contracts/check", to: "contracts#check"
     resources :contracts, only: [:create, :new, :show, :update]
-    get "/contracts/complete", to: "customer#complete"
-    get "/contracts/check", to: "customer#check"
+
 
     #chat未
   end

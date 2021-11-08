@@ -1,4 +1,4 @@
-<h2>愛犬登録画面</h2>
+<h2>愛犬登録</h2>
 
 <%= form_with model: @dog, url: dogs_path, local: true do |f| %>
 
@@ -33,6 +33,8 @@
     <%= f.radio_button :is_inoculate, :true %>
     <%= f.label :is_inoculate_false, "未接種" %>
     <%= f.radio_button :is_inoculate, :false %>
+  </div>
+  <div class="field">
     <%= f.label :inoculation_date, "接種日" %>
     <%= f.text_field :inoculation_date, autofocus: true %>
   </div>
@@ -52,7 +54,3 @@
     <%= f.button '愛犬登録', type: 'button', onclick: 'submit();' %>
   </div>
 <% end %>
-
-
-
-
