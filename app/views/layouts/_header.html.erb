@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container ">
-    <a class="navbar-brand" href="/"><%= image_tag('logo.jpg', size: ("150x80"), class:"logo") %></a>
+    <a class="navbar-brand" href="/"><%= image_tag('logo.jpg', size: ("150x80"), class:"logo", data: {"turbolinks"=>false}) %></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,13 +12,13 @@
             <li class="nav-item text-center mr-3"><%= link_to customers_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>依頼一覧<% end %></li>
           <% else %>
             <li class="nav-item text-center mr-3"><%= link_to customers_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>トリマー一覧<% end %></li>
-            <li class="nav-item text-center mr-3"><%= link_to dogs_path, class: 'nav-link', data: {"turbolinks"=>false} do %><i class="fas fa-paw fa-lg"></i><br>愛犬ページ<% end %></li>
+            <li class="nav-item text-center mr-3"><%= link_to dogs_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>愛犬ページ<% end %></li>
           <% end %>
             <li class="nav-item text-center mr-3"><%= link_to customers_mypage_path, class: 'nav-link' do %><i class="fas fa-address-card fa-lg"></i><br>マイページ<% end %></li>
             <li class="nav-item text-center mr-3"><%= link_to destroy_customer_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
         <% elsif admin_signed_in? %>
           <li class="nav-item text-center mr-3"><%= link_to admin_contracts_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>契約一覧<% end %></li>
-          <li class="nav-item text-center mr-3"><%= link_to admin_customers_path, class: 'nav-link', data: {"turbolinks"=>false} do %><i class="fas fa-paw fa-lg"></i><br>会員一覧<% end %></li>
+          <li class="nav-item text-center mr-3"><%= link_to admin_customers_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>会員一覧<% end %></li>
           <li class="nav-item text-center mr-3"><%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
         <% else %>
           <li class="nav-item text-center mr-5"><%= link_to about_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>about<% end %></li>
