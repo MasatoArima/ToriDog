@@ -9,39 +9,9 @@
     </div>
     <div class="col-8">
       <% if is_trimmer? %>
-        <h4>依頼一覧</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>依頼日</th>
-              <th>トリミング犬</th>
-              <th>依頼主</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @requests.each do |request| %>
-              <% if request.is_complete == false %>
-                <tr>
-                  <td>
-                    <%= link_to request_path(request.id) do %>
-                      <%= request.updated_at.to_s(:datetime_jp) %>
-                    <% end %>
-                  </td>
-                  <td><%= @dogs.find(request.dog_id).name %></td>
-                  <td><%= @dogs.find(request.dog_id).name %></td>
-                </tr>
-              <% end %>
-          　<% end %>
-          </tbody>
-        </table>
-        <h3>飼い主一覧</h3>
+        <%= render 'customer/customers/trimmer-index', dog_owners: @dog_owners, requests: @requests, dogs: @dogs %>
       <% else %>
-        <h3>トリマー一覧</h3>
-      <% end %>
-      <% @customers.each do |customer| %>
-        <%= link_to customer_path(customer.id) do %>
-          <p><%= customer.last_name %><%= customer.first_name %></p>
-        <% end %>
+        <%= render 'customer/customers/dog_owner-index', trimmers: @trimmers %>
       <% end %>
     </div>
   </div>

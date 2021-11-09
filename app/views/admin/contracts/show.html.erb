@@ -1,0 +1,66 @@
+<div class="container">
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>飼い主情報</h4>
+      <table class="table table-striped" style="width: 500px">
+        <tr>
+          <th>名前</th>
+          <th>郵便番号</th>
+          <th>住所</th>
+          <th>依頼内容</th>
+        </tr>
+        <tr>
+          <td><%= @dog_owner.last_name %><%= @dog_owner.first_name %></td>
+          <td><%= @dog_owner.post_code %></td>
+          <td><%= @dog_owner.prefecture_code %><%= @dog_owner.city %><%= @dog_owner.street %></td>
+          <td><%= @requests.find(@applications.find(@contract.application_id).request_id).comment %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <h4>愛犬情報</h4>
+      <table class="table table-striped">
+        <tr>
+          <th>名前</th>
+          <th>犬種</th>
+          <th>性別</th>
+          <th>サイズ</th>
+          <th>誕生日</th>
+          <th>既往歴</th>
+        </tr>
+        <tr>
+          <td><%= @dog.name %></td>
+          <td><%= @dog.breed %></td>
+          <td><% if @dog.sex? %>おす<% else %>めす<% end %></td>
+          <td><%if @dog.is_inoculate? %>接種済み<%= @dog.inoculation_date %><% else %>未接種<% end %></td>
+          <td><%= @dog.birthday %></td>
+          <td><%= @dog.medical_history %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>トリマー情報</h4>
+      <table class="table table-striped">
+        <tr>
+          <th>名前</th>
+          <th>郵便番号</th>
+          <th>住所</th>
+        </tr>
+        <tr>
+          <td><%= @trimmer.last_name %><%= @trimmer.first_name %></td>
+          <td><%= @trimmer.post_code %></td>
+          <td><%= @trimmer.prefecture_code %><%= @trimmer.city %><%= @trimmer.street %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+

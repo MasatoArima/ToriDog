@@ -1,0 +1,22 @@
+<h3>トリマー一覧</h3>
+<span>※同一都道府県のみ</span>
+<table class="table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>住所</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% trimmers.each do |trimmer| %>
+      <tr>
+        <td>
+          <%= link_to customer_path(trimmer.id) do %>
+            <p><%= trimmer.full_name %></p>
+          <% end %>
+        </td>
+        <td><%= trimmer.prefecture_code %><%= trimmer.city %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
