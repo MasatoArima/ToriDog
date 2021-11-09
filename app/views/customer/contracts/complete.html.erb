@@ -1,4 +1,10 @@
-<h1>契約が確定しました</h1>
-
-<%= link_to "契約詳細ページに進む", contract_path(@contract.id) %>
-<%= link_to "マイページに進む", customers_mypage_path %>
+<div class="container">
+  <div class="row text-center">
+    <div class="col-12">
+      <h1>契約が確定しました</h1>
+      <p>契約の取り消しを行う場合は契約詳細画面から行うことが出来ます</p>
+      <%= link_to "契約詳細ページに進む", contract_path(@contract.id), class: "btn btn-success" %>
+      <%= link_to "マイページに進む", customers_mypage_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
