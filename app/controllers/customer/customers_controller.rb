@@ -1,10 +1,7 @@
 class Customer::CustomersController < ApplicationController
   def index
-    if current_customer.user_status == "dog_owner"
-      @customers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code)
-    else
-      @customers = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code)
-    end
+    @trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code)
+    @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code)
     @requests = Request.where(prefecture_code: current_customer.prefecture_code)
     @dogs = Dog.all
   end

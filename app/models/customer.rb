@@ -21,6 +21,14 @@ class Customer < ApplicationRecord
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
+  def full_name
+    self.last_name + " " + self.first_name
+  end
+
+  def full_name_kana
+    self.last_name_kana + " " + self.first_name_kana
+  end
+
   #enum使用
   enum user_status: { dog_owner: 0, trimmer: 1 }
 end
