@@ -5,18 +5,33 @@
 .top {
   margin: 0 auto;
   width: 650px;
-  height: 400px;
-  border-radius: 100px;
+  height: 500px;
   background-image: image-url('top.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   .text {
-    font-size: 18px;
+    font-size: 20px;
+    color: white;
     position: relative;
     width: 200px;
-    left: 400px;
-    top: 100px;
+    left: 275px;
+    top: 300px;
     border: 1px solid black;
+  }
+}
+#box{
+  height: 500px;
+  .image1 {
+    background-image: image-url('image1.jpg');
+  }
+  .image2 {
+    background-image: image-url('image2.jpg');
+  }
+  .image3 {
+    background-image: image-url('image3.jpg');
+  }
+  .image4 {
+    background-image: image-url('image4.jpg');
   }
 }
