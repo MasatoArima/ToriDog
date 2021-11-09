@@ -50,6 +50,10 @@
     <%= f.label :introduction, "紹介文" %>
     <%= f.text_field :introduction, autofocus: true %>
   </div>
+  <div>
+    <%= f.label :dog_image , "プロファイル画像" %>
+    <%= f.file_field :dog_image %>
+  </div>
   <div class="actions">
     <%= f.button '愛犬登録', type: 'button', onclick: 'submit();' %>
   </div>

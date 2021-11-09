@@ -52,7 +52,16 @@
     <%= f.label :introduction, "自己紹介文" %>
     <%= f.text_field :introduction, autofocus: true %>
   </div>
-  <div>画像追加フォーム</div>
+  <div>
+    <%= f.label :profile_image , "プロファイル画像" %>
+    <%= f.file_field :profile_image %>
+  </div>
+  <% if is_trimmer? %>
+    <div>
+      <%= f.label :cut_images , "トリミング画像" %>
+      <%= f.file_field :cut_images, multiple: true %><br>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "編集を保存" %>

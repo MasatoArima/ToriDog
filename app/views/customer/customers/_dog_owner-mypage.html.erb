@@ -1,5 +1,7 @@
 <div class="col-4">
-  <p><%= customer.profile_image %></p>
+  <% if customer.profile_image.attached? %>
+    <%= image_tag customer.profile_image.variant(resize:'150x150').processed %>
+  <% end %>
   <p>ステータス : <%= customer.user_status_i18n%></p>
   <p>名前 : <%= customer.full_name %></p>
   <p>カナ : <%= customer.full_name_kana %></p>
@@ -7,8 +9,15 @@
   <p>住所 : <%= customer.prefecture_code %><%= customer.city %><%= customer.street %><%= customer.other_address %></p>
   <p>電話番号 : <%= customer.phone_number %></p>
   <p>自己紹介文 : <%= customer.introduction%></p>
-
-  　愛犬画像！！！！！！！！！！
+  <p>フォロー数: <%= customer.followings.count %></p>
+  <p>フォロワー数: <%= customer.followers.count %></p>
+  <p>mydog</p>
+  <% dogs.where(customer_id: customer.id).each do |dog| %>
+    <% if dog.dog_image.attached? %>
+      <%= dog.name %><br>
+      <%= image_tag dog.dog_image.variant(resize:'150x150').processed %><br>
+    <% end %>
+  <% end %>
 
   <div class="mt-4">
     <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>

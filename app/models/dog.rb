@@ -2,6 +2,9 @@ class Dog < ApplicationRecord
   belongs_to :customer
   has_many :request
 
+  has_one_attached :dog_image
+  has_many_attached :trimming_images
+
   validates :name, presence: true
   validates :name_kana, presence: true
   validates :breed, presence: true

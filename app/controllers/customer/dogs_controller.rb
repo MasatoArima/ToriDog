@@ -38,6 +38,6 @@ class Customer::DogsController < ApplicationController
 
   private
   def dog_params
-    params.require(:dog).permit(:name, :name_kana,:breed,:sex,:size,:is_inoculate,:inoculation_date,:birthday,:medical_history,:introduction,:profile_image)
+    params.require(:dog).permit(:name, :name_kana,:breed,:sex,:size,:is_inoculate,:inoculation_date,:birthday,:medical_history,:introduction, :dog_image, trimming_images: [])
   end
 end
