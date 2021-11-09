@@ -28,6 +28,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>名前</th>
       <th>住所</th>
     </tr>
@@ -35,6 +36,11 @@
   <tbody>
     <% dog_owners.each do |dog_owner| %>
       <tr>
+        <td>
+          <% if dog_owner.profile_image.attached? %>
+            <%= image_tag dog_owner.profile_image.variant(resize:'50x50').processed %>
+          <% end %>
+        </td>
         <td>
           <%= link_to customer_path(dog_owner.id) do %>
             <p><%= dog_owner.full_name %></p>

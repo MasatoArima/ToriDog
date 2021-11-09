@@ -3,6 +3,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th></th>
       <th>名前</th>
       <th>住所</th>
     </tr>
@@ -10,6 +11,11 @@
   <tbody>
     <% trimmers.each do |trimmer| %>
       <tr>
+        <td>
+          <% if trimmer.profile_image.attached? %>
+            <%= image_tag trimmer.profile_image.variant(resize:'50x50').processed %>
+          <% end %>
+        </td>
         <td>
           <%= link_to customer_path(trimmer.id) do %>
             <p><%= trimmer.full_name %></p>
