@@ -1,0 +1,28 @@
+<p><%= @customer.last_name %><%= @customer.first_name %></p>
+<p><%= @customer.post_code %></p>
+<p><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></p>
+
+<p>名前　<%= @dog.name %></p>
+<p>犬種　<%= @dog.breed %></p>
+<p>性別　<% if @dog.sex? %>おす<% else %>めす<% end %></p>
+<p>サイズ　<%= @dog.size_i18n %></p>
+<p>ワクチン　<%if @dog.is_inoculate? %>接種済み<%= @dog.inoculation_date %><% else %>未接種<% end %></p>
+<p>誕生日　<%= @dog.birthday %></p>
+<p>既往歴　<%= @dog.medical_history %></p>
+
+<h4>契約希望日</h4>
+
+<h3>契約者情報</h3>
+<p><%= @torimmer.last_name %><%= @torimmer.first_name %></p>
+<p><%= @torimmer.post_code %></p>
+<p><%= @torimmer.prefecture_code %><%= @torimmer.city %><%= @torimmer.street %></p>
+
+
+<%= form_with model: @contract, url: contract_path(id: @contract.id), local: true do |f| %>
+  <div class="field">
+    <%= f.hidden_field :is_status, :value => "in_progress" %>
+  </div>
+  <div class="actions">
+    <%= f.button '契約確定', type: 'button', onclick: 'submit();' %>
+  </div>
+<% end %>

@@ -1,4 +1,4 @@
-<h2>愛犬情報編集画面</h2>
+<h2>愛犬編集</h2>
 
 <%= form_with model: @dog, url: dog_path(@dog.id), local: true do |f| %>
 
@@ -49,7 +49,7 @@
     <%= f.text_field :introduction, autofocus: true %>
   </div>
   <div class="actions">
-    <%= f.button '愛犬登録', type: 'button', onclick: 'submit();' %>
+    <%= f.button '変更', type: 'button', onclick: 'submit();' %>
   </div>
 <% end %>
 

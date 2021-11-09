@@ -7,10 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
   # 管理者
-  # Admin.create!(
-  # email: 'admin@admin',
-  # password: 'adminadmin'
-  # )
+  Admin.create!(
+  email: 'admin@admin',
+  password: 'adminadmin'
+  )
 
   # 会員
   7.times do |n|

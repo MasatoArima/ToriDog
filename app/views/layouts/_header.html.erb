@@ -8,14 +8,18 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
         <% if customer_signed_in? %>
-          <% if current_customer.user_status == 0 %>
+          <% if current_customer.user_status == "trimmer" %>
             <li class="nav-item text-center mr-3"><%= link_to customers_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>依頼一覧<% end %></li>
           <% else %>
             <li class="nav-item text-center mr-3"><%= link_to customers_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>トリマー一覧<% end %></li>
             <li class="nav-item text-center mr-3"><%= link_to dogs_path, class: 'nav-link', data: {"turbolinks"=>false} do %><i class="fas fa-paw fa-lg"></i><br>愛犬ページ<% end %></li>
           <% end %>
-          <li class="nav-item text-center mr-3"><%= link_to customers_mypage_path, class: 'nav-link' do %><i class="fas fa-address-card fa-lg"></i><br>マイページ<% end %></li>
-          <li class="nav-item text-center mr-3"><%= link_to destroy_customer_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
+            <li class="nav-item text-center mr-3"><%= link_to customers_mypage_path, class: 'nav-link' do %><i class="fas fa-address-card fa-lg"></i><br>マイページ<% end %></li>
+            <li class="nav-item text-center mr-3"><%= link_to destroy_customer_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
+        <% elsif %>
+          <li class="nav-item text-center mr-3"><%= link_to admin_contracts_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>契約一覧<% end %></li>
+          <li class="nav-item text-center mr-3"><%= link_to admin_customers_path, class: 'nav-link', data: {"turbolinks"=>false} do %><i class="fas fa-paw fa-lg"></i><br>会員一覧<% end %></li>
+          <li class="nav-item text-center mr-3"><%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
         <% else %>
           <li class="nav-item text-center mr-5"><%= link_to about_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>about<% end %></li>
           <li class="nav-item text-center mr-5"><%= link_to new_customer_registration_path, class: 'nav-link' do %><i class="fas fa-user-plus fa-lg"></i><br>Sign_up<% end %></li>

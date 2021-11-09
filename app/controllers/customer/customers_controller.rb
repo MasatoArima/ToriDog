@@ -5,10 +5,18 @@ class Customer::CustomersController < ApplicationController
     else
       @customers = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code)
     end
+    @requests = Request.where(prefecture_code: current_customer.prefecture_code)
+    @dogs = Dog.all
   end
 
   def mypage
-    @myself = current_customer
+    @customer = current_customer
+    @torimmer = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code)
+    @dog_owner = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code)
+    @requests = Request.all
+    @dogs = Dog.all
+    @applications = Application.all
+    @contracts = Contract.all
   end
 
   def show

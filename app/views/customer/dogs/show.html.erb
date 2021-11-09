@@ -1,15 +1,22 @@
-<p><%= @dog.name %></p>
-<p><%= @dog.name_kana %></p>
-<p><%= @dog.breed %></p>
-<p><%= @dog.sex %></p>
-<p><%= @dog.size %></p>
-<p><%= @dog.is_inoculate %></p>
-<p><%= @dog.inoculation_date %></p>
-<p><%= @dog.birthday %></p>
-<p><%= @dog.medical_history %></p>
-<p><%= @dog.introduction %></p>
+<div class="container">
+  <div class="row">
+    <table class="table table-striped" style="width: 500px">
+      <tr><th style="width: 100px">名前</th><th><%= @dog.name %></th></tr>
+      <tr><td>フリガナ</td><td><%= @dog.name_kana %></td></tr>
+      <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
+      <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
+      <tr><td>サイズ</td><td><%= @dog.size %></td></tr>
+      <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
+      <tr><td>誕生日</td><td><%= @dog.birthday %></td></tr>
+      <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
+      <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
+    </table>
+  </div>
+</div>
 
 
 
-<%= link_to "愛犬編集", edit_dog_path(@dog) %>
-<%= link_to "愛犬情報削除", dog_path(@dog), method: :delete %>
+<div class="text-center mt-4">
+  <%= link_to "愛犬編集", edit_dog_path(@dog), class: "btn btn-success", style: "width:150px" %>
+  <%= link_to "愛犬情報削除", dog_path(@dog), method: :delete, class: "btn btn-danger", style: "width:150px" %>
+</div>

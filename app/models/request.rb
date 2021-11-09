@@ -1,4 +1,5 @@
 class Request < ApplicationRecord
   belongs_to :customer
-  has_many :applications
+  belongs_to :dog
+  has_many :applications, dependent: :destroy
 end

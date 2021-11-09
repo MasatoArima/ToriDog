@@ -1,12 +1,22 @@
+<div class="container">
+  <div class="row">
+    <% @dogs.each do |dog| %>
+      <%= link_to dog_path(dog.id) do %>
+        <div class="card mr-3" style="width: 18rem;">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/><text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text></svg>
+          <div class="card-body">
+            <h5 class="card-title"><%= dog.name %></h5>
+            <p class="card-text"><%= dog.breed%></p>
+            <p class="card-text"><%= dog.birthday %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
-<% @dogs.each do |dog| %>
-  <%= link_to dog_path(dog.id) do %>
-    <p><%= dog.name %></p>
-  <% end %>
-  <p><%= dog.breed%></p>
-  <p><%= dog.birthday %></p>
-<% end %>
 
-
-<%= link_to "マイページに戻る", customers_mypage_path %>
-<%= link_to "愛犬登録", new_dog_path %>
+<div class="text-center mt-4">
+  <%= link_to "マイページ", customers_mypage_path, class: "btn btn-success", style: "width:150px"  %>
+  <%= link_to "愛犬登録", new_dog_path, class: "btn btn-success", style: "width:150px"  %>
+</div>

@@ -45,5 +45,5 @@
 
 ## 使用素材
 
-- レイアウトで使用するかも。
-- 使わなかったら消す
+- O-DAN(オーダン) <https://o-dan.net/ja/>
+- DesignEvo <https://www.designevo.com/>

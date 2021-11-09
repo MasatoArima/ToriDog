@@ -6,7 +6,7 @@ class Customer::ApplicationsController < ApplicationController
       redirect_to request.referer, notice: '登録しました'
     else
       flash[:alert] = '登録に失敗しました'
-      render :new
+      redirect_to request.referer
     end
   end
   def update
