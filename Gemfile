@@ -73,3 +73,4 @@ gem 'ransack'
 gem 'pry-byebug'
 
 gem 'jp_prefecture'
+gem 'image_processing', '~> 1.2'

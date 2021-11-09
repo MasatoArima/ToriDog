@@ -21,6 +21,9 @@ class Customer < ApplicationRecord
   has_many :likings, through: :assessments, source: :get_like
   has_many :likers, through: :reverse_of_assessments, source: :like
 
+  has_one_attached :profile_image
+  has_many_attached :cut_images
+
 
   # フォロー・フォロワー
   def follow(customer_id)

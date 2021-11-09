@@ -12,6 +12,9 @@ class Customer::CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id])
+    @dogs = Dog.where(customer_id: @customer.id)
+    @requests = Request.all
+    @applications = Application.all
   end
 
   def edit
@@ -42,7 +45,7 @@ class Customer::CustomersController < ApplicationController
 
   private
   def customer_params
-    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction)
+    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, cut_images: [])
   end
 
   def setup
