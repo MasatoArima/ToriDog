@@ -1,10 +1,11 @@
 class Customer::ContractsController < ApplicationController
   def show
     @contract = Contract.find(params[:id])
-    @application = Application.find_by(id: @contract.application_id )
-    @dog = Dog.find_by(id: @application.request.dog_id )
-    @customer = current_customer
-    @torimmer = Customer.find_by(id: @application.request.customer_id )
+    @application = Application.find(@contract.application_id)
+    @request = Request.find(@application.request_id)
+    @dog = Dog.find(@request.dog_id )
+    @dog_owner = Customer.find(@request.customer_id)
+    @trimmer = Customer.find(@application.customer_id)
   end
 
   def new
@@ -45,10 +46,8 @@ class Customer::ContractsController < ApplicationController
   def check
   end
 
-
-
   private
   def contract_params
-    params.require(:contract).permit(:application_id, :is_status)
+    params.require(:contract).permit(:application_id, :is_status,:dog_owner_is_consent,:trimmer_is_consent)
   end
 end

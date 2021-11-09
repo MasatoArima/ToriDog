@@ -1,5 +1,6 @@
 class Customer::RequestsController < ApplicationController
   def show
+    @contracts = Contract.all
     @request = Request.find(params[:id])
     @customer = Customer.find_by(id: @request.customer_id)
     @dog = Dog.find_by(id: @request.dog_id)

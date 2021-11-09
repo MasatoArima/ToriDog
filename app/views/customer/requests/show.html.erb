@@ -1,4 +1,5 @@
 <div class="container">
+    <h3>依頼詳細ページ</h3>
   <div class="row">
     <div class="col-6">
       <table class="table table-striped" style="width: 500px">
@@ -22,42 +23,62 @@
     </div>
   </div>
   <div class="row">
-    <% if is_trimmer? %>
-      <% if @application.request_id.nil? %>
-      <h3>応募する</h3>
-        <%= form_with model: @application, url: applications_path, local: true do |f| %>
-          <div class="field">
-            <%= f.label :comment, "対応可能な日付およびコメント" %>
-            <%= f.text_field :comment, autofocus: true %>
-            <%= f.hidden_field :request_id, :value => @request.id %>
-          </div>
-          <div class="actions">
-            <%= f.button '応募登録', type: 'button', onclick: 'submit();' %>
-          </div>
-        <% end %>
-      <% else %>
-      <h3>応募済み</h3>
-        <%= form_with model: @application, url: application_path, local: true do |f| %>
-          <div class="field">
-            <%= f.label :comment, "対応可能な日付およびコメント" %>
-            <%= f.text_field :comment, autofocus: true %>
-            <%= f.hidden_field :request_id, :value => @request.id %>
-          </div>
-          <div class="actions">
-            <%= f.button '変更', type: 'button', onclick: 'submit();' %>
-          </div>
-        <% end %>
-      <% end %>
+    <div class="col12">
 
-    <% else %>
-    　<h3>応募トリマー</h3>
-    　<% @applications.each do |application| %>
-    　  <p>
-    　    <%= application.customer.first_name %>
-    　    <%= application.comment %>
-          <%= link_to "契約に進む", new_contract_path(id: application.id), class: "btn btn-success", style: "width:150px" %>
-        </p>
-    　<% end %>
-    <% end %>
+      <% if is_trimmer? %>
+        <% if @application.request_id.nil? %>
+        <h3>応募する</h3>
+          <%= form_with model: @application, url: applications_path, local: true do |f| %>
+            <div class="field">
+              <%= f.label :comment, "対応可能な日付およびコメント" %>
+              <%= f.text_field :comment, autofocus: true %>
+              <%= f.hidden_field :request_id, :value => @request.id %>
+            </div>
+            <div class="actions">
+              <%= f.button '応募登録', type: 'button', onclick: 'submit();' %>
+            </div>
+          <% end %>
+        <% else %>
+        <h3>応募済み</h3>
+          <%= form_with model: @application, url: application_path, local: true do |f| %>
+            <div class="field">
+              <%= f.label :comment, "対応可能な日付およびコメント" %>
+              <%= f.text_field :comment, autofocus: true %>
+              <%= f.hidden_field :request_id, :value => @request.id %>
+            </div>
+            <div class="actions">
+              <%= f.button '変更', type: 'button', onclick: 'submit();' %>
+            </div>
+          <% end %>
+        <% end %>
+
+      <% else %>
+      　<h3>応募トリマー</h3>
+        <table class="table table-striped" style="width: 500px">
+        　<% @applications.each do |application| %>
+            <tr>
+              <th>応募トリマー</th>
+              <th>コメント</th>
+              <th>契約ステータス</th>
+            </tr>
+            <tr>
+              <td>
+                <%= link_to customer_path(application.customer_id) do %>
+                  <%= application.customer.full_name %>
+                <% end %>
+              </td>
+              <td><%= application.comment %></td>
+              <th>
+                <% if @contracts.where(application_id: application.id).nil? %>
+                  <%= link_to "契約に進む", new_contract_path(id: application.id), class: "btn btn-success", style: "width:150px" %>
+                <% else %>
+                  応募済
+                <% end %>
+              </th>
+            </tr>
+      　  <% end %>
+        </table>
+      <% end %>
+    </div>
   </div>
 </div>

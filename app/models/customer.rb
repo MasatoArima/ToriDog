@@ -9,6 +9,53 @@ class Customer < ApplicationRecord
   has_many :requests, dependent: :destroy
   has_many :applications, dependent: :destroy
 
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+
+  has_many :followings, through: :relationships, source: :followed
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+
+  has_many :assessments, class_name: "Assessment", foreign_key: "like_id", dependent: :destroy
+  has_many :reverse_of_assessments, class_name: "Assessment", foreign_key: "get_like_id", dependent: :destroy
+
+  has_many :likings, through: :assessments, source: :get_like
+  has_many :likers, through: :reverse_of_assessments, source: :like
+
+
+  # フォロー・フォロワー
+  def follow(customer_id)
+    relationships.create(followed_id: customer_id)
+  end
+  def unfollow(customer_id)
+    relationships.find_by(followed_id: customer_id).destroy
+  end
+  def following?(customer)
+    followings.include?(customer)
+  end
+
+  # いいね
+  def likes(customer_id)
+    assessments.create(get_like_id: customer_id)
+  end
+  def unlikes(customer_id)
+    assessments.find_by(get_like_id: customer_id).destroy
+  end
+  def liking?(customer)
+    likings.include?(customer)
+  end
+
+
+
+
+  def full_name
+    self.last_name + " " + self.first_name
+  end
+
+  def full_name_kana
+    self.last_name_kana + " " + self.first_name_kana
+  end
+
+
   #住所自動入力
   include JpPrefecture
   jp_prefecture :prefecture_code
@@ -21,13 +68,7 @@ class Customer < ApplicationRecord
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
-  def full_name
-    self.last_name + " " + self.first_name
-  end
 
-  def full_name_kana
-    self.last_name_kana + " " + self.first_name_kana
-  end
 
   #enum使用
   enum user_status: { dog_owner: 0, trimmer: 1 }

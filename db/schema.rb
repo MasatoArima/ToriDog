@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2021_11_06_075752) do
     t.integer "application_id", null: false
     t.float "rate"
     t.integer "is_status", null: false
+    t.boolean "dog_owner_is_consent", default: false, null: false
+    t.boolean "trimmer_is_consent", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_contracts_on_application_id"
@@ -135,8 +137,8 @@ ActiveRecord::Schema.define(version: 2021_11_06_075752) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer "following_id", null: false
     t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
