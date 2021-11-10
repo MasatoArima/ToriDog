@@ -9,7 +9,7 @@
     </div>
     <div class="col-8">
       <% if is_trimmer? %>
-        <%= render 'customer/customers/trimmer-index', dog_owners: @dog_owners, requests: @requests, dogs: @dogs %>
+        <%= render 'customer/customers/trimmer-index', dog_owners: @dog_owners, requests: @requests, dogs: @dogs, customers: @customers, applications: @applications %>
       <% else %>
         <%= render 'customer/customers/dog_owner-index', trimmers: @trimmers %>
       <% end %>

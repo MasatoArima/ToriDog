@@ -24,7 +24,6 @@
   </div>
   <div class="row">
     <div class="col12">
-
       <% if is_trimmer? %>
         <% if @application.request_id.nil? %>
         <h3>応募する</h3>
@@ -55,12 +54,12 @@
       <% else %>
       　<h3>応募トリマー</h3>
         <table class="table table-striped" style="width: 500px">
-        　<% @applications.each do |application| %>
-            <tr>
-              <th>応募トリマー</th>
-              <th>コメント</th>
-              <th>契約ステータス</th>
-            </tr>
+          <tr>
+            <th>応募トリマー</th>
+            <th>コメント</th>
+            <th>契約ステータス</th>
+          </tr>
+          <% @applications.each do |application| %>
             <tr>
               <td>
                 <%= link_to customer_path(application.customer_id) do %>
@@ -69,10 +68,10 @@
               </td>
               <td><%= application.comment %></td>
               <th>
-                <% if @contracts.where(application_id: application.id).nil? %>
+                <% if @contracts.find_by(application_id: application.id).nil? %>
                   <%= link_to "契約に進む", new_contract_path(id: application.id), class: "btn btn-success", style: "width:150px" %>
                 <% else %>
-                  応募済
+                  契約準備中
                 <% end %>
               </th>
             </tr>

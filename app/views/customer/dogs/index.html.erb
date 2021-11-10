@@ -2,9 +2,11 @@
   <div class="row">
     <% @dogs.each do |dog| %>
       <%= link_to dog_path(dog.id) do %>
-        <div class="card" style="width: 18rem;">
+        <div class="card mr-3" style="width: 18rem;">
           <% if dog.dog_image.attached? %>
             <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+          <% else %>
+            <%= image_tag("no_image.jpg", :size => "300x285") %>
           <% end %>
           <div class="card-body">
             <h5 class="card-title"><%= dog.name %></h5>

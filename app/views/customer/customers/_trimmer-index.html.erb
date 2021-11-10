@@ -5,6 +5,7 @@
       <th>依頼日</th>
       <th>愛犬名</th>
       <th>依頼主</th>
+      <th>応募</th>
     </tr>
   </thead>
   <tbody>
@@ -17,12 +18,21 @@
             <% end %>
           </td>
           <td><%= dogs.find(requesta.dog_id).name %></td>
-          <td><%= dog_owners.find(requesta.dog_id).full_name %></td>
+          <td><%= customers.find(requesta.customer_id).full_name %></td>
+          <td>
+            <% if applications.find_by(customer_id: current_customer.id, request_id: requesta.id) %>
+              済
+            <% else %>
+              未
+            <% end %>
+            </td>
         </tr>
       <% end %>
   　<% end %>
   </tbody>
 </table>
+<%= paginate requests, :param_name => 'request_page' %>
+
 <h3>飼い主一覧</h3>
 <span>※同一都道府県のみ</span>
 <table class="table">
@@ -39,6 +49,8 @@
         <td>
           <% if dog_owner.profile_image.attached? %>
             <%= image_tag dog_owner.profile_image.variant(resize:'50x50').processed %>
+          <% else %>
+           <%= image_tag("no_image.jpg", :size => "50x50") %>
           <% end %>
         </td>
         <td>
@@ -51,3 +63,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate dog_owners, :param_name => 'customer_page' %>

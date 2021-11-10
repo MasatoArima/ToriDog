@@ -68,6 +68,8 @@ gem 'jquery-rails'
 gem 'font-awesome-sass', '~> 5.13'
 
 gem 'kaminari'
+gem 'kaminari-bootstrap', '~> 3.0.1'
+
 gem 'dotenv-rails'
 gem 'ransack'
 gem 'pry-byebug'

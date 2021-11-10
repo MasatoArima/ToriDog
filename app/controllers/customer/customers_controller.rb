@@ -1,7 +1,8 @@
 class Customer::CustomersController < ApplicationController
   before_action :setup, only: [:index, :mypage]
+
   def index
-    @requests = Request.where(prefecture_code: current_customer.prefecture_code)
+    @requests = Request.where(prefecture_code: current_customer.prefecture_code).page(params[:request_page]).per(5)
 
   end
 
@@ -49,11 +50,12 @@ class Customer::CustomersController < ApplicationController
   end
 
   def setup
-    @trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code)
-    @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code)
+    @customers = Customer.all
+    @trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
+    @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
     @dogs = Dog.all
     @applications = Application.all
-    @contracts = Contract.all
+    @contracts = Contract.all.page(params[:contract_page]).per(5)
   end
 
 end
