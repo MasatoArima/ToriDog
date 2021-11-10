@@ -61,3 +61,19 @@
         user_status: 1,
       )
   end
+  15.times do |n|
+      Customer.create!(
+        email: "tat#{n + 1}@test.com",
+        password: "111111",
+        last_name: "山田",
+        first_name: "達夫#{n + 1}",
+        last_name_kana: "ヤマダ",
+        first_name_kana: "ハナコ",
+        prefecture_code: "埼玉県",
+        city: "test",
+        street: "test2",
+        post_code: "0000000",
+        phone_number: "09012345678",
+        user_status: 1,
+      )
+  end

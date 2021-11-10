@@ -1,11 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      検索画面作成
-      <p>都道府県</p>
-      <p>町村</p>
-      <p>犬種</p>
-      <p>検索</p>
+      <%= search_form_for @q do |f| %>
+        <%= f.label :prefecture_code, "都道府県" %><br>
+        <%= f.search_field :prefecture_code_cont %><br>
+        <%= f.submit "検索" %>
+      <% end %>
+
     </div>
     <div class="col-8">
       <% if is_trimmer? %>
