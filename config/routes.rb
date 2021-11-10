@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       get 'likers' => 'assessments#likers', as: 'likers'
     end
 
+    resources :contacts, only: [:new, :create]
+    post 'contacts/confirm', to: 'contacts#confirm', as: 'confirm'
+    post 'contacts/back', to: 'contacts#back', as: 'back'
+    get 'done', to: 'contacts#done', as: 'done'
+
     resources :dogs
     resources :requests, expect: [:index]
     resources :applications, only: [:create, :destroy, :edit, :update]
