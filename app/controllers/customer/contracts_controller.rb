@@ -48,6 +48,6 @@ class Customer::ContractsController < ApplicationController
 
   private
   def contract_params
-    params.require(:contract).permit(:application_id, :is_status,:dog_owner_is_consent,:trimmer_is_consent)
+    params.require(:contract).permit(:application_id, :is_status,:dog_owner_is_consent,:trimmer_is_consent, :preferred_date)
   end
 end

@@ -30,6 +30,6 @@ class Customer::RequestsController < ApplicationController
 
   private
   def request_params
-    params.require(:request).permit(:comment, :dog_id, :prefecture_code)
+    params.require(:request).permit(:comment, :dog_id, :prefecture_code, :first_preferred_date, :last_preferred_date)
   end
 end

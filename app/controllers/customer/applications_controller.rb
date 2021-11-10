@@ -19,6 +19,6 @@ class Customer::ApplicationsController < ApplicationController
 
   private
   def application_params
-    params.require(:application).permit(:comment,:request_id)
+    params.require(:application).permit(:comment,:request_id, :first_preferred_date, :last_preferred_date)
   end
 end
