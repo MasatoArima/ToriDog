@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2021_11_10_141903) do
     t.integer "customer_id", null: false
     t.integer "request_id", null: false
     t.text "comment"
+    t.datetime "first_preferred_date"
+    t.datetime "last_preferred_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_applications_on_customer_id"
@@ -88,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_141903) do
     t.integer "is_status", null: false
     t.boolean "dog_owner_is_consent", default: false, null: false
     t.boolean "trimmer_is_consent", default: false, null: false
+    t.datetime "preferred_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_contracts_on_application_id"
@@ -159,6 +162,8 @@ ActiveRecord::Schema.define(version: 2021_11_10_141903) do
     t.text "comment"
     t.string "prefecture_code", null: false
     t.boolean "is_complete", default: false, null: false
+    t.datetime "first_preferred_date"
+    t.datetime "last_preferred_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_requests_on_customer_id"

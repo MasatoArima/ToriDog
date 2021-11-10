@@ -13,6 +13,12 @@
     <%= f.label :comment, "追記事項" %>
     <%= f.text_field :comment, autofocus: true %>
   </div>
+  <div class="field">
+    <%= f.label :first_preferred_date, "希望日" %>
+    <%= f.datetime_field :first_preferred_date, autofocus: true %>
+    ～
+    <%= f.datetime_field :last_preferred_date %>
+  </div>
 
   <%= f.hidden_field :prefecture_code, value: @customer.prefecture_code %>
 

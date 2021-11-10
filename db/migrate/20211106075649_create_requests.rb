@@ -6,6 +6,8 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.text :comment
       t.string :prefecture_code, null: false
       t.boolean :is_complete, null: false, default: false
+      t.datetime :first_preferred_date
+      t.datetime :last_preferred_date
 
       t.timestamps
     end

@@ -6,6 +6,7 @@ class CreateContracts < ActiveRecord::Migration[5.2]
       t.integer :is_status, null: false
       t.boolean :dog_owner_is_consent, null: false, default: false
       t.boolean :trimmer_is_consent, null: false, default: false
+      t.datetime :preferred_date
 
       t.timestamps
     end

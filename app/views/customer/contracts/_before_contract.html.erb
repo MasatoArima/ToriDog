@@ -7,6 +7,10 @@
       <table class="table">
         <tbody>
             <tr>
+                <th>施術日</th>
+                <td><%= contract.preferred_date.to_s(:datetime_jp_time) %></td>
+            </tr>
+            <tr>
                 <th>飼い主</th>
                 <td><%= dog_owner.full_name %></td>
             </tr>

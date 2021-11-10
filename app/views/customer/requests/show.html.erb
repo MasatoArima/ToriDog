@@ -6,6 +6,7 @@
         <tr><th style="width: 100px">名前</th><th><%= @customer.last_name %><%= @customer.first_name %></th></tr>
         <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
         <tr><td>住所</td><td><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></td></tr>
+        <tr><td>希望日</td><td><%= @request.preferred_dates %></td></tr>
         <tr><td>依頼内容</td><td><%= @request.comment %></td></tr>
       </table>
     </div>
@@ -33,6 +34,12 @@
               <%= f.text_field :comment, autofocus: true %>
               <%= f.hidden_field :request_id, :value => @request.id %>
             </div>
+            <div class="field">
+              <%= f.label :first_preferred_date, "対応可能日" %>
+              <%= f.datetime_field :first_preferred_date, autofocus: true %>
+              ～
+              <%= f.datetime_field :last_preferred_date %>
+            </div>
             <div class="actions">
               <%= f.button '応募登録', type: 'button', onclick: 'submit();' %>
             </div>
@@ -45,6 +52,12 @@
               <%= f.text_field :comment, autofocus: true %>
               <%= f.hidden_field :request_id, :value => @request.id %>
             </div>
+            <div class="field">
+              <%= f.label :first_preferred_date, "対応可能日" %>
+              <%= f.datetime_field :first_preferred_date, autofocus: true %>
+              ～
+              <%= f.datetime_field :last_preferred_date %>
+            </div>
             <div class="actions">
               <%= f.button '変更', type: 'button', onclick: 'submit();' %>
             </div>
@@ -56,6 +69,7 @@
         <table class="table table-striped" style="width: 500px">
           <tr>
             <th>応募トリマー</th>
+            <th>対応可能日</th>
             <th>コメント</th>
             <th>契約ステータス</th>
           </tr>
@@ -66,6 +80,7 @@
                   <%= application.customer.full_name %>
                 <% end %>
               </td>
+              <td><%= application.preferred_dates %></td>
               <td><%= application.comment %></td>
               <th>
                 <% if @contracts.find_by(application_id: application.id).nil? %>
