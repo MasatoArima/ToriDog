@@ -3,7 +3,28 @@ class Customer::CustomersController < ApplicationController
 
   def index
     @requests = Request.where(prefecture_code: current_customer.prefecture_code).page(params[:request_page]).per(5)
+    if params[:q].blank? || params[:q][:prefecture_code_cont].blank?
+      params[:q] = {}
+      params[:q][:prefecture_code_cont] = current_customer.prefecture_code
+    end
 
+    if current_customer.user_status == "trimmer"
+      @q = Customer.where(user_status: 0).ransack(params[:q])
+      @r = Request.ransack(params[:q])
+    else
+      @q = Customer.where(user_status: 1).ransack(params[:q])
+    end
+
+    unless params[:q].nil?
+      if params[:q][:s].blank?
+        trimmers = Customer.where(user_status: 1).where("prefecture_code like '%#{params[:q][:prefecture_code_cont]}%'").includes(:likers).sort {|a,b| b.likers.size <=> a.likers.size}
+        @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
+        @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
+      else
+        @trimmers = @q.result(distinct: true).page(params[:customer_page]).per(5)
+
+      end
+    end
   end
 
   def mypage

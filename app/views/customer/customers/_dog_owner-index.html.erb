@@ -1,11 +1,16 @@
 <h3>トリマー一覧</h3>
-<span>※同一都道府県のみ</span>
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :id, "新着順")%></th>
+    </tr>
+  </thead>
 <table class="table">
   <thead>
     <tr>
       <th></th>
       <th>名前</th>
       <th>住所</th>
+      <th>いいね数</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +29,7 @@
           <% end %>
         </td>
         <td><%= trimmer.prefecture_code %><%= trimmer.city %></td>
+        <td><%= trimmer.likers.count %></td>
       </tr>
     <% end %>
   </tbody>
