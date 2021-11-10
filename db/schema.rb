@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_06_075752) do
+ActiveRecord::Schema.define(version: 2021_11_10_141903) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -70,6 +70,16 @@ ActiveRecord::Schema.define(version: 2021_11_06_075752) do
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_chats_on_customer_id"
     t.index ["room_id"], name: "index_chats_on_room_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email"
+    t.string "phone_number"
+    t.string "subject", null: false
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "contracts", force: :cascade do |t|
