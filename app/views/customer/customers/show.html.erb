@@ -1,32 +1,36 @@
 <div class="container">
   <div class="row">
     <div class="col-5">
-      <dt class="col-sm-3">profile画像</dt>
+      <dt class="col-sm-5">profile画像</dt>
       <dd class="col-sm-9">
         <% if @customer.profile_image.attached? %>
           <%= image_tag @customer.profile_image.variant(resize:'150x150').processed %>
         <% end %>
       </dd>
 
-      <dt class="col-sm-3">名前</dt>
+      <dt class="col-sm-5">名前</dt>
       <dd class="col-sm-9"><%= @customer.full_name %></dd>
 
-      <dt class="col-sm-3">住所</dt>
+      <dt class="col-sm-5">住所</dt>
       <dd class="col-sm-9"><%= @customer.prefecture_code %><%= @customer.city %></dd>
 
-      <dt class="col-sm-3">自己紹介文</dt>
-      <dd class="col-sm-9"><%= @customer.introduction%></dd>
-    <% if current_customer.following?(@customer) %>
-      <%= link_to "フォロー外す", customer_relationships_path(@customer.id), method: :delete, class: "btn btn-danger" %>
-    <% else %>
-      <%= link_to "フォローする", customer_relationships_path(@customer.id), method: :post, class: "btn btn-primary" %>
-    <% end %>
+      <dt class="col-sm-9">フォロー数: <%= @customer.followings.count %></dt>
+      <dt class="col-sm-9">フォロワー数: <%= @customer.followers.count %></dt>
+      <dt class="col-sm-9">いいね数: <%= @customer.likers.count %></dt>
 
-    <% if current_customer.liking?(@customer)%>
-      <%= link_to "いいねを消す", customer_assessments_path(@customer.id), method: :delete, class: "btn btn-danger" %>
-    <% else %>
-      <%= link_to "いいねする", customer_assessments_path(@customer.id), method: :post, class: "btn btn-primary" %>
-    <% end %>
+      <dt class="col-sm-5">自己紹介文</dt>
+      <dd class="col-sm-9"><%= @customer.introduction%></dd>
+      <% if current_customer.following?(@customer) %>
+        <%= link_to "フォロー外す", customer_relationships_path(@customer.id), method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "フォローする", customer_relationships_path(@customer.id), method: :post, class: "btn btn-primary" %>
+      <% end %>
+
+      <% if current_customer.liking?(@customer)%>
+        <%= link_to "いいねを消す", customer_assessments_path(@customer.id), method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "いいねする", customer_assessments_path(@customer.id), method: :post, class: "btn btn-primary" %>
+      <% end %>
     </div>
     <div class="col-7">
       <% if is_trimmer? %>

@@ -14,6 +14,8 @@
         <td>
           <% if trimmer.profile_image.attached? %>
             <%= image_tag trimmer.profile_image.variant(resize:'50x50').processed %>
+          <% else %>
+           <%= image_tag("no_image.jpg", :size => "50x50") %>
           <% end %>
         </td>
         <td>
@@ -26,3 +28,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= paginate trimmers, :param_name => 'customer_page' %>
