@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
-  devise_for :customer,skip: [:passwords,], controllers: {
+  devise_for :customer, skip: [:passwords], controllers: {
     registrations: "customer/registrations",
-    sessions: 'customer/sessions'
+    sessions: 'customer/sessions',
   }
 
-  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
-    sessions: "admin/sessions"
+  devise_for :admin, skip: [:registrations, :passwords], controllers: {
+    sessions: "admin/sessions",
   }
 
   root "customer/homes#top"
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     get "/customers/withdraw_confirm", to: "customers#withdraw_confirm"
     get "/customers/mypage", to: "customers#mypage"
     patch "/customers/withdraw", to: "customers#withdraw"
-    resources :customers, only:[:index, :show, :edit, :update] do
+    resources :customers, only: [:index, :show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
@@ -36,14 +36,11 @@ Rails.application.routes.draw do
     get "/contracts/check", to: "contracts#check"
     resources :contracts, only: [:create, :new, :show, :update]
 
-    resources :chats, only: [:show,:create,:destroy]
+    resources :chats, only: [:show, :create, :destroy]
   end
 
   namespace :admin do
-    resources :customers, only:[:index, :show, :edit, :update]
+    resources :customers, only: [:index, :show, :edit, :update]
     resources :contracts, only: [:index, :show]
   end
-
-
-
 end
