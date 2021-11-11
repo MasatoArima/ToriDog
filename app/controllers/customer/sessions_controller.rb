@@ -4,6 +4,10 @@ class Customer::SessionsController < Devise::SessionsController
   before_action :reject_login, only: [:create]
   # before_action :configure_sign_in_params, only: [:create]
 
+  def create
+    cookies.signed[:customer_id] = current_customer.id
+    redirect_to root_path
+  end
   # GET /resource/sign_in
   # def new
   #   super

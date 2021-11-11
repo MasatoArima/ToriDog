@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
 
   devise_for :customer,skip: [:passwords,], controllers: {
     registrations: "customer/registrations",
