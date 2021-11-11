@@ -81,3 +81,5 @@ gem 'jp_prefecture'
 gem 'image_processing', '~> 1.2'
 
 gem 'execjs'
+
+gem "aws-sdk-s3", require: false
