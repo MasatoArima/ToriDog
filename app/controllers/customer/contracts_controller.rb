@@ -1,5 +1,7 @@
 class Customer::ContractsController < ApplicationController
   def show
+    @customers = Customer.all
+    @messages = Message.where(contract_id: (params[:id]))
     @contract = Contract.find(params[:id])
     @application = Application.find(@contract.application_id)
     @request = Request.find(@application.request_id)

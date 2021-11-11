@@ -16,6 +16,13 @@
           completion: "完了"
           cancel: "中止"
     activerecord:
+      models:
+        contact: お問い合わせ
+      attributes:
+        contact:
+          name: お名前
+          subject: 要件
+        　message: メッセージ
       errors:
         messages:
           record_invalid: 'バリデーションに失敗しました: %{errors}'

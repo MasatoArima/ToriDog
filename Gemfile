@@ -78,3 +78,5 @@ gem 'ransack'
 
 gem 'jp_prefecture'
 gem 'image_processing', '~> 1.2'
+
+gem 'execjs'

@@ -1,18 +1,6 @@
 class Customer::ContactsController < ApplicationController
-  def new
+  def index
     @contact = Contact.new
-  end
-
-  def confirm
-    @contact = Contact.new(contact_params)
-    if @contact.invalid?
-      render :new
-    end
-  end
-
-  def back
-    @contact = Contact.new(contact_params)
-    render :new
   end
 
   def create
@@ -21,20 +9,13 @@ class Customer::ContactsController < ApplicationController
       ContactMailer.send_mail(@contact).deliver_now
       redirect_to root_path, notice: '送信しました'
     else
-      render :new
+      render :index
     end
   end
-
 
   private
 
   def contact_params
-    params.require(:contact)
-          .permit(:email,
-                  :name,
-                  :phone_number,
-                  :subject,
-                  :message
-                 )
+    params.require(:contact).permit(:email, :name, :phone_number ,:subject ,:message)
   end
 end
