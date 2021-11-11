@@ -27,10 +27,7 @@ Rails.application.routes.draw do
       get 'likers' => 'assessments#likers', as: 'likers'
     end
 
-    resources :contacts, only: [:new, :create]
-    post 'contacts/confirm', to: 'contacts#confirm', as: 'confirm'
-    post 'contacts/back', to: 'contacts#back', as: 'back'
-    get 'done', to: 'contacts#done', as: 'done'
+    resources :contacts, only: [:index, :create]
 
     resources :dogs
     resources :requests, expect: [:index]
@@ -39,8 +36,7 @@ Rails.application.routes.draw do
     get "/contracts/check", to: "contracts#check"
     resources :contracts, only: [:create, :new, :show, :update]
 
-
-    #chat未
+    resources :chats, only: [:show,:create,:destroy]
   end
 
   namespace :admin do

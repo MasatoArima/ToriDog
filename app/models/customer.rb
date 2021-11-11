@@ -8,6 +8,9 @@ class Customer < ApplicationRecord
   has_many :dogs, dependent: :destroy
   has_many :requests, dependent: :destroy
   has_many :applications, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :entries
+  has_many :chats
 
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
