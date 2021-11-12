@@ -102,4 +102,6 @@ Rails.application.configure do
       password: ENV['SMTP_PASSWORD'],
       enable_starttls_auto: true
   }
+
+  config.require_master_key = true
 end
