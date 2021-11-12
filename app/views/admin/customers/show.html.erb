@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p><%= @customer.profile_image %></p>
+      <p>ステータス : <%= @customer.user_status_i18n%></p>
+      <p>名前 : <%= @customer.last_name %><%= @customer.first_name %></p>
+      <p>カナ : <%= @customer.last_name_kana %><%= @customer.first_name_kana %></p>
+      <p>郵便番号 : <%= @customer.post_code %></p>
+      <p>住所 : <%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %><%= @customer.other_address %></p>
+      <p>電話番号 : <%= @customer.phone_number %></p>
+      <p>メールアドレス : <%= @customer.email %></p>
+      <p>退会ステータス : <%= @customer.is_deleted %></p>
+      <p>自己紹介文 : <%= @customer.introduction %></p>
+
+      <div class="mt-4">
+        <%= link_to "会員編集", edit_admin_customer_path(@customer), class: "btn btn-success", style: "width:100px" %>
+      </div>
+    </div>
+
+    <div class="col-8">
+    </div>
+  </div>
+</div>
+
+
+

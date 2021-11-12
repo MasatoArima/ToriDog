@@ -1,0 +1,2 @@
+module Customer::ContractsHelper
+end

@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <%= search_form_for @q do |f| %>
+        <%= f.label :prefecture_code, "都道府県" %><br>
+        <%= f.search_field :prefecture_code_cont %><br>
+        <%= f.submit "検索" %>
+      <% end %>
+
+    </div>
+    <div class="col-8">
+      <% if is_trimmer? %>
+        <%= render 'customer/customers/trimmer-index', dog_owners: @dog_owners, requests: @requests, dogs: @dogs, customers: @customers, applications: @applications %>
+      <% else %>
+        <%= render 'customer/customers/dog_owner-index', trimmers: @trimmers %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+

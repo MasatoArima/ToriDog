@@ -1,0 +1,38 @@
+<h3>トリマー一覧</h3>
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :id, "新着順")%></th>
+    </tr>
+  </thead>
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>名前</th>
+      <th>住所</th>
+      <th>いいね数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% trimmers.each do |trimmer| %>
+      <tr>
+        <td>
+          <% if trimmer.profile_image.attached? %>
+            <%= image_tag trimmer.profile_image.variant(resize:'50x50').processed %>
+          <% else %>
+           <%= image_tag("no_image.jpg", :size => "50x50") %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to customer_path(trimmer.id) do %>
+            <p><%= trimmer.full_name %></p>
+          <% end %>
+        </td>
+        <td><%= trimmer.prefecture_code %><%= trimmer.city %></td>
+        <td><%= trimmer.likers.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate trimmers, :param_name => 'customer_page' %>

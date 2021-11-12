@@ -1,0 +1,88 @@
+<div class="col-4">
+  <% if customer.profile_image.attached? %>
+    <%= image_tag customer.profile_image.variant(resize:'150x150').processed %>
+  <% end %>
+  <p>ステータス : <%= customer.user_status_i18n%></p>
+  <p>名前 : <%= customer.full_name %></p>
+  <p>カナ : <%= customer.full_name_kana %></p>
+  <p>郵便番号 : <%= customer.post_code %></p>
+  <p>住所 : <%= customer.prefecture_code %><%= customer.city %><%= customer.street %><%= customer.other_address %></p>
+  <p>電話番号 : <%= customer.phone_number %></p>
+  <p>自己紹介文 : <%= customer.introduction%></p>
+  <p>フォロー数: <%= customer.followings.count %></p>
+  <p>フォロワー数: <%= customer.followers.count %></p>
+  <p>いいね数: <%= customer.likers.count %></p>
+  <div class="mt-4">
+    <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
+    <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
+  </div>
+  <% if customer.cut_images.attached? %>
+    <% customer.cut_images.each do |image| %>
+      <%= image_tag image.variant(resize:'150x150').processed %> <br>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="col-7">
+  <h4>応募中案件一覧</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>依頼日</th>
+        <th>トリミング犬</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% applications.each do |application| %>
+        <% if (current_customer.id ==  applications.find(application.id).customer_id) && (requests.find(applications.find(application.id).request_id).is_complete == false) %>
+          <tr>
+            <td>
+              <%= link_to request_path(applications.find(application.id).request_id) do %>
+                <%= application.updated_at.to_s(:datetime_jp) %>
+              <% end %>
+            </td>
+            <td><%= dogs.find(requests.find(applications.find(application.id).request_id).dog_id).name %></td>
+          </tr>
+        <% else %>
+        <% end %>
+     <% end %>
+    </tbody>
+  </table>
+
+  <h4>契約案件一覧</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>施術日</th>
+        <th>トリミング犬</th>
+        <th>飼い主</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% contracts.each do |contract| %>
+        <% if current_customer.id ==  applications.find(contract.application_id).customer_id %>
+        <tr>
+          <td>
+            <%= link_to contract_path(contract.id) do %>
+              <%= contract.updated_at.to_s(:datetime_jp) %>
+            <% end %>
+          </td>
+          <td><%= dogs.find(requests.find(applications.find(contract.application_id).request_id).dog_id).name %></td>
+          <td><%= dog_owners.find(requests.find(applications.find(contract.application_id).request_id).customer_id).full_name %></td>
+          <td><%= contract.is_status_i18n %></td>
+        </tr>
+        <% else %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+

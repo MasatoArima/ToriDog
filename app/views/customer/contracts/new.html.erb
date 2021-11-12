@@ -1,0 +1,43 @@
+<%= form_with model: @contract, url: contracts_path, local: true do |f| %>
+  <div class="container">
+      <h3>依頼詳細ページ</h3>
+    <div class="row">
+      <div class="col-6">
+        <p><%= @customer.last_name %><%= @customer.first_name %></p>
+        <p><%= @customer.post_code %></p>
+        <p><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></p>
+        <h4>施術希望日</h4>
+        <div class="field">
+          <%= f.label :preferred_date, "施術希望日" %>
+          <%= f.datetime_field :preferred_date, autofocus: true %>
+        </div>
+      </div>
+      <div class="col-6">
+        <p>名前　<%= @dog.name %></p>
+        <p>犬種　<%= @dog.breed %></p>
+        <p>性別　<% if @dog.sex? %>おす<% else %>めす<% end %></p>
+        <p>サイズ　<%= @dog.size_i18n %></p>
+        <p>ワクチン　<%if @dog.is_inoculate? %>接種済み<%= @dog.inoculation_date %><% else %>未接種<% end %></p>
+        <p>誕生日　<%= @dog.birthday %></p>
+        <p>既往歴　<%= @dog.medical_history %></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col12">
+        <h3>契約者情報</h3>
+        <p><%= @torimmer.last_name %><%= @torimmer.first_name %></p>
+        <p><%= @torimmer.post_code %></p>
+        <p><%= @torimmer.prefecture_code %><%= @torimmer.city %><%= @torimmer.street %></p>
+
+
+        <div class="field">
+          <%= f.hidden_field :application_id, :value => @application.id %>
+          <%= f.hidden_field :is_status, :value => "in_preparation" %>
+        </div>
+        <div class="actions">
+          <%= f.button '契約書作成', type: 'button', onclick: 'submit();' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

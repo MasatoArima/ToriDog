@@ -1,0 +1,119 @@
+<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h2>新規会員登録</h2>
+      <%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
+        <%= render "customer/shared/error_messages", resource: resource %>
+        <div class="field">
+          <%= f.label :user_status_dog_owner, "飼い主" %>
+          <%= f.radio_button :user_status, :dog_owner %>
+          <%= f.label :user_status_trimmer, "トリマー" %>
+          <%= f.radio_button :user_status, :trimmer %>
+        </div>
+        <div class="field">
+          <span>名前</span>
+          <%= f.label :last_name, "　(姓)" %>
+          <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name" %>
+          <%= f.label :first_name, "　(名)" %>
+          <%= f.text_field :first_name, autofocus: true, autocomplete: "name" %>
+        </div>
+        <div class="field">
+          <span class="mr-3">フリガナ</span>
+          <%= f.label :last_name_kana, "(セイ)" %>
+          <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "family-name" %>
+          <%= f.label :first_name_kana, "(メイ)" %>
+          <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "name" %>
+        </div>
+        <div class="field">
+          <%= f.label :email, "メールアドレス" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <div class="field">
+          <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
+          <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
+        </div>
+        <div class="field">
+          <%= f.label :prefecture_code, "都道府県" %>
+          <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県' %>
+        </div>
+        <div class="field">
+          <%= f.label :city, "町村" %>
+          <%= f.text_field :city, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :street, "番地" %>
+          <%= f.text_field :street, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :other_address, "その他" %>
+          <%= f.text_field :other_address, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
+          <%= f.text_field :phone_number, autofocus: true %>
+        </div>
+        <div class="field">
+          <%= f.label :password, "パスワード" %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> 文字以上)</em>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+        </div>
+        <div class="field">
+          <%= f.label :password_confirmation, "パスワード(確認用)" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </div>
+        <div class="actions">
+          <%= f.button '新規登録', type: 'button', onclick: 'submit();' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<form class="row g-3">
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input type="email" class="form-control" id="inputEmail4">
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Password</label>
+    <input type="password" class="form-control" id="inputPassword4">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+  <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address 2</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input type="text" class="form-control" id="inputCity">
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Zip</label>
+    <input type="text" class="form-control" id="inputZip">
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+</form>

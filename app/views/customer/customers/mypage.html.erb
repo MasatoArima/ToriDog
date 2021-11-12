@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="row">
+    <% if is_trimmer? %>
+    　<%= render 'customer/customers/trimmer-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts, dog_owners: @dog_owners %>
+    <% else %>
+    　<%= render 'customer/customers/dog_owner-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts, trimmers: @trimmers %>
+    <% end %>
+  </div>
+</div>
+
+
