@@ -83,3 +83,7 @@ gem 'image_processing', '~> 1.2'
 gem 'execjs'
 
 gem "aws-sdk-s3", require: false
+
+group :production do
+  gem 'mysql2'
+end
