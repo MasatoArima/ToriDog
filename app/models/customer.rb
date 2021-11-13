@@ -2,7 +2,7 @@ class Customer < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable
 
 
   has_many :dogs, dependent: :destroy
@@ -27,6 +27,18 @@ class Customer < ApplicationRecord
   has_one_attached :profile_image
   has_many_attached :cut_images
 
+  validates :email, presence: true
+  validates :encrypted_password, presence: true
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name_kana, presence: true
+  validates :first_name_kana, presence: true
+  validates :prefecture_code, presence: true
+  validates :city, presence: true
+  validates :street, presence: true
+  validates :post_code, presence: true
+  validates :phone_number, presence: true
+  validates :user_status, presence: true
 
   # フォロー・フォロワー
   def follow(customer_id)

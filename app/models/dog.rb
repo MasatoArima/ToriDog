@@ -13,6 +13,9 @@ class Dog < ApplicationRecord
   validates :sex, inclusion: { in: [true, false] }
   validates :is_inoculate, inclusion: { in: [true, false] }
 
+  def age
+    ((Date.today.strftime("%Y%m%d").to_i - self.birthday.to_i) / 10000).to_s + "才"
+  end
 
   #enum使用
   enum size: {large: 0, medium: 1, small: 2}

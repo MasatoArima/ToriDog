@@ -5,6 +5,10 @@ class Customer::DogsController < ApplicationController
 
   def show
     @dog = Dog.find(params[:id])
+    @blob = @dog.trimming_images.first
+    if params[:blob].present?
+      @blob = @dog.trimming_images.find_by(id: params[:blob])
+    end
   end
 
   def new

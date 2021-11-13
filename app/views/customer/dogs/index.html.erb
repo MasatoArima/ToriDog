@@ -1,24 +1,23 @@
 <div class="container">
   <div class="row">
     <% @dogs.each do |dog| %>
-      <%= link_to dog_path(dog.id) do %>
-        <div class="card mr-3" style="width: 18rem;">
-          <% if dog.dog_image.attached? %>
-            <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
-          <% else %>
-            <%= image_tag("no_image.jpg", :size => "300x285") %>
-          <% end %>
-          <div class="card-body">
+      <div class="card mr-3 mx-auto border-dark px-1 pt-1" style="width: 18rem;">
+        <% if dog.dog_image.attached? %>
+          <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+        <% else %>
+          <%= image_tag("no_image.jpg", :size => "300x285") %>
+        <% end %>
+        <div class="card-body text-center">
+          <%= link_to dog_path(dog.id) do %>
             <h5 class="card-title"><%= dog.name %></h5>
-            <p class="card-text"><%= dog.breed%></p>
-            <p class="card-text"><%= dog.birthday %></p>
-          </div>
+          <% end %>
+          <p class="card-text"><%= dog.breed%></p>
+          <p class="card-text"><%= dog.age %></p>
         </div>
-      <% end %>
+      </div>
     <% end %>
   </div>
 </div>
-
 
 <div class="text-center mt-4">
   <%= link_to "マイページ", customers_mypage_path, class: "btn btn-success", style: "width:150px"  %>
