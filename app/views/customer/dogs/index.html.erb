@@ -1,20 +1,33 @@
 <div class="container">
   <div class="row">
-    <% @dogs.each do |dog| %>
-      <div class="card mr-3 mx-auto border-dark px-1 pt-1" style="width: 18rem;">
-        <% if dog.dog_image.attached? %>
-          <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
-        <% else %>
-          <%= image_tag("no_image.jpg", :size => "300x285") %>
-        <% end %>
-        <div class="card-body text-center">
-          <%= link_to dog_path(dog.id) do %>
-            <h5 class="card-title"><%= dog.name %></h5>
+    <% if @dogs.blank? %>
+    <div class="col-12 text-center">
+      <p>愛犬は登録されていません</p>
+    </div>
+    <% else %>
+      <% @dogs.each do |dog| %>
+        <div class="card mr-3 mx-auto border-dark px-1 pt-1 mb-3" style="width: 18rem;">
+          <% if dog.dog_image.attached? %>
+            <%#= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+            <% begin %>
+              <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+            <% rescue Aws::S3::Errors::BadRequest %>
+              <% debugger %>
+              error
+            <% end %>
+            <%#= dog.dog_image.variant(resize:'300x300').processed %>
+          <% else %>
+            <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
           <% end %>
-          <p class="card-text"><%= dog.breed%></p>
-          <p class="card-text"><%= dog.age %></p>
+          <div class="card-body text-center">
+            <%= link_to dog_path(dog.id) do %>
+              <h5 class="card-title"><%= dog.name %></h5>
+            <% end %>
+            <p class="card-text"><%= dog.breed%></p>
+            <p class="card-text"><%= dog.age %></p>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

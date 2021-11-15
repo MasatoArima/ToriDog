@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     resources :applications, only: [:create, :destroy, :edit, :update]
     get "/contracts/complete", to: "contracts#complete"
     get "/contracts/check", to: "contracts#check"
-    resources :contracts, only: [:create, :new, :show, :update]
+    resources :contracts, only: [:create, :new, :show, :update, :destroy]
 
     resources :chats, only: [:show, :create, :destroy]
   end

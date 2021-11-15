@@ -8,7 +8,7 @@
         <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
         <tr><td>サイズ</td><td><%= @dog.size_i18n %></td></tr>
         <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
-        <tr><td>誕生日</td><td><%= @dog.birthday %>(<%= @dog.age %>)</td></tr>
+        <tr><td>誕生日</td><td><%= @dog.birth_day %>(<%= @dog.age %>)</td></tr>
         <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
         <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
       </table>
@@ -19,13 +19,13 @@
         <% end %>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-8 text-center">
       <div class="ml-1 mb-3">
         <%= render 'customer/dogs/show', blob: @blob %>
       </div>
       <% @dog.trimming_images.each do |image| %>
         <%= link_to dog_path(@dog.id, blob: image.id),remote: true do %>
-          <%= image_tag image.variant(resize:'150x150').processed %>
+          <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>
         <% end %>
       <% end %>
     </div>

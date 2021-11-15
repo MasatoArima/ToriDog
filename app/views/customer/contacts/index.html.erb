@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-7">
+      <h2 class="text-center">お問い合わせ</h2>
       <%= render 'layouts/error', obj: @contact %>
       <%= form_for(@contact) do |f| %>
         <div class="form-group">
@@ -21,9 +22,9 @@
         </div>
         <div class="form-group">
           <%= f.label :message, 'メッセージ*' %>
-          <%= f.text_area :message, size: '10x10', class: 'form-control' %>
+          <%= f.text_area :message, size: '5x5', class: 'form-control' %>
         </div>
-        <div>
+        <div class="text-right">
           <%= f.submit '送信する', data: { confirm: "この内容で送信する"} %>
         </div>
       <% end %>

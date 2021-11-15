@@ -62,15 +62,20 @@ class Customer < ApplicationRecord
     likings.include?(customer)
   end
 
-
-
-
   def full_name
     self.last_name + " " + self.first_name
   end
 
   def full_name_kana
     self.last_name_kana + " " + self.first_name_kana
+  end
+
+  def open_addres
+    self.prefecture_code + self.city
+  end
+
+  def addres
+    self.prefecture_code.to_s + self.city.to_s + self.street.to_s + self.other_address.to_s
   end
 
 
