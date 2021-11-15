@@ -1,0 +1,10 @@
+<div id="mainview">
+  <% if @dog.dog_image.attached? %>
+    <%= image_tag @dog.dog_image.variant(resize:'300x300').processed %>
+  <% else %>
+    <%= image_tag("no_dogimage.jpg", :size => "300x300") %>
+  <% end %>
+  <% if @dog.trimming_images.attached? %>
+    <%= image_tag @dog.trimming_images.find_by(id: @blob.id).variant(resize: "300x300").processed %>
+  <% end %>
+</div>

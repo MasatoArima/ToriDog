@@ -37,6 +37,7 @@ class Customer::CustomersController < ApplicationController
     @dogs = Dog.where(customer_id: @customer.id)
     @requests = Request.all
     @applications = Application.all
+    @contracts = Contract.all
   end
 
   def edit

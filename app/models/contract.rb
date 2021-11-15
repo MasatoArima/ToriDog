@@ -1,5 +1,7 @@
 class Contract < ApplicationRecord
 
+  validates :preferred_date, presence: true
+
   # 1対1の記述ー－－－－－－
   # has_one :application
   # ー－－－－－－－－－－－

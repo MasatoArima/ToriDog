@@ -17,15 +17,9 @@
               <%= requesta.updated_at.to_s(:datetime_jp) %>
             <% end %>
           </td>
-          <td><%= dogs.find(requesta.dog_id).name %></td>
-          <td><%= customers.find(requesta.customer_id).full_name %></td>
-          <td>
-            <% if applications.find_by(customer_id: current_customer.id, request_id: requesta.id) %>
-              済
-            <% else %>
-              未
-            <% end %>
-            </td>
+          <td><%= request_dog_name(requesta) %></td>
+          <td><%= request_dog_owner_name(requesta) %></td>
+          <td><%= request_status(requesta) %></td>
         </tr>
       <% end %>
   　<% end %>
@@ -59,7 +53,7 @@
             <p><%= dog_owner.full_name %></p>
           <% end %>
         </td>
-        <td><%= dog_owner.prefecture_code %><%= dog_owner.city %></td>
+        <td><%= dog_owner.open_addres %></td>
       </tr>
     <% end %>
   </tbody>

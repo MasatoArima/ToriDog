@@ -1,66 +1,49 @@
 <div class="container">
-    <h3>依頼詳細ページ</h3>
   <div class="row">
     <div class="col-6">
-      <table class="table table-striped" style="width: 500px">
-        <tr><th style="width: 100px">名前</th><th><%= @customer.last_name %><%= @customer.first_name %></th></tr>
-        <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
-        <tr><td>住所</td><td><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></td></tr>
-        <tr><td>希望日</td><td><%= @request.preferred_dates %></td></tr>
-        <tr><td>依頼内容</td><td><%= @request.comment %></td></tr>
-      </table>
-    </div>
-    <div class="col-6">
-      <table class="table table-striped" style="width: 500px">
-        <tr><th style="width: 100px">名前</th><th><%= @dog.name %></th></tr>
-        <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
-        <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
-        <tr><td>サイズ</td><td><%= @dog.size %></td></tr>
-        <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
-        <tr><td>誕生日</td><td><%= @dog.birthday %></td></tr>
-        <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
-        <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col12">
       <% if is_trimmer? %>
         <% if @application.request_id.nil? %>
         <h3>応募する</h3>
           <%= form_with model: @application, url: applications_path, local: true do |f| %>
             <div class="field">
-              <%= f.label :comment, "対応可能な日付およびコメント" %>
-              <%= f.text_field :comment, autofocus: true %>
-              <%= f.hidden_field :request_id, :value => @request.id %>
-            </div>
-            <div class="field">
-              <%= f.label :first_preferred_date, "対応可能日" %>
+              <%= f.label :first_preferred_date, "対応可能日" %><br>
               <%= f.datetime_field :first_preferred_date, autofocus: true %>
               ～
               <%= f.datetime_field :last_preferred_date %>
+            </div>
+            <div class="field">
+              <%= f.label :comment, "追記事項" %><br>
+              <%= f.text_area :comment, size: "50x10", autofocus: true %>
+              <%= f.hidden_field :request_id, :value => @request.id %>
             </div>
             <div class="actions">
               <%= f.button '応募登録', type: 'button', onclick: 'submit();' %>
             </div>
           <% end %>
         <% else %>
-        <h3>応募済み</h3>
-          <%= form_with model: @application, url: application_path, local: true do |f| %>
-            <div class="field">
-              <%= f.label :comment, "対応可能な日付およびコメント" %>
-              <%= f.text_field :comment, autofocus: true %>
-              <%= f.hidden_field :request_id, :value => @request.id %>
-            </div>
-            <div class="field">
-              <%= f.label :first_preferred_date, "対応可能日" %>
-              <%= f.datetime_field :first_preferred_date, autofocus: true %>
-              ～
-              <%= f.datetime_field :last_preferred_date %>
-            </div>
-            <div class="actions">
-              <%= f.button '変更', type: 'button', onclick: 'submit();' %>
-            </div>
+          <% if @contracts.find_by(application_id: @application.id) %>
+            <h3 class="text-center">契約準備中です</h3>
+            <p class="text-center"><%= link_to "詳細ページを確認する", contract_path(@contracts.find_by(application_id: @application.id).id) %></p>
+          <% else %>
+            <h3>応募済み</h3>
+            <p>応募情報は下記から変更が可能です</p>
+              <%= form_with model: @application, url: application_path, local: true do |f| %>
+                <div class="field">
+                  <%= f.label :first_preferred_date, "対応可能日" %><br>
+                  <%= f.datetime_field :first_preferred_date, autofocus: true %>
+                  ～
+                  <%= f.datetime_field :last_preferred_date %>
+                </div>
+                <div class="field">
+                  <%= f.label :comment, "特記事項" %><br>
+                  <%= f.text_area :comment, size: "50x10", autofocus: true %>
+                  <%= f.hidden_field :request_id, :value => @request.id %>
+                </div>
+                <div class="actions">
+                  <%= f.button '変更', type: 'button', onclick: 'submit();' %>
+                </div>
+              <% end %>
+            <%= link_to "応募取り消し", application_path(@application), method: :delete, class: "btn btn-danger mb-1", style: "width:150px", data: { confirm: "本当に応募を取りやめますか？"} %>
           <% end %>
         <% end %>
 
@@ -68,10 +51,10 @@
       　<h3>応募トリマー</h3>
         <table class="table table-striped" style="width: 500px">
           <tr>
-            <th>応募トリマー</th>
-            <th>対応可能日</th>
-            <th>コメント</th>
-            <th>契約ステータス</th>
+            <th style="width: 120px">応募トリマー</th>
+            <th style="width: 105px">対応可能日</th>
+            <th style="width: 165px">コメント</th>
+            <th style="width: 110px">契約状態</th>
           </tr>
           <% @applications.each do |application| %>
             <tr>
@@ -81,7 +64,7 @@
                 <% end %>
               </td>
               <td><%= application.preferred_dates %></td>
-              <td><%= application.comment %></td>
+              <td style="word-break : break-all"><%= application.comment %></td>
               <th>
                 <% if @contracts.find_by(application_id: application.id).nil? %>
                   <%= link_to "契約に進む", new_contract_path(id: application.id), class: "btn btn-success", style: "width:150px" %>
@@ -93,6 +76,35 @@
       　  <% end %>
         </table>
       <% end %>
+    </div>
+
+    <div class="col-6">
+      <h3>依頼詳細</h3>
+      <% unless contract_inprogress(@request) %>
+        <% if @request.customer_id == current_customer.id %>
+          <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1", style: "width:150px", data: { confirm: "本当に依頼を削除しますか？"} %>
+        <% end %>
+      <% end %>
+      <table class="table table-striped" style="width: 500px">
+        <tr><th style="width: 100px"></th><th>会員情報</th></tr>
+        <tr><td>依頼内容</td><td><%= @request.comment %></td></tr>
+        <tr><td>名前</td><td><%= @customer.full_name %></td></tr>
+        <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
+        <tr><td>住所</td><td><%= @customer.open_addres %></td></tr>
+        <tr><td>希望日</td><td><%= @request.preferred_dates %></td></tr>
+      </table>
+
+      <table class="table table-striped" style="width: 500px">
+        <tr><th style="width: 100px"></th></th><th>愛犬情報</th></tr>
+        <tr><td>名前</td><td><%= @dog.name %></td></tr>
+        <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
+        <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
+        <tr><td>サイズ</td><td><%= @dog.size_i18n %></td></tr>
+        <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
+        <tr><td>誕生日</td><td><%= @dog.birthday %></td></tr>
+        <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
+        <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
+      </table>
     </div>
   </div>
 </div>
