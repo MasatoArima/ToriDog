@@ -9,7 +9,7 @@ module Customer::DogsHelper
 
   def is_inoculate(data)
     if data.is_inoculate == true
-      "接種済" "(#{data.inoculation_date})"
+      "接種済" "(#{data.inoculation_day})"
     else
       "未接種"
     end

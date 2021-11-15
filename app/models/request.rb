@@ -3,6 +3,8 @@ class Request < ApplicationRecord
   belongs_to :dog
   has_many :applications, dependent: :destroy
 
+  validates :dog_id, presence: true
+  validates :prefecture_code, presence: true
 
   def preferred_dates
     if self.first_preferred_date.nil?

@@ -3,6 +3,7 @@ class Admin::ContractsController < ApplicationController
 
   def index
   end
+
   def show
     @contract = Contract.find(params[:id])
     @application = Application.find_by(id: @contract.application_id )

@@ -22,9 +22,16 @@ class Customer::RequestsController < ApplicationController
     if @request.save
       redirect_to request_path(@request), notice: '登録しました'
     else
-      flash[:alert] = '登録に失敗しました'
-      render :new
+      flash[:alert] = '愛犬情報は必ず入力してください'
+      @customer = current_customer
+      redirect_to new_request_path(@request)
     end
+  end
+
+  def destroy
+    requesta = Request.find(params[:id])
+    requesta.destroy
+    redirect_to customers_mypage_path, notice: '依頼を削除しました'
   end
 
 

@@ -33,9 +33,10 @@ class Customer::SessionsController < Devise::SessionsController
     customer = Customer.find_by(email: params[:customer][:email])
 
     if customer.nil?
+      flash[:alert] = "メールアドレスもしくはパスワードが違います"
       redirect_to new_customer_session_path
     elsif customer.is_deleted == true
-      flash[:notice] = "退会済みのアカウントです"
+      flash[:alert] = "退会済みのアカウントです"
       redirect_to new_customer_session_path
     end
   end

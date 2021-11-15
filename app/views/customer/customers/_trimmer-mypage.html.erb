@@ -1,26 +1,33 @@
 <div class="col-4">
-  <% if customer.profile_image.attached? %>
-    <%= image_tag customer.profile_image.variant(resize:'150x150').processed %>
-  <% end %>
-  <p>ステータス : <%= customer.user_status_i18n%></p>
-  <p>名前 : <%= customer.full_name %></p>
-  <p>カナ : <%= customer.full_name_kana %></p>
-  <p>郵便番号 : <%= customer.post_code %></p>
-  <p>住所 : <%= customer.prefecture_code %><%= customer.city %><%= customer.street %><%= customer.other_address %></p>
-  <p>電話番号 : <%= customer.phone_number %></p>
-  <p>自己紹介文 : <%= customer.introduction%></p>
-  <p>フォロー数: <%= customer.followings.count %></p>
-  <p>フォロワー数: <%= customer.followers.count %></p>
-  <p>いいね数: <%= customer.likers.count %></p>
+  <div class="text-center">
+    <% if customer.profile_image.attached? %>
+      <%= image_tag customer.profile_image.variant(resize:'200x200').processed %>
+    <% else %>
+      <%= image_tag("no_image.jpg", :size => "200x200") %>
+    <% end %>
+  </div>
+  <table class="table mt-2">
+    <tbody>
+      <tr><td style="width: 120px">ステータス</td><td><%= customer.user_status_i18n%></td></tr>
+      <tr><td>名前</td><td><%= customer.full_name %></td></tr>
+      <tr><td>フリガナ</td><td><%= customer.full_name_kana %></td></tr>
+      <tr><td>郵便番号</td><td><%= customer.post_code %></td></tr>
+      <tr><td>住所</td><td style="word-break : break-all"><%= customer.addres %></td></tr>
+      <tr><td>電話番号</td><td><%= customer.phone_number %></td></tr>
+      <tr><td>アドレス</td><td><%= customer.email %></td></tr>
+      <tr><td>フォロー</td><td><%= link_to customer.followings.count, customer_followings_path(customer) %></td></tr>
+      <tr><td>フォロワー</td><td><%= link_to customer.followers.count, customer_followers_path(customer) %></td></tr>
+      <tr><td>いいね</td><td><%= link_to customer.likers.count, customer_likers_path(customer) %></td></tr>
+      <tr><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div>自己紹介文</div>
+  <p style="word-break : break-all"><%= customer.introduction%></p>
+
   <div class="mt-4">
     <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
     <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
   </div>
-  <% if customer.cut_images.attached? %>
-    <% customer.cut_images.each do |image| %>
-      <%= image_tag image.variant(resize:'150x150').processed %> <br>
-    <% end %>
-  <% end %>
 </div>
 
 <div class="col-7">
@@ -49,7 +56,7 @@
     </tbody>
   </table>
 
-  <h4>契約案件一覧</h4>
+  <h4 class="mt-5">契約案件一覧</h4>
   <table class="table">
     <thead>
       <tr>
@@ -65,18 +72,28 @@
         <tr>
           <td>
             <%= link_to contract_path(contract.id) do %>
-              <%= contract.updated_at.to_s(:datetime_jp) %>
+              <%= contract.preferred_date.to_s(:datetime_jp) %>
             <% end %>
           </td>
-          <td><%= dogs.find(requests.find(applications.find(contract.application_id).request_id).dog_id).name %></td>
-          <td><%= dog_owners.find(requests.find(applications.find(contract.application_id).request_id).customer_id).full_name %></td>
+          <td><%= contract_dog_name(contract) %> </td>
+          <td><%= contract_dog_owner_name(contract) %></td>
           <td><%= contract.is_status_i18n %></td>
         </tr>
-        <% else %>
         <% end %>
       <% end %>
     </tbody>
   </table>
+
+  <h4 class="mt-5">トリミング画像</h3>
+  <div>
+    <% if customer.cut_images.attached? %>
+      <% customer.cut_images.each do |image| %>
+        <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>
+      <% end %>
+    <% else %>
+    　<p>画像を投稿していません</p>
+    <% end %>
+  </div>
 </div>
 
 
