@@ -77,3 +77,14 @@
         user_status: 1,
       )
   end
+
+  Dog.create!(
+  customer_id: 1  ,
+  name: 'ぎんた',
+  name_kana: 'ギンタ',
+  breed: 'チワックス',
+  sex: true,
+  size: 1,
+  is_inoculate: false,
+  birthday: 20200806,
+  )

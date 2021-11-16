@@ -2,10 +2,18 @@
 <table class="table">
   <thead>
     <tr>
-      <th>依頼日</th>
-      <th>愛犬名</th>
-      <th>依頼主</th>
-      <th>応募</th>
+      <th>
+        依頼日
+      </th>
+      <th>
+        愛犬名
+      </th>
+      <th>
+        依頼主
+      </th>
+      <th>
+        応募
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -17,9 +25,15 @@
               <%= requesta.updated_at.to_s(:datetime_jp) %>
             <% end %>
           </td>
-          <td><%= request_dog_name(requesta) %></td>
-          <td><%= request_dog_owner_name(requesta) %></td>
-          <td><%= request_status(requesta) %></td>
+          <td>
+            <%= request_dog_name(requesta) %>
+          </td>
+          <td>
+            <%= request_dog_owner_name(requesta) %>
+          </td>
+          <td>
+            <%= request_status(requesta) %>
+          </td>
         </tr>
       <% end %>
   　<% end %>
@@ -28,14 +42,17 @@
 <%= paginate requests, :param_name => 'request_page' %>
 
 <h3>飼い主一覧</h3>
-
 <span>※同一都道府県のみ</span>
 <table class="table">
   <thead>
     <tr>
       <th></th>
-      <th>名前</th>
-      <th>住所</th>
+      <th>
+        名前
+      </th>
+      <th>
+        住所
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -45,7 +62,7 @@
           <% if dog_owner.profile_image.attached? %>
             <%= image_tag dog_owner.profile_image.variant(resize:'50x50').processed %>
           <% else %>
-           <%= image_tag("no_image.jpg", :size => "50x50") %>
+            <%= image_tag("no_image.jpg", :size => "50x50") %>
           <% end %>
         </td>
         <td>
@@ -53,10 +70,11 @@
             <p><%= dog_owner.full_name %></p>
           <% end %>
         </td>
-        <td><%= dog_owner.open_addres %></td>
+        <td>
+          <%= dog_owner.open_addres %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <%= paginate dog_owners, :param_name => 'customer_page' %>

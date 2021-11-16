@@ -1,5 +1,13 @@
 <div class="container">
   <div class="row">
+    <div class="col-12 text-center">
+      <h3>契約準備中</h3>
+      <% if is_trimmer? %>
+        <%= render 'customer/contracts/trimmer_form',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
+      <% else %>
+        <%= render 'customer/contracts/dog_owner_form',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
+      <% end %>
+    </div>
     <div class="col-4">
       <h3 class="text-center">Chat</h3>
       <div class="actioncable">
@@ -18,7 +26,7 @@
           <tr><th>施術日</th>
             <td>
               <% if (contract.trimmer_is_consent == false) && ( is_trimmer? == false )%>
-                <%= form_with model: @contract, url: contracts_path, local: true do |f| %>
+                <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
                   <%= f.label :preferred_date, "施術希望日" %>
                   <%= f.datetime_field :preferred_date, autofocus: true %>
                   <%= f.button '変更する', type: 'button', onclick: 'submit();' %>
@@ -45,6 +53,7 @@
           <tr><th>住所</th><td><%= trimmer.open_addres %></td></tr>
         </tbody>
       </table>
+
       <% if is_trimmer? %>
         <% if contract.trimmer_is_consent == false %>
           <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>

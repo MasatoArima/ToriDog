@@ -38,6 +38,10 @@
             <% end %>
           <% else %>
           <p>同意済み</p>
+            <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+                <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
+            <% end %>
           <% end %>
         <% else %>
           <% if contract.dog_owner_is_consent == false %>

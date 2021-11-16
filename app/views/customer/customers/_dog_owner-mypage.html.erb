@@ -1,35 +1,3 @@
-<div class="col-4">
-  <div class="text-center">
-    <% if customer.profile_image.attached? %>
-      <%= image_tag customer.profile_image.variant(resize:'200x200').processed %>
-    <% else %>
-      <%= image_tag("no_image.jpg", :size => "200x200") %>
-    <% end %>
-  </div>
-  <table class="table mt-2">
-    <tbody>
-      <tr><td style="width: 120px">ステータス</td><td><%= customer.user_status_i18n%></td></tr>
-      <tr><td>名前</td><td><%= customer.full_name %></td></tr>
-      <tr><td>フリガナ</td><td><%= customer.full_name_kana %></td></tr>
-      <tr><td>郵便番号</td><td><%= customer.post_code %></td></tr>
-      <tr><td>住所</td><td style="word-break : break-all"><%= customer.addres %></td></tr>
-      <tr><td>電話番号</td><td><%= customer.phone_number %></td></tr>
-      <tr><td>アドレス</td><td><%= customer.email %></td></tr>
-      <tr><td>フォロー</td><td><%= link_to customer.followings.count, customer_followings_path(customer) %></td></tr>
-      <tr><td>フォロワー</td><td><%= link_to customer.followers.count, customer_followers_path(customer) %></td></tr>
-      <tr><td></td><td></td></tr>
-    </tbody>
-  </table>
-  <div>自己紹介文</div>
-  <p style="word-break : break-all"><%= customer.introduction%></p>
-
-  <div class="mt-4">
-    <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
-    <%= link_to "愛犬一覧", dogs_path, class: "btn btn-success", style: "width:90px" %>
-    <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
-  </div>
-</div>
-
 <div class="col-7 text-center mx-auto">
   <h4>カット依頼案件</h4>
   <div class="float-right mb-1">
@@ -38,25 +6,32 @@
   <table class="table mb-5">
     <thead>
       <tr>
-        <th>依頼日</th>
-        <th>トリミング犬</th>
-        <th>応募数</th>
+        <th>
+          依頼日
+        </th>
+        <th>
+          トリミング犬
+        </th>
+        <th>
+          応募数
+        </th>
       </tr>
     </thead>
     <tbody>
       <% requests.each do |requesta| %>
-        <% if is_cutomer_request(requesta) %>
-          <tr>
-            <td>
-              <%= link_to request_path(requesta.id) do %>
-                <%= requesta.updated_at.to_s(:datetime_jp) %>
-              <% end %>
-            </td>
-            <td><%= request_dog_name(requesta) %></td>
-            <td><%= application_count(requesta) %></td>
-          </tr>
-        <% else %>
-        <% end %>
+        <tr>
+          <td>
+            <%= link_to request_path(requesta.id) do %>
+              <%= requesta.updated_at.to_s(:datetime_jp) %>
+            <% end %>
+          </td>
+          <td>
+            <%= request_dog_name(requesta) %>
+          </td>
+          <td>
+            <%= requesta.applications.count %>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>
@@ -65,27 +40,38 @@
   <table class="table">
     <thead>
       <tr>
-        <th>施術日</th>
-        <th>トリミング犬</th>
-        <th>トリマー</th>
-        <th>ステータス</th>
+        <th>
+          施術日
+        </th>
+        <th>
+          トリミング犬
+        </th>
+        <th>
+          トリマー
+        </th>
+        <th>
+          ステータス
+        </th>
       </tr>
     </thead>
     <tbody>
       <% contracts.each do |contract| %>
-        <% if is_customer(contract) %>
         <tr>
           <td>
             <%= link_to contract_path(contract.id) do %>
               <%= contract.preferred_date.to_s(:datetime_jp) %>
             <% end %>
           </td>
-          <td><%= contract_dog_name(contract) %></td>
-          <td><%= contract_trimmer_name(contract) %></td>
-          <td><%= contract.is_status_i18n %></td>
+          <td>
+            <%= contract_dog_name(contract) %>
+          </td>
+          <td>
+            <%= contract_trimmer_name(contract) %>
+          </td>
+          <td>
+            <%= contract.is_status_i18n %>
+          </td>
         </tr>
-        <% else %>
-        <% end %>
       <% end %>
     </tbody>
   </table>

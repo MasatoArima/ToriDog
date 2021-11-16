@@ -14,13 +14,15 @@ class Customer::ContractsController < ApplicationController
     @application = Application.find(params[:id])
     @dog = Dog.find_by(id: @application.request.dog_id )
     @customer = current_customer
-    @torimmer = Customer.find_by(id: @application.request.customer_id )
+    @trimmer = Customer.find(@application.customer_id )
     @contract = Contract.new
   end
 
   def create
     @contract = Contract.new(contract_params)
-    if @contract.save
+    application = Application.find(params[:id])
+
+    if @contract.save && application.update(contract_id: @contract.id)
       redirect_to contract_path(@contract), notice: '登録しました'
     else
       flash[:alert] = '施術希望日は必ず入力してください'
@@ -31,16 +33,16 @@ class Customer::ContractsController < ApplicationController
     @contract = Contract.find(params[:id])
     @contract.update(contract_params)
     if @contract.is_status == "in_preparation"
-      redirect_to request.referer
+      redirect_to request.referer, notice: '更新しました'
     elsif @contract.is_status == "in_progress"
-      if (@contract.dog_owner_is_consent == "true") && (@contract.trimmer_is_consent == "true")
+      if @contract.trimmer_is_consent == "false" && @contract.dog_owner_is_consent == "false"
         requests = Request.all
         applications = Application.all
         request = requests.find(applications.find(@contract.application_id).request_id)
         request.update(is_complete: true)
         redirect_to contracts_complete_path(id: @contract.id)
       else
-        redirect_to request.referer
+        redirect_to contract_path(@contract.id), notice: '更新しました'
       end
     elsif @contract.is_status == "cancel"
       redirect_to customers_mypage_path
@@ -64,6 +66,6 @@ class Customer::ContractsController < ApplicationController
 
   private
   def contract_params
-    params.require(:contract).permit(:application_id, :is_status,:dog_owner_is_consent,:trimmer_is_consent, :preferred_date)
+    params.require(:contract).permit(:application_id, :is_status,:dog_owner_is_consent,:trimmer_is_consent, :preferred_date, :client_id, :trimmer_id)
   end
 end

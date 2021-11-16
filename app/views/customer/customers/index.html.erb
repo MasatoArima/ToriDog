@@ -1,9 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
+      <h4 class="text-center">ユーザー検索欄</h4>
       <%= search_form_for @q do |f| %>
-        <%= f.label :prefecture_code, "都道府県" %><br>
+        <%= f.label :last_name, "　姓　　" %>
+        <%= f.search_field :last_name_cont %><br>
+        <%= f.label :first_name, "　名　　" %>
+        <%= f.search_field :first_name_cont %><br>
+        <%= f.label :last_name_kana, "　セイ　" %>
+        <%= f.search_field :last_name_kana_cont %><br>
+        <%= f.label :first_name_kana, "　メイ　" %>
+        <%= f.search_field :first_name_kana_cont %><br>
+        <%= f.label :prefecture_code, "都道府県" %>
         <%= f.search_field :prefecture_code_cont %><br>
+        <%= f.label :city, "市区町村" %>
+        <%= f.search_field :city_cont %><br>
         <%= f.submit "検索" %>
       <% end %>
 

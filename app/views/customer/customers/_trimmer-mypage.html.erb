@@ -1,58 +1,36 @@
-<div class="col-4">
-  <div class="text-center">
-    <% if customer.profile_image.attached? %>
-      <%= image_tag customer.profile_image.variant(resize:'200x200').processed %>
-    <% else %>
-      <%= image_tag("no_image.jpg", :size => "200x200") %>
-    <% end %>
-  </div>
-  <table class="table mt-2">
-    <tbody>
-      <tr><td style="width: 120px">ステータス</td><td><%= customer.user_status_i18n%></td></tr>
-      <tr><td>名前</td><td><%= customer.full_name %></td></tr>
-      <tr><td>フリガナ</td><td><%= customer.full_name_kana %></td></tr>
-      <tr><td>郵便番号</td><td><%= customer.post_code %></td></tr>
-      <tr><td>住所</td><td style="word-break : break-all"><%= customer.addres %></td></tr>
-      <tr><td>電話番号</td><td><%= customer.phone_number %></td></tr>
-      <tr><td>アドレス</td><td><%= customer.email %></td></tr>
-      <tr><td>フォロー</td><td><%= link_to customer.followings.count, customer_followings_path(customer) %></td></tr>
-      <tr><td>フォロワー</td><td><%= link_to customer.followers.count, customer_followers_path(customer) %></td></tr>
-      <tr><td>いいね</td><td><%= link_to customer.likers.count, customer_likers_path(customer) %></td></tr>
-      <tr><td></td><td></td></tr>
-    </tbody>
-  </table>
-  <div>自己紹介文</div>
-  <p style="word-break : break-all"><%= customer.introduction%></p>
-
-  <div class="mt-4">
-    <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
-    <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
-  </div>
-</div>
-
 <div class="col-7">
   <h4>応募中案件一覧</h4>
   <table class="table">
     <thead>
       <tr>
-        <th>依頼日</th>
-        <th>トリミング犬</th>
+        <th>
+          依頼日
+        </th>
+        <th>
+          トリミング犬
+        </th>
+        <th>
+          依頼主
+        </th>
       </tr>
     </thead>
     <tbody>
       <% applications.each do |application| %>
-        <% if (current_customer.id ==  applications.find(application.id).customer_id) && (requests.find(applications.find(application.id).request_id).is_complete == false) %>
-          <tr>
-            <td>
-              <%= link_to request_path(applications.find(application.id).request_id) do %>
-                <%= application.updated_at.to_s(:datetime_jp) %>
-              <% end %>
-            </td>
-            <td><%= dogs.find(requests.find(applications.find(application.id).request_id).dog_id).name %></td>
-          </tr>
-        <% else %>
-        <% end %>
-     <% end %>
+        <% requesta = requests.find(application.request_id) %>
+        <tr>
+          <td>
+            <%= link_to request_path(application.request_id) do %>
+              <%= requesta.updated_at.to_s(:datetime_jp) %>
+            <% end %>
+          </td>
+          <td>
+            <%= request_dog_name(requesta) %>
+          </td>
+          <td>
+            <%= request_dog_owner_name(requesta) %>
+          </td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 
@@ -68,7 +46,6 @@
     </thead>
     <tbody>
       <% contracts.each do |contract| %>
-        <% if current_customer.id ==  applications.find(contract.application_id).customer_id %>
         <tr>
           <td>
             <%= link_to contract_path(contract.id) do %>
@@ -79,7 +56,6 @@
           <td><%= contract_dog_owner_name(contract) %></td>
           <td><%= contract.is_status_i18n %></td>
         </tr>
-        <% end %>
       <% end %>
     </tbody>
   </table>
