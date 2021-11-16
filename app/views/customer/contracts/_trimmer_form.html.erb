@@ -1,1 +1,43 @@
-trima
+<% if contract.is_status == "in_preparation" %>
+  <h3>契約準備中</h3>
+  <div class="row">
+    <div class="col-3">
+    </div>
+    <div class="col-6">
+      <% if contract.trimmer_is_consent == false %>
+        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+            <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
+            <%= f.button '契約に同意する', type: 'button', onclick: 'submit();' %>
+        <% end %>
+      <% else %>
+        <p>
+          <strong>
+            契約に同意済みです<br>
+            飼い主が同意すれば契約が確定します
+          </strong>
+        </p>
+        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+            <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+            <%= f.button '同意を解除する', type: 'button', onclick: 'submit();', class: "btn btn-danger" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-3">
+    </div>
+  </div>
+<% else %>
+
+          <% if contract.trimmer_is_consent == false %>
+            <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
+                <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
+            <% end %>
+          <% else %>
+          <p>同意済み</p>
+            <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+                <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
+            <% end %>
+          <% end %>
+
+<% end %>

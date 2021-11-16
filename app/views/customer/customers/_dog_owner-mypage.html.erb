@@ -19,19 +19,21 @@
     </thead>
     <tbody>
       <% requests.each do |requesta| %>
-        <tr>
-          <td>
-            <%= link_to request_path(requesta.id) do %>
-              <%= requesta.updated_at.to_s(:datetime_jp) %>
-            <% end %>
-          </td>
-          <td>
-            <%= request_dog_name(requesta) %>
-          </td>
-          <td>
-            <%= requesta.applications.count %>
-          </td>
-        </tr>
+        <% if requesta.is_complete == false %>
+          <tr>
+            <td>
+              <%= link_to request_path(requesta.id) do %>
+                <%= requesta.updated_at.to_s(:datetime_jp) %>
+              <% end %>
+            </td>
+            <td>
+              <%= request_dog_name(requesta) %>
+            </td>
+            <td>
+              <%= requesta.applications.count %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

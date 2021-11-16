@@ -83,31 +83,60 @@
           </td>
         </tr>
       <% end %>
-      <tr>
-        <td>
-          フォロー
-        </td>
-        <td>
-          <%= link_to customer.followings.count, customer_followings_path(customer) %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          フォロワー
-        </td>
-        <td>
-          <%= link_to customer.followers.count, customer_followers_path(customer) %>
-        </td>
-      </tr>
-      <% if customer.user_status == "trimmer" %>
+      <% if request.fullpath == customers_mypage_path %>
         <tr>
           <td>
-            いいね
+            フォロー
           </td>
           <td>
-            <%= link_to customer.likers.count, customer_likers_path(customer) %>
+            <%= link_to customer.followings.count, customer_followings_path(customer) %>
           </td>
         </tr>
+        <tr>
+          <td>
+            フォロワー
+          </td>
+          <td>
+            <%= link_to customer.followers.count, customer_followers_path(customer) %>
+          </td>
+        </tr>
+        <% if customer.user_status == "trimmer" %>
+          <tr>
+            <td>
+              いいね
+            </td>
+            <td>
+              <%= link_to customer.likers.count, customer_likers_path(customer) %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>
+            フォロー
+          </td>
+          <td>
+            <%= customer.followings.count %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            フォロワー
+          </td>
+          <td>
+            <%= customer.followers.count %>
+          </td>
+        </tr>
+        <% if customer.user_status == "trimmer" %>
+          <tr>
+            <td>
+              いいね
+            </td>
+            <td>
+              <%= customer.likers.count %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
       <tr>
         <td></td>

@@ -2,7 +2,7 @@
   <div class="row">
     <% if is_trimmer? %>
     　<%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
-    　<%= render 'customer/customers/trimmer-mypage', customers: @customers, customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
+    　<%= render 'customer/customers/trimmer-mypage', customers: @customers, customer: @customer, applications_page: @applications_page, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
     <% else %>
     　<%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
     　<%= render 'customer/customers/dog_owner-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>

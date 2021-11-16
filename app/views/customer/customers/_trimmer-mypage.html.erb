@@ -15,24 +15,27 @@
       </tr>
     </thead>
     <tbody>
-      <% applications.each do |application| %>
-        <% requesta = requests.find(application.request_id) %>
-        <tr>
-          <td>
-            <%= link_to request_path(application.request_id) do %>
-              <%= requesta.updated_at.to_s(:datetime_jp) %>
-            <% end %>
-          </td>
-          <td>
-            <%= request_dog_name(requesta) %>
-          </td>
-          <td>
-            <%= request_dog_owner_name(requesta) %>
-          </td>
-        </tr>
+      <% applications_page.each do |application| %>
+         <% requesta = requests.find(application.request_id) %>
+        <% if requesta.is_complete == false %>
+          <tr>
+            <td>
+              <%= link_to request_path(application.request_id) do %>
+                <%= requesta.updated_at.to_s(:datetime_jp) %>
+              <% end %>
+            </td>
+            <td>
+              <%= request_dog_name(requesta) %>
+            </td>
+            <td>
+              <%= request_dog_owner_name(requesta) %>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
+  <%= paginate applications_page, :param_name => 'application_page' %>
 
   <h4 class="mt-5">契約案件一覧</h4>
   <table class="table">
@@ -59,6 +62,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate contracts, :param_name => 'contract_page' %>
 
   <h4 class="mt-5">トリミング画像</h3>
   <div>
@@ -70,6 +74,7 @@
     　<p>画像を投稿していません</p>
     <% end %>
   </div>
+
 </div>
 
 

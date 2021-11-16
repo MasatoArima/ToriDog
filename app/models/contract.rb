@@ -1,7 +1,8 @@
 class Contract < ApplicationRecord
 
   validates :preferred_date, presence: true
-  belongs_to :customer
+  belongs_to :client, class_name: "Customer"
+  belongs_to :trimmer, class_name: "Customer"
 
   # 1対1の記述ー－－－－－－
   has_one :application

@@ -3,7 +3,7 @@ class Customer::CustomersController < ApplicationController
     @customers = Customer.all
     if current_customer.user_status == "trimmer"
       @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
-      @requests = Request.where(prefecture_code: current_customer.prefecture_code).page(params[:request_page]).per(5)
+      @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
       @applications = current_customer.applications
       @dogs = Dog.all
       @q = Customer.where(user_status: 0).ransack(params[:q])
@@ -25,12 +25,13 @@ class Customer::CustomersController < ApplicationController
     @customers = Customer.all
     @customer = current_customer
     if current_customer.user_status == "trimmer"
-      @contracts = current_customer.trimmer_contract.page(params[:contract_page]).per(5)
+      @contracts = current_customer.trimmer_contract.page(params[:contract_page]).per(5).order(id: :DESC)
       @requests = Request.all
+      @applications_page = current_customer.applications.where(contract_id: nil).page(params[:application_page]).per(5).order(id: :DESC)
       @applications = current_customer.applications
       @dogs = Dog.all
     else
-      @contracts = current_customer.client_contract.page(params[:contract_page]).per(5)
+      @contracts = current_customer.client_contract.page(params[:contract_page]).per(5).order(id: :DESC)
       @requests = current_customer.requests
       @applications = Application.all
       @dogs = current_customer.dogs

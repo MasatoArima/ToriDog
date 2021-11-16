@@ -18,24 +18,22 @@
   </thead>
   <tbody>
     <% requests.each do |requesta| %>
-      <% if requesta.is_complete == false %>
-        <tr>
-          <td>
-            <%= link_to request_path(requesta.id) do %>
-              <%= requesta.updated_at.to_s(:datetime_jp) %>
-            <% end %>
-          </td>
-          <td>
-            <%= request_dog_name(requesta) %>
-          </td>
-          <td>
-            <%= request_dog_owner_name(requesta) %>
-          </td>
-          <td>
-            <%= request_status(requesta) %>
-          </td>
-        </tr>
-      <% end %>
+      <tr>
+        <td>
+          <%= link_to request_path(requesta.id) do %>
+            <%= requesta.updated_at.to_s(:datetime_jp) %>
+          <% end %>
+        </td>
+        <td>
+          <%= request_dog_name(requesta) %>
+        </td>
+        <td>
+          <%= request_dog_owner_name(requesta) %>
+        </td>
+        <td>
+          <%= request_status(requesta) %>
+        </td>
+      </tr>
   　<% end %>
   </tbody>
 </table>
