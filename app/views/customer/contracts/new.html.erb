@@ -1,39 +1,43 @@
-<%= form_with model: @contract, url: contracts_path, local: true do |f| %>
+<%= form_with model: @contract, url: contracts_path(id: @application.id), local: true do |f| %>
   <div class="container">
-      <h3>依頼詳細ページ</h3>
+      <h3>契約書作成ページ</h3>
     <div class="row">
-      <div class="col-6">
-        <p><%= @customer.last_name %><%= @customer.first_name %></p>
-        <p><%= @customer.post_code %></p>
-        <p><%= @customer.prefecture_code %><%= @customer.city %><%= @customer.street %></p>
+      <div class="col-4">
+      <table class="table">
+        <tbody>
+          <tr><th>飼い主</th><td><%= @customer.full_name %></td></tr>
+          <tr><th>郵便番号</th><td><%= @customer.post_code %></td></tr>
+          <tr><th>住所</th><td><%= @customer.open_addres %></td></tr>
+          <tr><th></th><td></td></tr>
+          <tr><th>愛犬名</th><td><%= @dog.name %></td></tr>
+          <tr><th>犬種</th><td><%= @dog.breed %></td></tr>
+          <tr><th>性別</th><td><% sex(@dog) %></td></tr>
+          <tr><th>サイズ</th><td><%= @dog.size_i18n %></td></tr>
+          <tr><th>ワクチン</th><td><%= is_inoculate(@dog) %></td></tr>
+          <tr><th>誕生日</th><td><%= @dog.birth_day %>(<%= @dog.age %>)</td></tr>
+          <tr><th>既往歴</th><td><%= @dog.medical_history %></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="col-4">
+        <table class="table">
+          <tbody>
+            <tr><th>トリマー</th><td><%= @trimmer.full_name %></td></tr>
+            <tr><th>郵便番号</th><td><%= @trimmer.post_code %></td></tr>
+            <tr><th>住所</th><td><%= @trimmer.open_addres %></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-4">
         <h4>施術希望日</h4>
         <div class="field">
-          <%= f.label :preferred_date, "施術希望日" %>
+          <%= f.label :preferred_date, "施術希望日" %><br>
           <%= f.datetime_field :preferred_date, autofocus: true %>
         </div>
-      </div>
-      <div class="col-6">
-        <p>名前　<%= @dog.name %></p>
-        <p>犬種　<%= @dog.breed %></p>
-        <p>性別　<% if @dog.sex? %>おす<% else %>めす<% end %></p>
-        <p>サイズ　<%= @dog.size_i18n %></p>
-        <p>ワクチン　<%if @dog.is_inoculate? %>接種済み<%= @dog.inoculation_date %><% else %>未接種<% end %></p>
-        <p>誕生日　<%= @dog.birthday %></p>
-        <p>既往歴　<%= @dog.medical_history %></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col12">
-        <h3>契約者情報</h3>
-        <p><%= @torimmer.last_name %><%= @torimmer.first_name %></p>
-        <p><%= @torimmer.post_code %></p>
-        <p><%= @torimmer.prefecture_code %><%= @torimmer.city %><%= @torimmer.street %></p>
-
-
-        <div class="field">
           <%= f.hidden_field :application_id, :value => @application.id %>
           <%= f.hidden_field :is_status, :value => "in_preparation" %>
-        </div>
+          <%= f.hidden_field :client_id, :value => @customer.id %>
+          <%= f.hidden_field :trimmer_id, :value => @trimmer.id %>
         <div class="actions">
           <%= f.button '契約書作成', type: 'button', onclick: 'submit();' %>
         </div>

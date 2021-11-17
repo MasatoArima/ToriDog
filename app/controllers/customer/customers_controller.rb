@@ -1,43 +1,51 @@
 class Customer::CustomersController < ApplicationController
-  before_action :setup, only: [:index, :mypage]
-
   def index
-    @requests = Request.where(prefecture_code: current_customer.prefecture_code).page(params[:request_page]).per(5)
-    if params[:q].blank? || params[:q][:prefecture_code_cont].blank?
-      params[:q] = {}
-      params[:q][:prefecture_code_cont] = current_customer.prefecture_code
-    end
-
+    @customers = Customer.all
     if current_customer.user_status == "trimmer"
+      @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
+      @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
+      @applications = current_customer.applications
+      @dogs = Dog.all
       @q = Customer.where(user_status: 0).ransack(params[:q])
-      @r = Request.ransack(params[:q])
+      unless params[:q].nil?
+        @q.result(distinct: true).page(params[:customer_page]).per(5)
+         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
+      end
     else
+      trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
+      @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.where(user_status: 1).ransack(params[:q])
-    end
-
-    unless params[:q].nil?
-      if params[:q][:s].blank?
-        trimmers = Customer.where(user_status: 1).where("prefecture_code like '%#{params[:q][:prefecture_code_cont]}%'").includes(:likers).sort {|a,b| b.likers.size <=> a.likers.size}
+      unless params[:q].nil?
+        trimmers = @q.result(distinct: true).sort {|a,b| b.likers.size <=> a.likers.size}
         @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
-        @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
-      else
-        @trimmers = @q.result(distinct: true).page(params[:customer_page]).per(5)
-
       end
     end
   end
 
   def mypage
+    @customers = Customer.all
+    @evaluations = Evaluation.all
     @customer = current_customer
-    @requests = Request.all
+    if current_customer.user_status == "trimmer"
+      @contracts = current_customer.trimmer_contract.page(params[:contract_page]).per(5).order(id: :DESC)
+      @requests = Request.all
+      @applications_page = current_customer.applications.where(contract_id: nil).page(params[:application_page]).per(5).order(id: :DESC)
+      @applications = current_customer.applications
+      @dogs = Dog.all
+    else
+      @contracts = current_customer.client_contract.page(params[:contract_page]).per(5).order(id: :DESC)
+      @requests = current_customer.requests
+      @applications = Application.all
+      @dogs = current_customer.dogs
+    end
+
   end
 
   def show
     @customer = Customer.find(params[:id])
-    @dogs = Dog.where(customer_id: @customer.id)
-    @requests = Request.all
-    @applications = Application.all
-    @contracts = Contract.all
+    @dogs = @customer.dogs
+    @requests = @customer.requests
+    @contracts = @customer.trimmer_contract
   end
 
   def edit
@@ -69,15 +77,6 @@ class Customer::CustomersController < ApplicationController
   private
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, cut_images: [])
-  end
-
-  def setup
-    @customers = Customer.all
-    @trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
-    @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
-    @dogs = Dog.all
-    @applications = Application.all
-    @contracts = Contract.all.page(params[:contract_page]).per(5)
   end
 
 end

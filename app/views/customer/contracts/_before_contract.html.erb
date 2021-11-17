@@ -1,90 +1,47 @@
-<div class="container">
-  <div class="row">
-    <div class="col-4">
-      <h3 class="text-center">Chat</h3>
-      <div class="actioncable">
-        <div id="messages" data-contract_id="<%= contract.id %>" data-sender="<%= current_customer.full_name %>" style="word-break : break-all">
-          <%= render @messages %>
-        </div>
-      </div>
-      <form>
-          <label style="color: white;" id="target">新しいメッセージを作成</label><br>
-          <input type="text" id="chat-input" data-behavior="contract_speaker" class="form-control">
-      </form>
-    </div>
-    <div class="col-8">
-      <table class="table">
-        <tbody>
-          <tr><th>施術日</th>
-            <td>
-              <% if (contract.trimmer_is_consent == false) && ( is_trimmer? == false )%>
-                <%= form_with model: @contract, url: contracts_path, local: true do |f| %>
-                  <%= f.label :preferred_date, "施術希望日" %>
-                  <%= f.datetime_field :preferred_date, autofocus: true %>
-                  <%= f.button '変更する', type: 'button', onclick: 'submit();' %>
-                <% end %>
-              <% else %>
-                <%= contract.preferred_date.to_s(:datetime_jp_time) %>
-              <% end %>
-            </td>
-          </tr>
-          <tr><th>飼い主</th><td><%= dog_owner.full_name %></td></tr>
-          <tr><th>郵便番号</th><td><%= dog_owner.post_code %></td></tr>
-          <tr><th>住所</th><td><%= dog_owner.open_addres %></td></tr>
-          <tr><th></th><td></td></tr>
-          <tr><th>愛犬名</th><td><%= dog.name %></td></tr>
-          <tr><th>犬種</th><td><%= dog.breed %></td></tr>
-          <tr><th>性別</th><td><% sex(dog) %></td></tr>
-          <tr><th>サイズ</th><td><%= dog.size_i18n %></td></tr>
-          <tr><th>ワクチン</th><td><%= is_inoculate(dog) %></td></tr>
-          <tr><th>誕生日</th><td><%= dog.birth_day %>(<%= dog.age %>)</td></tr>
-          <tr><th>既往歴</th><td><%= dog.medical_history %></td></tr>
-          <tr><th></th><td></td></tr>
-          <tr><th>トリマー</th><td><%= trimmer.full_name %></td></tr>
-          <tr><th>郵便番号</th><td><%= trimmer.post_code %></td></tr>
-          <tr><th>住所</th><td><%= trimmer.open_addres %></td></tr>
-        </tbody>
-      </table>
-      <% if is_trimmer? %>
-        <% if contract.trimmer_is_consent == false %>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-              <%= f.button '契約に同意する', type: 'button', onclick: 'submit();' %>
+<div class="col-8">
+  <table class="table">
+    <tbody>
+      <tr><th>施術日</th>
+        <td>
+          <% if (contract.trimmer_is_consent == false) && ( is_trimmer? == false )%>
+            <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+              <%= f.label :preferred_date, "施術希望日" %>
+              <%= f.datetime_field :preferred_date, autofocus: true %>
+              <%= f.button '変更する', type: 'button', onclick: 'submit();' %>
+            <% end %>
+          <% else %>
+            <%= contract.preferred_date.to_s(:datetime_jp_time) %>
           <% end %>
-        <% else %>
-        <p>同意済み</p>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-              <%= f.button '同意を解除する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <% if contract.dog_owner_is_consent == false %>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-              <%= f.button '契約に同意する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% else %>
-        <p>同意済み</p>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-              <%= f.button '同意を解除する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% end %>
-        <% if (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-            <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-            <%= f.hidden_field :is_status, :value => "in_progress" %>
-            <%= f.button '契約確定する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% else %>
-        <p>両者が同意すれば契約を確定することが出来ます</p>
-        <% end %>
-      <% end %>
-      <% unless is_trimmer? %>
-        <%= link_to "依頼削除", contract_path(@contract), method: :delete, class: "btn btn-danger", style: "width:150px", data: { confirm: "本当に依頼を削除しますか？"} %>
-      <% end %>
+        </td>
+      </tr>
+      <tr><th>飼い主</th><td><%= dog_owner.full_name %></td></tr>
+      <tr><th>郵便番号</th><td><%= dog_owner.post_code %></td></tr>
+      <tr><th>住所</th><td><%= dog_owner.open_addres %></td></tr>
+      <tr><th></th><td></td></tr>
+      <tr><th>愛犬名</th><td><%= dog.name %></td></tr>
+      <tr><th>犬種</th><td><%= dog.breed %></td></tr>
+      <tr><th>性別</th><td><% sex(dog) %></td></tr>
+      <tr><th>サイズ</th><td><%= dog.size_i18n %></td></tr>
+      <tr><th>ワクチン</th><td><%= is_inoculate(dog) %></td></tr>
+      <tr><th>誕生日</th><td><%= dog.birth_day %>(<%= dog.age %>)</td></tr>
+      <tr><th>既往歴</th><td><%= dog.medical_history %></td></tr>
+      <tr><th></th><td></td></tr>
+      <tr><th>トリマー</th><td><%= trimmer.full_name %></td></tr>
+      <tr><th>郵便番号</th><td><%= trimmer.post_code %></td></tr>
+      <tr><th>住所</th><td><%= trimmer.open_addres %></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-4">
+  <h3 class="text-center">Chat</h3>
+  <div class="actioncable">
+    <div id="messages" data-contract_id="<%= contract.id %>" data-sender="<%= current_customer.full_name %>" style="word-break : break-all">
+      <%= render @messages %>
     </div>
   </div>
+  <form>
+      <input type="text" id="chat-input" data-behavior="contract_speaker" class="form-control mt-1">
+      <label id="target">Enterで入力確定</label><br>
+  </form>
 </div>

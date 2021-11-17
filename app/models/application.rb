@@ -3,7 +3,7 @@ class Application < ApplicationRecord
   belongs_to :request
 
   # 1対1の記述ー－－－－－－
-  # belongs_to :contract
+  belongs_to :contract, optional: true
   # ー－－－－－－－－－－－
 
 

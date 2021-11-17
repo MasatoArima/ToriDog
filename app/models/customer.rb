@@ -12,15 +12,16 @@ class Customer < ApplicationRecord
   has_many :entries
   has_many :chats
 
+  has_many :client_contract, class_name: "Contract", foreign_key: "client_id", dependent: :destroy
+  has_many :trimmer_contract, class_name: "Contract", foreign_key: "trimmer_id", dependent: :destroy
+
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
   has_many :assessments, class_name: "Assessment", foreign_key: "like_id", dependent: :destroy
   has_many :reverse_of_assessments, class_name: "Assessment", foreign_key: "get_like_id", dependent: :destroy
-
   has_many :likings, through: :assessments, source: :get_like
   has_many :likers, through: :reverse_of_assessments, source: :like
 
@@ -39,6 +40,7 @@ class Customer < ApplicationRecord
   validates :post_code, presence: true
   validates :phone_number, presence: true
   validates :user_status, presence: true
+
 
   # フォロー・フォロワー
   def follow(customer_id)
@@ -79,6 +81,7 @@ class Customer < ApplicationRecord
   end
 
 
+
   #住所自動入力
   include JpPrefecture
   jp_prefecture :prefecture_code
@@ -90,6 +93,7 @@ class Customer < ApplicationRecord
   def prefecture_name=(prefecture_name)
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
+
 
   #enum使用
   enum user_status: { dog_owner: 0, trimmer: 1 }

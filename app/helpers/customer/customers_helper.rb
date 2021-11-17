@@ -4,14 +4,6 @@ module Customer::CustomersHelper
   end
 
  #依頼関連
-  def is_cutomer_request(data)
-    if (current_customer.id == @requests.find(data.id).customer_id) && (data.is_complete == false)
-      true
-    else
-      false
-    end
-  end
-
   def request_dog_name(data)
      @dogs.find(data.dog_id).name
   end
@@ -19,23 +11,9 @@ module Customer::CustomersHelper
   def request_dog_owner_name(data)
      @customers.find(data.customer_id).full_name
   end
-  def application_count(data)
-     @applications.where(request_id: data.id).count
-  end
-  def contract_count(data)
-    applications = @applications.where(customer_id: data.id)
-    contract_count = 0
-    applications.each do |application|
-      unless @contracts.where(application_id: application.id).blank?
-        contract = @contracts.find_by(application_id: application.id)
-        if contract.is_status == "completion"
-          contract_count += 1
-        end
-      else
-      end
-    end
-    return contract_count
-  end
+  # def application_count(data)
+  #   data.applications.count
+  # end
 
   def request_status(data)
     if @applications.find_by(customer_id: current_customer.id, request_id: data.id)
@@ -52,20 +30,77 @@ module Customer::CustomersHelper
   end
 
   def contract_dog_owner_name(data)
-    @dog_owners.find(@requests.find(@applications.find(data.application_id).request_id).customer_id).full_name
+    @customers.find(@requests.find(@applications.find(data.application_id).request_id).customer_id).full_name
   end
 
   def contract_trimmer_name(data)
-    link_to customer_path(@trimmers.find(@applications.find(data.application_id).customer_id).id) do
-      @trimmers.find(@applications.find(data.application_id).customer_id).full_name
+    link_to customer_path(data.trimmer_id) do
+      @customers.find(data.trimmer_id).full_name
     end
   end
 
-  def is_customer(data)
-    if current_customer.id ==  @requests.find(@applications.find(data.application_id).request_id).customer_id
-      true
+
+  def consent_status(data)
+    if data.is_status == "in_preparation"
+      if is_trimmer?
+        if (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
+          "(契約待機中)"
+        elsif (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
+          "(飼い主は契約に同意しています)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
+          "(契約確定中)"
+        else
+          "(契約内容を確認してください)"
+        end
+      else
+        if (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
+          "(契約待機中)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
+          "(トリマーは同意しています)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
+          "(契約を確定できます)"
+        else
+          "(契約内容を確認してください)"
+        end
+      end
+    elsif data.is_status == "in_progress"
+      if is_trimmer?
+        if (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
+          "(中止依頼中)"
+        elsif (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
+          "(中止依頼があります)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
+          "(中止確定中)"
+        else
+        end
+      else
+        if (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
+          "(中止依頼中)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
+          "(中止依頼があります)"
+        elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
+          "(契約を中止できます)"
+        else
+        end
+      end
+    end
+  end
+
+  def evaluation_ave(data)
+    contracts = data.trimmer_contract
+    rate_average = 0
+    count = 0
+    unless contracts.blank?
+      contracts.each do |contract|
+        if contract.evaluation.nil?
+        else
+          rate_average += (contract.evaluation.rate).to_i
+          count += 1
+        end
+      end
+      return rate_average / count
     else
-      false
+      0
     end
   end
 

@@ -1,0 +1,195 @@
+<div class="col-4">
+  <div class="text-center">
+    <% if customer.profile_image.attached? %>
+      <%= image_tag customer.profile_image.variant(resize:'200x200').processed %>
+    <% else %>
+      <%= image_tag("no_image.jpg", :size => "200x200") %>
+    <% end %>
+  </div>
+  <table class="table mt-2">
+    <tbody>
+      <tr>
+        <td style="width: 120px">
+          ステータス
+        </td>
+        <td>
+          <%= customer.user_status_i18n%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          名前
+        </td>
+        <td>
+          <%= customer.full_name %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          フリガナ
+        </td>
+        <td>
+          <%= customer.full_name_kana %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          郵便番号
+        </td>
+        <td>
+          <%= customer.post_code %>
+        </td>
+      </tr>
+      <% if customer.id == current_customer.id %>
+        <tr>
+          <td>
+            住所
+          </td>
+          <td style="word-break : break-all">
+            <%= customer.addres %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            電話番号
+          </td>
+          <td>
+            <%= customer.phone_number %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            アドレス
+          </td>
+          <td>
+            <%= customer.email %>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td>
+            住所
+          </td>
+          <td style="word-break : break-all">
+            <%= customer.open_addres %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            契約件数
+          </td>
+          <td>
+            <%= contracts.count %>
+          </td>
+        </tr>
+      <% end %>
+      <% if request.fullpath == customers_mypage_path %>
+        <tr>
+          <td>
+            フォロー
+          </td>
+          <td>
+            <%= link_to customer.followings.count, customer_followings_path(customer) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            フォロワー
+          </td>
+          <td>
+            <%= link_to customer.followers.count, customer_followers_path(customer) %>
+          </td>
+        </tr>
+        <% if customer.user_status == "trimmer" %>
+          <tr>
+            <td>
+              いいね
+            </td>
+            <td>
+              <%= link_to customer.likers.count, customer_likers_path(customer) %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>
+            フォロー
+          </td>
+          <td>
+            <%= customer.followings.count %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            フォロワー
+          </td>
+          <td>
+            <%= customer.followers.count %>
+          </td>
+        </tr>
+        <% if customer.user_status == "trimmer" %>
+          <tr>
+            <td>
+              いいね
+            </td>
+            <td>
+              <%= customer.likers.count %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <% if customer.user_status == "trimmer" %>
+        <tr>
+          <td>評価</td>
+          <td class="average-rate" data-score="<%= evaluation_ave(customer) %>"></td>
+          <script>
+            $('.average-rate').raty({
+              readOnly: true,
+              score: function() {
+                return $(this).attr('data-score');
+              },
+              path: '/assets/'
+            });
+          </script>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div>自己紹介文</div>
+  <p style="word-break : break-all"><%= customer.introduction%></p>
+
+  <div class="mt-4">
+    <% if customer.id == current_customer.id %>
+      <% if is_trimmer? %>
+        <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
+        <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
+      <% else %>
+        <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
+        <%= link_to "愛犬一覧", dogs_path, class: "btn btn-success", style: "width:90px" %>
+        <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
+      <% end %>
+    <% else %>
+      <div class="mt-1">
+        <div>
+          <% if current_customer.following?(customer) %>
+            <%= link_to "フォロー外す", customer_relationships_path(customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
+          <% else %>
+            <%= link_to "フォローする", customer_relationships_path(customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
+          <% end %>
+        </div>
+        <div>
+          <% if current_customer.liking?(customer)%>
+            <%= link_to "いいねを消す", customer_assessments_path(customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
+          <% else %>
+            <%= link_to "いいねする", customer_assessments_path(customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
+          <% end %>
+        </div>
+        <div>
+          <%= link_to 'chatを始める', chat_path(customer.id), class: "btn btn-primary", style: "width:150px" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
