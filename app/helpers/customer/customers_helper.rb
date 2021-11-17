@@ -98,7 +98,11 @@ module Customer::CustomersHelper
           count += 1
         end
       end
-      return rate_average / count
+      unless rate_average == 0
+        return rate_average / count
+      else
+        0
+      end
     else
       0
     end
