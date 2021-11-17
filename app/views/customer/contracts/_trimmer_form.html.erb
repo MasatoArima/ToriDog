@@ -34,7 +34,7 @@
             <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
             <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
         <% end %>
-      <% elsif (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == true %>
+      <% elsif (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == true) %>
         <p>
           飼い主が契約中止を希望しています<br>
         </p>
@@ -60,6 +60,7 @@
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
           <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
           <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
+        <% end %>
         <% end %>
 
     </div>
