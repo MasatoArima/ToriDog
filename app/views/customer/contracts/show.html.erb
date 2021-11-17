@@ -1,6 +1,17 @@
 
-<% if @contract.is_status == "in_preparation" %>
-  <%= render 'customer/contracts/before_contract',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
-<% else %>
-  <%= render 'customer/contracts/after_contract',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <% if is_trimmer? %>
+        <%= render 'customer/contracts/trimmer_form',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract, evaluation: @evaluation %>
+      <% else %>
+        <%= render 'customer/contracts/dog_owner_form', contract: @contract, evaluation: @evaluation %>
+      <% end %>
+    </div>
+    <% if @contract.is_status == "in_preparation" %>
+      <%= render 'customer/contracts/before_contract',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
+    <% else %>
+      <%= render 'customer/contracts/after_contract',dog_owner: @dog_owner,dog: @dog,trimmer: @trimmer, contract: @contract %>
+    <% end %>
+  </div>
+</div>

@@ -1,9 +1,11 @@
 <div class="container">
   <div class="row">
     <% if is_trimmer? %>
-    　<%= render 'customer/customers/trimmer-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts, dog_owners: @dog_owners %>
+    　<%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
+    　<%= render 'customer/customers/trimmer-mypage', customers: @customers, customer: @customer, applications_page: @applications_page, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts, evaluations: @evaluations %>
     <% else %>
-    　<%= render 'customer/customers/dog_owner-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts, trimmers: @trimmers %>
+    　<%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
+    　<%= render 'customer/customers/dog_owner-mypage', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
     <% end %>
   </div>
 </div>

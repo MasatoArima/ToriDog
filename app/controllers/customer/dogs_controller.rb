@@ -1,6 +1,6 @@
 class Customer::DogsController < ApplicationController
   def index
-    @dogs = Dog.where(customer_id: current_customer.id)
+    @dogs = current_customer.dogs
   end
 
   def show
@@ -12,7 +12,7 @@ class Customer::DogsController < ApplicationController
   end
 
   def new
-    @dog =Dog.new
+    @dog = Dog.new
   end
 
   def create

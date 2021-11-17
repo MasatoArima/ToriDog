@@ -1,114 +1,87 @@
 <div class="container">
   <div class="row">
-    <div class="col-4">
-      <div class="">
-        <% if @customer.profile_image.attached? %>
-          <%= image_tag @customer.profile_image.variant(resize:'200x200').processed %>
-        <% else %>
-          <%= image_tag("no_image.jpg", :size => "200x200") %>
-        <% end %>
-      </div>
-      <table class="table mt-2">
-        <tbody>
-          <tr><td style="width: 120px">ステータス</td><td><%= @customer.user_status_i18n%></td></tr>
-          <tr><td>名前</td><td><%= @customer.full_name %></td></tr>
-          <tr><td>フリガナ</td><td><%= @customer.full_name_kana %></td></tr>
-          <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
-          <tr><td>住所</td><td style="word-break : break-all"><%= @customer.open_addres %></td></tr>
-          <tr><td>フォロー</td><td><%= @customer.followings.count %></td></tr>
-          <tr><td>フォロワー</td><td><%= @customer.followers.count %></td></tr>
-          <tr><td>いいね</td><td><%= @customer.likers.count %></td></tr>
-          <tr><td>契約件数</td><td><%= contract_count(@customer) %></td></tr>
-          <tr><td></td><td></td></tr>
-        </tbody>
-      </table>
-
-      <div class="mt-1">
-        <div>
-          <% if current_customer.following?(@customer) %>
-            <%= link_to "フォロー外す", customer_relationships_path(@customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
-          <% else %>
-            <%= link_to "フォローする", customer_relationships_path(@customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
-          <% end %>
-        </div>
-        <div>
-          <% if current_customer.liking?(@customer)%>
-            <%= link_to "いいねを消す", customer_assessments_path(@customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
-          <% else %>
-            <%= link_to "いいねする", customer_assessments_path(@customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
-          <% end %>
-        </div>
-        <div>
-        <% if current_customer != @customer %>
-          <%= link_to 'chatを始める', chat_path(@customer.id), class: "btn btn-primary", style: "width:150px" %>
-        <% end %>
-        </div>
-      </div>
-    </div>
-
+    <%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
     <div class="col-8">
+      <!--トリマーなら-->
       <% if is_trimmer? %>
-        <h4>カット依頼案件</h4>
+        <h3>カット依頼案件</h3>
         <table class="table">
           <thead>
             <tr>
-              <th>依頼日</th>
-              <th>トリミング犬</th>
-              <th>応募数</th>
+              <th>
+                依頼日
+              </th>
+              <th>
+                トリミング犬
+              </th>
+              <th>
+                応募数
+              </th>
             </tr>
           </thead>
           <tbody>
             <% @requests.each do |requesta| %>
-              <% if (@customer.id == @requests.find(requesta.id).customer_id) && (requesta.is_complete == false) %>
+              <% if requesta.is_complete == false %>
                 <tr>
                   <td>
                     <%= link_to request_path(requesta.id) do %>
                       <%= requesta.updated_at.to_s(:datetime_jp) %>
                     <% end %>
                   </td>
-                  <td><%= request_dog_name(requesta) %></td>
-                  <td><%= application_count(requesta) %></td>
+                  <td>
+                    <%= request_dog_name(requesta) %>
+                  </td>
+                  <td>
+                    <%= requesta.applications.count %>
+                  </td>
                 </tr>
-              <% else %>
-              <% end %>
-           <% end %>
-          </tbody>
-        </table>
-
-        <p>dog</p>
-        <div class="row">
-          <% unless @dogs.nil? %>
-            <% @dogs.each do |dog| %>
-              <%= link_to dog_path(dog.id) do %>
-                <div class="card" style="width: 10rem;">
-                  <% if dog.dog_image.attached? %>
-                    <%= image_tag dog.dog_image.variant(resize:'150x150').processed %>
-                  <% else %>
-                    <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
-                  <% end %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= dog.name %></h5>
-                    <p class="card-text"><%= dog.breed %></p>
-                    <p class="card-text"><%= dog.birthday %></p>
-                  </div>
-                </div>
               <% end %>
             <% end %>
+          </tbody>
+        </table>
+        <h3>dog</h3>
+        <% unless @dogs.blank? %>
+          <% @dogs.each do |dog| %>
+            <div class="card mr-3 mx-auto border-dark px-1 pt-1 mb-3" style="width: 18rem;">
+              <% if dog.dog_image.attached? %>
+                <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+              <% else %>
+                <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
+              <% end %>
+              <div class="card-body text-center">
+                <h5 class="card-title">
+                  <%= link_to dog_path(dog.id) do %>
+                    <%= dog.name %>
+                  <% end %>
+                </h5>
+                <p class="card-text">
+                  <%= dog.breed %>
+                </p>
+                <p class="card-text">
+                  <%= dog.age %>
+                </p>
+              </div>
+            </div>
           <% end %>
+        <% else %>
+        <div class="mx-auto">
+          <p>まだ愛犬が登録されていません</p>
         </div>
+        <% end %>
+      <!--飼い主なら-->
       <% else %>
       <h3>自己紹介文</h3>
-      <p style="word-break : break-all">
-        <% if @customer.introduction.nil? %>
+      <div style="word-break : break-all">
+        <% if @customer.introduction.blank? %>
           <p>紹介文はまだ書かれていません</p>
         <% else %>
           <%= @customer.introduction %>
         <% end %>
-      </p>
+      </div>
       <h3 class="mt-5">トリミング画像</h3>
         <% if @customer.cut_images.attached? %>
           <% @customer.cut_images.each do |image| %>
-            <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>
+            <%= image_tag image.variant(resize:'200x200').processed, class: "mb-1" %>
           <% end %>
         <% else %>
           <p>トリミング画像はまだ投稿されていません</p>

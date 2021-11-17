@@ -1,0 +1,39 @@
+<h3>応募トリマー</h3>
+<table class="table table-striped" >
+  <tr>
+    <th style="width: 120px">
+      応募トリマー
+    </th>
+    <th style="width: 105px">
+      対応可能日
+    </th>
+    <th style="width: 165px">
+      コメント
+    </th>
+    <th style="width: 110px">
+      契約状態
+    </th>
+  </tr>
+  <% applications.each do |application| %>
+    <tr>
+      <td>
+        <%= link_to customer_path(application.customer_id) do %>
+          <%= application.customer.full_name %>
+        <% end %>
+      </td>
+      <td>
+        <%= application.preferred_dates %>
+      </td>
+      <td style="word-break : break-all">
+        <%= application.comment %>
+      </td>
+      <th>
+        <% if contracts.find_by(application_id: application.id).blank? %>
+          <%= link_to "契約に進む", new_contract_path(id: application.id), class: "btn btn-success", style: "width:150px" %>
+        <% else %>
+          契約準備中
+        <% end %>
+      </th>
+    </tr>
+　 <% end %>
+</table>

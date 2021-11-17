@@ -1,17 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <table class="table table-striped">
-        <tr><th style="width: 100px">名前</th><th><%= @dog.name %></th></tr>
-        <tr><td>フリガナ</td><td><%= @dog.name_kana %></td></tr>
-        <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
-        <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
-        <tr><td>サイズ</td><td><%= @dog.size_i18n %></td></tr>
-        <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
-        <tr><td>誕生日</td><td><%= @dog.birth_day %>(<%= @dog.age %>)</td></tr>
-        <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
-        <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
-      </table>
+      <%= render 'customer/dogs/dog_info', dog: @dog %>
       <div class="text-center mt-4">
         <% if current_customer.id == @dog.customer_id %>
           <%= link_to "愛犬編集", edit_dog_path(@dog), class: "btn btn-success", style: "width:150px" %>
@@ -21,7 +11,7 @@
     </div>
     <div class="col-8 text-center">
       <div class="ml-1 mb-3">
-        <%= render 'customer/dogs/show', blob: @blob %>
+        <%= render 'customer/dogs/show', blob: @blob, dog: @dog %>
       </div>
       <% @dog.trimming_images.each do |image| %>
         <%= link_to dog_path(@dog.id, blob: image.id),remote: true do %>
