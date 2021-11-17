@@ -71,7 +71,8 @@
             <%= contract_trimmer_name(contract) %>
           </td>
           <td>
-            <%= contract.is_status_i18n %>
+            <%= contract.is_status_i18n %><br>
+            <%= consent_status(contract) %>
           </td>
         </tr>
       <% end %>

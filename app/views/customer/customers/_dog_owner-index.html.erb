@@ -13,6 +13,9 @@
       <th>
         いいね数
       </th>
+      <th>
+        評価
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +39,16 @@
         <td>
           <%= trimmer.likers.count %>
         </td>
+        <td class="average-rate<%= trimmer.id %>" data-score="<%= evaluation_ave(trimmer) %>"></td>
+        <script>
+          $('.average-rate<%= trimmer.id %>').raty({
+            readOnly: true,
+            score: function() {
+              return $(this).attr('data-score');
+            },
+            path: '/assets/'
+          });
+        </script>
       </tr>
     <% end %>
   </tbody>

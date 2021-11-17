@@ -73,10 +73,36 @@
       <% end %>
     </div>
     <div class="col-6">
-      <p>施術後入力フォーム</p>
-      <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-          <%= f.hidden_field :is_status, :value => "completion" %>
-          <%= f.button '契約を完了する', type: 'button', onclick: 'submit();' %>
+      <% if trimming_finish(contract) == true %>
+        <p>施術後入力フォーム</p>
+        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+          <div class="form-group">
+            <%= f.hidden_field :is_status, :value => "completion" %>
+          </div>
+          <%= f.fields_for evaluation do |i| %>
+            <div class="form-group">
+              <%= i.hidden_field :contract_id, :value => contract.id %>
+              <%= i.label :comment, "コメント" %><br>
+              <%= i.text_area :comment, size:"50x5", autofocus: true %>
+            </div>
+            <div id="evaluate_stars">
+              <label>評価</label>
+            </div>
+          <% end %>
+          <div class="actions">
+            <%= f.button '契約を完了する', type: 'button', onclick: 'submit();', data: { confirm: "契約が完了すると評価は変えられません。契約を完了しますか？"} %>
+          </div>
+        <% end %>
+        <script>
+          $('#evaluate_stars').raty({
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
+            scoreName: 'evaluation[rate]'
+          });
+        </script>
+      <% else %>
+        <p>施術終了後評価を行うことが出来ます</p>
       <% end %>
     </div>
   </div>
@@ -87,10 +113,39 @@
     </div>
   </div>
 <% elsif contract.is_status == "completion" %>
-  <div class="row">
-    <div class="col-12">
-      <h3>完了</h3>
+
+
+    <div class="row">
+      <div class="col-6">
+        <h3>完了</h3>
+      </div>
+      <div class="col-6">
+        <table>
+          <thead>
+            <tr>
+              <th>コメント</th>
+              <th>この施術に対する評価</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td><%=evaluation.comment %></td>
+                <td class="contract-rate" data-score="<%= evaluation.rate %>"></td>
+              </tr>
+          </tbody>
+        </table>
+        <script>
+          $('.contract-rate').raty({
+            readOnly: true,
+            score: function() {
+              return $(this).attr('data-score');
+            },
+            path: '/assets/'
+          });
+        </script>
+      </div>
     </div>
-  </div>
+
+
 
 <% end %>

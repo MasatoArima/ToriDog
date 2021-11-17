@@ -138,10 +138,21 @@
           </tr>
         <% end %>
       <% end %>
-      <tr>
-        <td></td>
-        <td></td>
-      </tr>
+      <% if customer.user_status == "trimmer" %>
+        <tr>
+          <td>評価</td>
+          <td class="average-rate" data-score="<%= evaluation_ave(customer) %>"></td>
+          <script>
+            $('.average-rate').raty({
+              readOnly: true,
+              score: function() {
+                return $(this).attr('data-score');
+              },
+              path: '/assets/'
+            });
+          </script>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 

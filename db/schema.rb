@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_235854) do
+ActiveRecord::Schema.define(version: 2021_11_17_044032) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_235854) do
 
   create_table "contracts", force: :cascade do |t|
     t.integer "application_id", null: false
-    t.float "rate"
+    t.integer "evaluation_id"
     t.integer "is_status", null: false
     t.boolean "dog_owner_is_consent", default: false, null: false
     t.boolean "trimmer_is_consent", default: false, null: false
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_235854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_contracts_on_application_id"
+    t.index ["evaluation_id"], name: "index_contracts_on_evaluation_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -151,6 +152,15 @@ ActiveRecord::Schema.define(version: 2021_11_10_235854) do
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_entries_on_customer_id"
     t.index ["room_id"], name: "index_entries_on_room_id"
+  end
+
+  create_table "evaluations", force: :cascade do |t|
+    t.float "rate"
+    t.text "comment"
+    t.integer "contract_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contract_id"], name: "index_evaluations_on_contract_id"
   end
 
   create_table "messages", force: :cascade do |t|

@@ -9,6 +9,7 @@ class Customer::CustomersController < ApplicationController
       @q = Customer.where(user_status: 0).ransack(params[:q])
       unless params[:q].nil?
         @q.result(distinct: true).page(params[:customer_page]).per(5)
+         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
       end
     else
       trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
@@ -23,6 +24,7 @@ class Customer::CustomersController < ApplicationController
 
   def mypage
     @customers = Customer.all
+    @evaluations = Evaluation.all
     @customer = current_customer
     if current_customer.user_status == "trimmer"
       @contracts = current_customer.trimmer_contract.page(params[:contract_page]).per(5).order(id: :DESC)

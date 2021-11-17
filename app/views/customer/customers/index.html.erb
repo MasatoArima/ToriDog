@@ -3,14 +3,9 @@
     <div class="col-4">
       <h4 class="text-center">ユーザー検索欄</h4>
       <%= search_form_for @q do |f| %>
-        <%= f.label :last_name, "　姓　　" %>
-        <%= f.search_field :last_name_cont %><br>
-        <%= f.label :first_name, "　名　　" %>
-        <%= f.search_field :first_name_cont %><br>
-        <%= f.label :last_name_kana, "　セイ　" %>
-        <%= f.search_field :last_name_kana_cont %><br>
-        <%= f.label :first_name_kana, "　メイ　" %>
-        <%= f.search_field :first_name_kana_cont %><br>
+        <%= f.label "　　　　" %>
+        <%=f.search_field:last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_cont, placeholder: "キーワード検索"%><br>
+
         <%= f.label :prefecture_code, "都道府県" %>
         <%= f.search_field :prefecture_code_cont %><br>
         <%= f.label :city, "市区町村" %>

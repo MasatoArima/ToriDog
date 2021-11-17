@@ -6,6 +6,7 @@ class Contract < ApplicationRecord
 
   # 1対1の記述ー－－－－－－
   has_one :application
+  has_one :evaluation
   # ー－－－－－－－－－－－
   #enum使用
   enum is_status: { in_preparation: 0, in_progress: 1, completion: 2, cancel: 3}

@@ -23,12 +23,16 @@
       </table>
     </div>
     <div class="col-3">
-      <div>チャット履歴</div>
+      <div>Chat</div>
       <div class="actioncable">
         <div id="messages" data-contract_id="<%= contract.id %>" data-sender="<%= current_customer.full_name %>" style="word-break : break-all">
           <%= render @messages %>
         </div>
       </div>
+      <form>
+          <input type="text" id="chat-input" data-behavior="contract_speaker" class="form-control mt-1">
+          <label id="target">Enterで入力確定</label><br>
+      </form>
     </div>
   </div>
 </div>

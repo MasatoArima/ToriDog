@@ -8,6 +8,13 @@ class Customer::ContractsController < ApplicationController
     @dog = Dog.find(@request.dog_id )
     @dog_owner = Customer.find(@request.customer_id)
     @trimmer = Customer.find(@application.customer_id)
+    ##
+    if @contract.evaluation.nil?
+      @evaluation = Evaluation.new
+    else
+      @evaluation = @contract.evaluation
+    end
+    ##
   end
 
   def new
@@ -45,6 +52,9 @@ class Customer::ContractsController < ApplicationController
     elsif @contract.is_status == "cancel"
       redirect_to customers_mypage_path
     elsif @contract.is_status == "completion"
+      evaluation = Evaluation.new(evaluation_params[:evaluation])
+      evaluation.save
+      evaluation.update(rate_params)
       redirect_to customers_mypage_path
     end
   end
@@ -64,4 +74,13 @@ class Customer::ContractsController < ApplicationController
   def contract_params
     params.require(:contract).permit(:application_id, :is_status, :dog_owner_is_consent, :trimmer_is_consent, :preferred_date, :client_id, :trimmer_id)
   end
+
+  def evaluation_params
+    params.require(:contract).permit(evaluation:[:comment, :contract_id])
+  end
+
+  def rate_params
+    params.require(:evaluation).permit(:rate)
+  end
+
 end
