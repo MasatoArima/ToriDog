@@ -48,28 +48,42 @@
 <!-----------------------------------進行中なら------------------------------------------------------------->
   <div class="row">
     <div class="col-6">
-      <% if contract.dog_owner_is_consent == false %>
+      <% if (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == false) %>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
             <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
             <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
         <% end %>
-      <% else %>
-      <p>
+      <% elsif (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == true) %>
+        <p>
+          トリマーが中止を希望しています
+        </p>
+        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+            <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
+            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
+        <% end %>
+      <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == false) %>
+        <p>
           契約中断を希望しています<br>
-        トリマーが同意すれば契約を中止することが出来ます<br>
-        契約を再開する場合は再開のボタンを押してください
-      </p>
+          トリマーが同意すれば契約を中止することが出来ます<br>
+          契約を再開する場合は再開のボタンを押してください
+        </p>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
             <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
             <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
         <% end %>
-      <% end %>
-      <% if (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
+      <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
+        <p>
+          契約を中止する場合は中止を押してください<br>
+          再開する場合は契約再開を押してください
+        </p>
+        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+            <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
+            <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
+        <% end %>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
             <%= f.hidden_field :is_status, :value => "cancel" %>
             <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
         <% end %>
-      <% else %>
       <% end %>
     </div>
     <div class="col-6">
@@ -137,10 +151,12 @@
         <script>
           $('.contract-rate').raty({
             readOnly: true,
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
             score: function() {
               return $(this).attr('data-score');
             },
-            path: '/assets/'
           });
         </script>
       </div>
