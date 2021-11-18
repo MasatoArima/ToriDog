@@ -1,6 +1,7 @@
 class Customer::CustomersController < ApplicationController
   def index
-    @customers = Customer.all
+    # @customers = Customer.all
+    @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
       @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
       @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
@@ -12,7 +13,11 @@ class Customer::CustomersController < ApplicationController
          @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
       end
     else
-      trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
+      @map_trimmers = Customer.where(user_status: 1)
+      # @map_trimmers = Customer.where(user_status: 1)
+      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
+      # trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
+      # trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
