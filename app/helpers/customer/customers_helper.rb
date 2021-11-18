@@ -87,7 +87,7 @@ module Customer::CustomersHelper
   end
 
   def evaluation_ave(data)
-    contracts = data.trimmer_contract
+    contracts = data.trimmer_contract.includes(:evaluation)
     rate_average = 0
     count = 0
     unless contracts.blank?

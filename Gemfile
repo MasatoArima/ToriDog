@@ -68,6 +68,7 @@ gem "enum_help"
 
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
+gem 'jcanvas-rails', '~> 0.1.0'
 gem 'font-awesome-sass', '~> 5.13'
 
 gem 'kaminari'
@@ -81,9 +82,13 @@ gem 'jp_prefecture'
 gem 'image_processing', '~> 1.2'
 
 gem 'execjs'
+gem 'geocoder'
+gem 'gon'
 
 gem "aws-sdk-s3", require: false
 
 group :production do
   gem 'mysql2'
 end
+
+gem 'bullet', :group => :development

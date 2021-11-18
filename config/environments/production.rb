@@ -48,6 +48,11 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
   ActionCable.server.config.disable_request_forgery_protection = true
 
+  ###EIP必要?###########################################################################
+  # config.action_cable.url = "ws://【Elastic IP】/cable"
+  # config.action_cable.allowed_request_origins = ['http://【Elastic IP】']
+  ######################################################################################
+
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 

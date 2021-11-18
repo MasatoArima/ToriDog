@@ -58,3 +58,71 @@
 <div class="center-block">
 <%= paginate trimmers, :param_name => 'customer_page' %>
 </div>
+
+
+
+
+<h2>地図から検索</h2>
+
+<input id="address" type="textbox" value="GeekSalon">
+<input type="button" value="Encode" onclick="codeAddress()">
+<div id='map'></div>
+
+<script>
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 36.5, lng: 138},
+    zoom: 5,
+  });
+
+  <% map_trimmers.each do |user| %>
+    <% unless Geocoder.search(user.open_addres).blank? %>
+      (function() {
+        let marker<%= user.id %> = new google.maps.Marker({
+          position: {lat: <%= Geocoder.search(user.open_addres).first.coordinates[0] %>, lng: <%= Geocoder.search(user.open_addres).first.coordinates[1] %>},
+          map: map,
+          title: "<%= user.full_name %>",
+        });
+        google.maps.event.addListener(marker<%= user.id %>, 'click',function() {
+          window.location.href = 'customers/<%= user.id %>';
+        });
+      })();
+    <% end %>
+  <% end %>
+}
+
+let geocoder
+
+function codeAddress(){
+  let inputAddress = document.getElementById('address').value;
+
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      map.setZoom(8);
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&callback=initMap" async defer></script>
+
+
+
+
+<!--<div id="map-container"></div>-->
+<!--<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>-->
+<!--<%#= javascript_include_tag 'jquery.japan-map.min.js' %>-->
+<!--<script>-->
+<!--  $(function(){-->
+<!--    $("#map-container").japanMap({-->
+<!--        width:600,-->
+<!--        onSelect : function(data){-->
+<!--            alert(data.name);-->
+<!--        }-->
+<!--      });-->
+<!--  });-->
+<!--</script>-->
