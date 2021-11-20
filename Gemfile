@@ -51,6 +51,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop-airbnb'
+  gem 'bullet'
 end
 
 group :test do
@@ -77,7 +78,6 @@ gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'dotenv-rails'
 gem 'ransack'
 
-
 gem 'jp_prefecture'
 gem 'image_processing', '~> 1.2'
 
@@ -90,5 +90,3 @@ gem "aws-sdk-s3", require: false
 group :production do
   gem 'mysql2'
 end
-
-gem 'bullet', :group => :development

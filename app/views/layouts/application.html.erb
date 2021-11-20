@@ -7,11 +7,14 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
     <%= render 'layouts/header' %>
-    <p id="notice" class='text-center'><%= notice %></p>
-    <p id="error_explanation" class='text-center'><%= alert %></p>
+    <p id="notice" class='text-center'>
+      <%= notice %>
+    </p>
+    <p id="error_explanation" class='text-center'>
+      <%= alert %>
+    </p>
     <main>
       <%= yield %>
     </main>

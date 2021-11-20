@@ -15,7 +15,7 @@ class Customer::ChatsController < ApplicationController
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
   end
-  
+
   def create
     @chat = current_customer.chats.new(chat_params)
     @chat.save
@@ -28,7 +28,8 @@ class Customer::ChatsController < ApplicationController
     redirect_to request.referer
   end
 
-  private
+  privat
+
   def chat_params
     params.require(:chat).permit(:message, :room_id)
   end

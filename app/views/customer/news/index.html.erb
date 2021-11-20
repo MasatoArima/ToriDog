@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <header>
+      <h1>⭐️犬情報⭐️</h1>
+      <p>Powered by <a href="https://newsapi.org">News API</a></p>
+    </header>
+    <hr>
+
+    <div class="articles">
+      <% @articles["articles"].first(9).each do |article| %>
+        <div class="article">
+          <div class="title">
+            <%= link_to article["title"], article["url"] %>
+          </div>
+          <div class="wrapper">
+            <div class="date">
+              <%= article["publishedAt"] %>
+            </div>
+            <div class="source">
+              <%= article["source"]["name"]%>
+            </div>
+            <div class="image">
+              <% unless article["urlToImage"].nil? %>
+                <%= image_tag article["urlToImage"],:size =>'240x160' %>
+              <% end %>
+            </div>
+            <div class="content">
+              <%= article["description"] %>
+            </div >
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

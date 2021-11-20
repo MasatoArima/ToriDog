@@ -7,6 +7,7 @@ module ApplicationCable
     end
 
     protected
+
     def find_verified_customer
         if verified_customer = Customer.find_by(id: cookies.signed['customer_id'])
           verified_customer

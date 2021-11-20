@@ -3,13 +3,13 @@ module Customer::CustomersHelper
     current_customer.user_status == "trimmer"
   end
 
- #依頼関連
+ # 依頼関連
   def request_dog_name(data)
-     @dogs.find(data.dog_id).name
+    @dogs.find(data.dog_id).name
   end
 
   def request_dog_owner_name(data)
-     @customers.find(data.customer_id).full_name
+    @customers.find(data.customer_id).full_name
   end
   # def application_count(data)
   #   data.applications.count
@@ -23,8 +23,7 @@ module Customer::CustomersHelper
     end
   end
 
-
- #契約関連
+ # 契約関連
   def contract_dog_name(data)
     @dogs.find(@requests.find(@applications.find(data.application_id).request_id).dog_id).name
   end
@@ -38,7 +37,6 @@ module Customer::CustomersHelper
       @customers.find(data.trimmer_id).full_name
     end
   end
-
 
   def consent_status(data)
     if data.is_status == "in_preparation"

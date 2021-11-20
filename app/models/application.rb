@@ -6,7 +6,6 @@ class Application < ApplicationRecord
   belongs_to :contract, optional: true
   # ー－－－－－－－－－－－
 
-
   def preferred_dates
     if self.first_preferred_date.nil?
       "指定なし"

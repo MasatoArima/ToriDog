@@ -21,10 +21,11 @@ class Dog < ApplicationRecord
   def birth_day
     self.birthday.slice(0..3) + "年" + self.birthday.slice(4..5) + "月" + self.birthday.slice(6..7) + "日"
   end
+  
   def inoculation_day
     self.birthday.slice(0..3) + "年" + self.birthday.slice(4..5) + "月" + self.birthday.slice(6..7) + "日"
   end
 
-  #enum使用
-  enum size: {large: 0, medium: 1, small: 2}
+  # enum使用
+  enum size: { large: 0, medium: 1, small: 2 }
 end
