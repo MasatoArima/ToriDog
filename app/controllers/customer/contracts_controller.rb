@@ -5,23 +5,21 @@ class Customer::ContractsController < ApplicationController
     @messages = Message.where(contract_id: (params[:id]))
     @application = Application.find(@contract.application_id)
     @request = Request.find(@application.request_id)
-    @dog = Dog.find(@request.dog_id )
+    @dog = Dog.find(@request.dog_id)
     @dog_owner = Customer.find(@request.customer_id)
     @trimmer = Customer.find(@application.customer_id)
-    ##
     if @contract.evaluation.nil?
       @evaluation = Evaluation.new
     else
       @evaluation = @contract.evaluation
     end
-    ##
   end
 
   def new
     @application = Application.find(params[:id])
-    @dog = Dog.find(@application.request.dog_id )
+    @dog = Dog.find(@application.request.dog_id)
     @customer = current_customer
-    @trimmer = Customer.find(@application.customer_id )
+    @trimmer = Customer.find(@application.customer_id)
     @contract = Contract.new
   end
 
@@ -71,12 +69,13 @@ class Customer::ContractsController < ApplicationController
   end
 
   private
+
   def contract_params
     params.require(:contract).permit(:application_id, :is_status, :dog_owner_is_consent, :trimmer_is_consent, :preferred_date, :client_id, :trimmer_id)
   end
 
   def evaluation_params
-    params.require(:contract).permit(evaluation:[:comment, :contract_id])
+    params.require(:contract).permit(evaluation: [:comment, :contract_id])
   end
 
   def rate_params

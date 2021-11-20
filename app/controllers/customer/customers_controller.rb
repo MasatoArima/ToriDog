@@ -15,13 +15,13 @@ class Customer::CustomersController < ApplicationController
     else
       @map_trimmers = Customer.where(user_status: 1)
       # @map_trimmers = Customer.where(user_status: 1)
-      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
+      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort { |a, b| b.likers.size <=> a.likers.size }
       # trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
       # trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
-        trimmers = @q.result(distinct: true).sort {|a,b| b.likers.size <=> a.likers.size}
+        trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
         @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       end
     end
@@ -80,6 +80,7 @@ class Customer::CustomersController < ApplicationController
   end
 
   private
+
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, cut_images: [])
   end
