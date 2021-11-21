@@ -1,4 +1,5 @@
 class Customer::DogsController < ApplicationController
+  before_action :authenticate_customer!
   def index
     @dogs = current_customer.dogs
   end

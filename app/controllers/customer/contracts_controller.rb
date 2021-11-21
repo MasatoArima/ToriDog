@@ -1,4 +1,5 @@
 class Customer::ContractsController < ApplicationController
+  before_action :authenticate_customer!
   def show
     @contract = Contract.find(params[:id])
     @customers = Customer.all

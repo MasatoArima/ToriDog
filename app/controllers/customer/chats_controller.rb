@@ -1,4 +1,5 @@
 class Customer::ChatsController < ApplicationController
+  before_action :authenticate_customer!
   def show
     @customer = Customer.find(params[:id])
     rooms = current_customer.entries.pluck(:room_id)
@@ -28,7 +29,7 @@ class Customer::ChatsController < ApplicationController
     redirect_to request.referer
   end
 
-  privat
+  private
 
   def chat_params
     params.require(:chat).permit(:message, :room_id)

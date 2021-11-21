@@ -1,4 +1,5 @@
 class Customer::RelationshipsController < ApplicationController
+  before_action :authenticate_customer!
   def create
     current_customer.follow(params[:customer_id])
     redirect_to request.referer

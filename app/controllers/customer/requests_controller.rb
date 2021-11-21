@@ -1,4 +1,5 @@
 class Customer::RequestsController < ApplicationController
+  before_action :authenticate_customer!
   def show
     @request = Request.find(params[:id])
     @customer = Customer.find_by(id: @request.customer_id)

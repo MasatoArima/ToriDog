@@ -8,6 +8,7 @@ class Customer::SessionsController < Devise::SessionsController
     cookies.signed[:customer_id] = current_customer.id
     redirect_to root_path
   end
+
   # GET /resource/sign_in
   # def new
   #   super

@@ -1,4 +1,5 @@
 class Customer::AssessmentsController < ApplicationController
+  before_action :authenticate_customer!
   def create
     current_customer.likes(params[:customer_id])
     redirect_to request.referer

@@ -1,4 +1,5 @@
 class Customer::ApplicationsController < ApplicationController
+  before_action :authenticate_customer!
   def create
     @application = current_customer.applications.new(application_params)
     if @application.save

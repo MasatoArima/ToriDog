@@ -121,6 +121,8 @@ ActiveRecord::Schema.define(version: 2021_11_17_044032) do
     t.integer "user_status", null: false
     t.text "introduction"
     t.string "profile_image"
+    t.float "lat"
+    t.float "lng"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true

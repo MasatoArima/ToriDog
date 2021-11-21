@@ -46,6 +46,8 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
       t.integer :user_status, null: false
       t.text :introduction
       t.string :profile_image
+      t.float :lat
+      t.float :lng
 
       t.timestamps null: false
     end

@@ -78,10 +78,10 @@ function initMap(){
   });
 
   <% map_trimmers.each do |user| %>
-    <% unless Geocoder.search(user.open_addres).blank? %>
+    <% unless user.lat.blank? || user.lng.blank? %>
       (function() {
         let marker<%= user.id %> = new google.maps.Marker({
-          position: {lat: <%= Geocoder.search(user.open_addres).first.coordinates[0] %>, lng: <%= Geocoder.search(user.open_addres).first.coordinates[1] %>},
+          position: {lat: <%= user.lat %>, lng: <%= user.lng %>},
           map: map,
           title: "<%= user.full_name %>",
         });

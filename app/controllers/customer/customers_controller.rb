@@ -1,4 +1,5 @@
 class Customer::CustomersController < ApplicationController
+  before_action :authenticate_customer!
   def index
     # @customers = Customer.all
     @customers = Customer.includes(:profile_image_attachment)
@@ -14,10 +15,7 @@ class Customer::CustomersController < ApplicationController
       end
     else
       @map_trimmers = Customer.where(user_status: 1)
-      # @map_trimmers = Customer.where(user_status: 1)
       trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort { |a, b| b.likers.size <=> a.likers.size }
-      # trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
-      # trimmers = Customer.where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort {|a,b| b.likers.size <=> a.likers.size}
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
@@ -59,11 +57,24 @@ class Customer::CustomersController < ApplicationController
 
   def update
     myself = current_customer
-    if myself.update(customer_params)
-      redirect_to customers_mypage_path, notice: '更新しました'
+    if Geocoder.search(myself.open_addres).blank?
+      if myself.update(customer_params)
+        myself.update(lat: nil, lng: nil)
+        redirect_to customers_mypage_path, notice: '更新しました'
+      else
+        flash[:alert] = '更新に失敗しました'
+        render :edit
+      end
     else
-      flash[:alert] = '更新に失敗しました'
-      render :edit
+      lat = Geocoder.search(myself.open_addres).first.coordinates[0]
+      lng = Geocoder.search(myself.open_addres).first.coordinates[1]
+      if myself.update(customer_params)
+        myself.update(lat: lat, lng: lng)
+        redirect_to customers_mypage_path, notice: '更新しました'
+      else
+        flash[:alert] = '更新に失敗しました'
+        render :edit
+      end
     end
   end
 
@@ -73,7 +84,7 @@ class Customer::CustomersController < ApplicationController
 
   def withdraw
     customer = current_customer
-    if customer.update(is_deleted: true)
+    if customer.update(is_deleted: true) && customer.update(lat: nil, lng: nil)
       reset_session
       redirect_to root_path
     end
@@ -82,7 +93,7 @@ class Customer::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, cut_images: [])
+    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, :lat, :lng, cut_images: [])
   end
 
 end
