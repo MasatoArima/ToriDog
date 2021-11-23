@@ -4,14 +4,20 @@
     <title>ToriDog</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Shippori+Mincho&family=Zen+Maru+Gothic:wght@300&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
     <%= render 'layouts/header' %>
-    <p id="notice" class='text-center'><%= notice %></p>
-    <p id="error_explanation" class='text-center'><%= alert %></p>
+    <span id="notice" class='text-center'>
+      <%= notice %>
+    </span>
+    <span id="error_explanation" class='text-center'>
+      <%= alert %>
+    </span>
     <main>
       <%= yield %>
     </main>

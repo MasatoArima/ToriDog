@@ -1,4 +1,5 @@
 class Customer::ApplicationsController < ApplicationController
+  before_action :authenticate_customer!
   def create
     @application = current_customer.applications.new(application_params)
     if @application.save
@@ -23,6 +24,6 @@ class Customer::ApplicationsController < ApplicationController
 
   private
   def application_params
-    params.require(:application).permit(:comment,:request_id, :first_preferred_date, :last_preferred_date)
+    params.require(:application).permit(:comment, :request_id, :first_preferred_date, :last_preferred_date)
   end
 end

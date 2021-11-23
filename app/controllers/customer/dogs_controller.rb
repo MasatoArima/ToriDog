@@ -1,6 +1,7 @@
 class Customer::DogsController < ApplicationController
+  before_action :authenticate_customer!
   def index
-    @dogs = current_customer.dogs
+    @dogs = current_customer.dogs.where(is_deleted: false)
   end
 
   def show
@@ -31,19 +32,27 @@ class Customer::DogsController < ApplicationController
 
   def update
     dog = Dog.find(params[:id])
-    dog.update(dog_params)
+    if params[:dog][:image_ids].nil?
+      dog.update(dog_params)
+    else
+      params[:dog][:image_ids].each do |image_id|
+        image = dog.trimming_images.find(image_id)
+        image.purge
+      end
+    end
     redirect_to dog_path(dog.id)
   end
 
   def destroy
     dog = Dog.find(params[:id])
-    dog.destroy
-    redirect_to dogs_path
+    if dog.update(is_deleted: true)
+      redirect_to dogs_path
+    end
   end
 
   private
 
   def dog_params
-    params.require(:dog).permit(:name, :name_kana,:breed,:sex,:size,:is_inoculate,:inoculation_date,:birthday,:medical_history,:introduction, :dog_image, trimming_images: [])
+    params.require(:dog).permit(:name, :name_kana, :breed, :sex, :size, :is_inoculate, :inoculation_date, :birthday, :medical_history, :introduction, :dog_image, trimming_images: [])
   end
 end

@@ -8,14 +8,7 @@
       <% @dogs.each do |dog| %>
         <div class="card mr-3 mx-auto border-dark px-1 pt-1 mb-3" style="width: 18rem;">
           <% if dog.dog_image.attached? %>
-            <%#= image_tag dog.dog_image.variant(resize:'300x300').processed %>
-            <% begin %>
-              <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
-            <% rescue Aws::S3::Errors::BadRequest %>
-              <% debugger %>
-              error
-            <% end %>
-            <%#= dog.dog_image.variant(resize:'300x300').processed %>
+            <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
           <% else %>
             <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
           <% end %>
@@ -33,6 +26,5 @@
 </div>
 
 <div class="text-center mt-4">
-  <%= link_to "マイページ", customers_mypage_path, class: "btn btn-success", style: "width:150px"  %>
   <%= link_to "愛犬登録", new_dog_path, class: "btn btn-success", style: "width:150px"  %>
 </div>

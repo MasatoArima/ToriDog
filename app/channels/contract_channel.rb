@@ -1,10 +1,11 @@
 class ContractChannel < ApplicationCable::Channel
-  #接続されたとき
+  # 接続されたとき
   def subscribed
     # stream_from "some_channel"
     stream_from "contract_channel_#{params['contract']}"
   end
-#切断されたとき
+
+  # 切断されたとき
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
   end

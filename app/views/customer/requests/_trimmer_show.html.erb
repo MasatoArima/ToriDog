@@ -21,8 +21,9 @@
     <h3 class="text-center">契約準備中です</h3>
     <p class="text-center"><%= link_to "詳細ページを確認する", contract_path(contracts.find_by(application_id: application.id).id) %></p>
   <% else %>
-    <h3>応募済み</h3>
-    <p>応募情報は下記から変更が可能です</p>
+    <div class="text-center">
+      <h3>応募済み</h3>
+      <p>応募情報は下記から変更が可能です</p>
       <%= form_with model: application, url: application_path(application.id), local: true do |f| %>
         <div class="field">
           <%= f.label :first_preferred_date, "対応可能日" %><br>
@@ -36,9 +37,24 @@
           <%= f.hidden_field :request_id, :value => requesta.id %>
         </div>
         <div class="actions">
-          <%= f.button '変更', type: 'button', onclick: 'submit();' %>
+          <%= f.submit '変更を保存', class: "clickon btn btn-primary", style: "width:150px" %>
         </div>
       <% end %>
-    <%= link_to "応募取り消し", application_path(application), method: :delete, class: "btn btn-danger mt-1", style: "width:150px", data: { confirm: "本当に応募を取りやめますか？"} %>
+      <div>
+        <%= link_to "応募取り消し", application_path(application), method: :delete, class: "btn btn-danger mt-1", style: "width:150px", data: { confirm: "本当に応募を取りやめますか？"} %>
+      </div>
+    </div>
   <% end %>
 <% end %>
+
+<script>
+    $(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+</script>

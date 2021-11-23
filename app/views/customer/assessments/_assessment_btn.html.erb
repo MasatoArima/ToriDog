@@ -1,0 +1,7 @@
+<div id="assessment-btn">
+  <% if current_customer.liking?(customer)%>
+    <%= link_to "いいねを消す", customer_assessments_path(customer.id), method: :delete, remote: true, class: "btn btn-danger mb-1", style: "width:150px" %>
+  <% else %>
+    <%= link_to "いいねする", customer_assessments_path(customer.id), method: :post, remote: true, class: "btn btn-primary mb-1", style: "width:150px" %>
+  <% end %>
+</div>

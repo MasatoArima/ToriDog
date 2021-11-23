@@ -1,5 +1,6 @@
 <% if contract.is_status == "in_preparation" %>
   <h3>契約準備中</h3>
+  <p>※契約完了後に登録してある住所、電話番号が契約書に追加されます</p>
   <div class="row">
     <div class="col-3">
     </div>
@@ -10,12 +11,12 @@
             <%= f.button '契約に同意する', type: 'button', onclick: 'submit();' %>
         <% end %>
       <% else %>
-        <p>
+        <div>
           <strong>
             契約に同意済みです<br>
             飼い主が同意すれば契約が確定します
           </strong>
-        </p>
+        </div>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
             <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
             <%= f.button '同意を解除する', type: 'button', onclick: 'submit();', class: "btn btn-danger" %>
@@ -25,48 +26,6 @@
     <div class="col-3">
     </div>
   </div>
-<% elsif contract.is_status == "in_progress" %>
-<!-----------------------------------進行中なら------------------------------------------------------------->
-  <div class="row">
-    <div class="col-6">
-      <% if (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == false) %>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == true) %>
-        <p>
-          飼い主が契約中止を希望しています<br>
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == false) %>
-        <p>
-          契約中断を希望しています<br>
-          飼い主が契約を中止するのをお待ちください<br>
-          契約を再開する場合は再開のボタンを押してください
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-          <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-          <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == true) %>
-        <p>
-          飼い主が中止確定中<br>
-          契約を再開する場合は再開ボタンを押してください
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-          <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-          <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-        <% end %>
-        <% end %>
-
-    </div>
-  </div>
-
-
 <% elsif contract.is_status == "cancel" %>
   <div class="row">
     <div class="col-12">
@@ -106,5 +65,4 @@
       </script>
     </div>
   </div>
-
 <% end %>

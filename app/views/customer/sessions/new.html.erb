@@ -3,7 +3,7 @@
     <div class="col-12 text-center">
       <div class="customer_session">
         <div class="session_form">
-          <h2>LogIn</h2>
+          <h2>Login</h2>
           <%= form_with model: @customer, url: customer_session_path, local: true do |f| %>
             <div class="field">
               <%= f.label :email, "メールアドレス" %>
@@ -20,7 +20,7 @@
               </div>
             <% end %>
             <div class="actions">
-              <%= f.button 'ログイン', type: 'button', onclick: 'submit();' %>
+              <%= f.submit 'ログイン', class: "clickon" %>
             </div>
           <% end %>
         </div>
@@ -28,3 +28,15 @@
     </div>
   </div>
 </div>
+
+<script>
+    $(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+</script>

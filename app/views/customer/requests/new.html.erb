@@ -5,7 +5,7 @@
       <%= form_with model: @request, url: requests_path, local: true do |f| %>
         <div>
           <%= f.label :dog_id, "愛犬選択" %>
-          <%= f.collection_select :dog_id, current_customer.dogs, :id, :name, include_blank: "選択して下さい" %>
+          <%= f.collection_select :dog_id, current_customer.dogs.where(is_deleted: false), :id, :name, include_blank: "選択して下さい" %>
         </div>
         <div>
           <%= f.label :comment, "追記事項" %><br>

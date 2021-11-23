@@ -10,15 +10,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  .text {
-    font-size: 20px;
-    color: white;
-    position: relative;
-    width: 200px;
-    left: 275px;
-    top: 300px;
-    border: 1px solid black;
-  }
 }
 #box{
   height: 500px;
@@ -33,5 +24,18 @@
   }
   .image4 {
     background-image: image-url('image4.jpg');
+  }
+}
+
+.about {
+  margin: 0 auto;
+  width: 650px;
+  height: 600px;
+  background-image: image-url('about.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  .about-text{
+    background-color: rgba(255, 255, 255, 0.5)
   }
 }

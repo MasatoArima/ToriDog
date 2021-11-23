@@ -42,17 +42,21 @@
    list-style: none;
  }
  body {
+  font-family: 'Kaisei Tokumin', serif;
+  font-family: 'Shippori Mincho', serif;
+  font-family: 'Zen Maru Gothic', sans-serif;
   background-color:	rgba(255, 235, 205, 0.25);
-   display: flex;
-   flex-flow: column;
-   min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
  }
  main {
    flex: 1;
  }
- .actioncable {
-  background-color: white;
-  width: 100%;
-  height: 600px;
-  overflow-y: scroll;
+ .news {
+  width: 90px;
+ }
+p {
+  white-space: pre-wrap;
 }
+

@@ -37,8 +37,8 @@ Rails.application.routes.draw do
     resources :contracts, only: [:create, :new, :show, :update, :destroy]
 
     resources :chats, only: [:show, :create, :destroy]
+    resources :news, only: [:index]
 
-    resources :maps, only: [:index]
   end
 
   namespace :admin do

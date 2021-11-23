@@ -1,14 +1,15 @@
 <% if contract.is_status == "in_preparation" %>
   <h3>契約準備中</h3>
+  <p>※契約完了後に登録してある住所、電話番号が契約書に追加されます</p>
   <div class="row">
      <div class="col-5">
       <% if (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
-        <p>
+        <div>
           <strong>
             両者が契約に同意しています<br>
             契約を確定する場合は確定ボタンを押してください
           </strong>
-        </p>
+        </div>
         <%= form_with model: contract, url: contract_path(contract.id,status: "complete"), local: true do |f| %>
           <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
           <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
@@ -47,46 +48,7 @@
 <% elsif contract.is_status == "in_progress" %>
 <!-----------------------------------進行中なら------------------------------------------------------------->
   <div class="row">
-    <div class="col-6">
-      <% if (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == false) %>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == true) %>
-        <p>
-          トリマーが中止を希望しています
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == false) %>
-        <p>
-          契約中断を希望しています<br>
-          トリマーが同意すれば契約を中止することが出来ます<br>
-          契約を再開する場合は再開のボタンを押してください
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-            <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
-        <p>
-          契約を中止する場合は中止を押してください<br>
-          再開する場合は契約再開を押してください
-        </p>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-            <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-        <% end %>
-        <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :is_status, :value => "cancel" %>
-            <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="col-6">
+    <div class="col-12">
       <% if trimming_finish(contract) == true %>
         <p>施術後入力フォーム</p>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
@@ -116,7 +78,7 @@
           });
         </script>
       <% else %>
-        <p>施術終了後評価を行うことが出来ます</p>
+        <div>施術終了後評価を行うことが出来ます</p>
       <% end %>
     </div>
   </div>
@@ -127,41 +89,9 @@
     </div>
   </div>
 <% elsif contract.is_status == "completion" %>
-
-
-    <div class="row">
-      <div class="col-6">
-        <h3>完了</h3>
-      </div>
-      <div class="col-6">
-        <table>
-          <thead>
-            <tr>
-              <th>コメント</th>
-              <th>この施術に対する評価</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr>
-                <td><%=evaluation.comment %></td>
-                <td class="contract-rate" data-score="<%= evaluation.rate %>"></td>
-              </tr>
-          </tbody>
-        </table>
-        <script>
-          $('.contract-rate').raty({
-            readOnly: true,
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            score: function() {
-              return $(this).attr('data-score');
-            },
-          });
-        </script>
-      </div>
+  <div class="row">
+    <div class="col-12">
+      <h3>完了</h3>
     </div>
-
-
-
+  </div>
 <% end %>

@@ -4,7 +4,7 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
-
+  belongs_to :info, optional: true
   has_many :dogs, dependent: :destroy
   has_many :requests, dependent: :destroy
   has_many :applications, dependent: :destroy
@@ -41,14 +41,15 @@ class Customer < ApplicationRecord
   validates :phone_number, presence: true
   validates :user_status, presence: true
 
-
   # フォロー・フォロワー
   def follow(customer_id)
     relationships.create(followed_id: customer_id)
   end
+
   def unfollow(customer_id)
     relationships.find_by(followed_id: customer_id).destroy
   end
+
   def following?(customer)
     followings.include?(customer)
   end
@@ -57,9 +58,11 @@ class Customer < ApplicationRecord
   def likes(customer_id)
     assessments.create(get_like_id: customer_id)
   end
+
   def unlikes(customer_id)
     assessments.find_by(get_like_id: customer_id).destroy
   end
+
   def liking?(customer)
     likings.include?(customer)
   end
@@ -80,9 +83,7 @@ class Customer < ApplicationRecord
     self.prefecture_code.to_s + self.city.to_s + self.street.to_s + self.other_address.to_s
   end
 
-
-
-  #住所自動入力
+  # 住所自動入力
   include JpPrefecture
   jp_prefecture :prefecture_code
 
@@ -94,7 +95,6 @@ class Customer < ApplicationRecord
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
-
-  #enum使用
+  # enum使用
   enum user_status: { dog_owner: 0, trimmer: 1 }
 end

@@ -13,5 +13,4 @@ module Customer::RequestsHelper
       "false"
     end
   end
-
 end

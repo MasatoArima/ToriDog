@@ -41,6 +41,7 @@
         </td>
         <td class="average-rate<%= trimmer.id %>" data-score="<%= evaluation_ave(trimmer) %>"></td>
         <script>
+          $('.average-rate<%= trimmer.id %>').empty();
           $('.average-rate<%= trimmer.id %>').raty({
             readOnly: true,
             starOn: "<%= asset_path('star-on.png') %>",
@@ -64,7 +65,7 @@
 
 <h2>地図から検索</h2>
 
-<input id="address" type="textbox" value="GeekSalon">
+<input id="address" type="textbox" placeholder="都道府県や地名を入力">
 <input type="button" value="Encode" onclick="codeAddress()">
 <div id='map'></div>
 
@@ -78,10 +79,10 @@ function initMap(){
   });
 
   <% map_trimmers.each do |user| %>
-    <% unless Geocoder.search(user.open_addres).blank? %>
+    <% unless user.lat.blank? || user.lng.blank? %>
       (function() {
         let marker<%= user.id %> = new google.maps.Marker({
-          position: {lat: <%= Geocoder.search(user.open_addres).first.coordinates[0] %>, lng: <%= Geocoder.search(user.open_addres).first.coordinates[1] %>},
+          position: {lat: <%= user.lat %>, lng: <%= user.lng %>},
           map: map,
           title: "<%= user.full_name %>",
         });

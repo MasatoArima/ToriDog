@@ -1,16 +1,20 @@
 <div class="chat">
   <% if chat.customer_id == current_customer.id %>
-    <p style="text-align: right;">
-      <%= chat.message %><br>
-      <%= chat.updated_at.to_s(:datetime_jp_time) %><br>
-      <%= chat.customer.full_name %>
-      <%= link_to "投稿削除", chat_path(chat), method: :delete %>
-    </p>
+    <div class="mb-2 chat-text" style="text-align: right;">
+      <strong><%= chat.message %></strong>
+      <div class="chat-font" style="text-align: right;">
+        <%= chat.updated_at.to_s(:datetime_chat_time) %><br>
+        <%= chat.customer.full_name %>
+        <%= link_to "投稿削除", chat_path(chat), method: :delete, remote: true %>
+      </div>
+    </div>
   <% else %>
-    <p style="text-align: left;">
-      <%= chat.message %><br>
-      <%= chat.updated_at.to_s(:datetime_jp_time) %><br>
-      <%= chat.customer.full_name %>
-    </p>
+    <div class="mb-2 chat-text" style="text-align: left;">
+      <strong><%= chat.message %></strong>
+      <div class="chat-font" style="text-align: left;">
+        <%= chat.updated_at.to_s(:datetime_chat_time) %><br>
+        <%= chat.customer.full_name %>
+      </div>
+    </div>
   <% end %>
 </div>
