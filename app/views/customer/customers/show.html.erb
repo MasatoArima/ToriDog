@@ -39,30 +39,31 @@
             <% end %>
           </tbody>
         </table>
-        <h3>dog</h3>
-        <% unless @dogs.blank? %>
-          <% @dogs.each do |dog| %>
-            <div class="card mr-3 mx-auto border-dark px-1 pt-1 mb-3" style="width: 18rem;">
-              <% if dog.dog_image.attached? %>
-                <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
-              <% else %>
-                <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
-              <% end %>
-              <div class="card-body text-center">
-                <h5 class="card-title">
-                  <%= link_to dog_path(dog.id) do %>
-                    <%= dog.name %>
-                  <% end %>
-                </h5>
-                <p class="card-text">
-                  <%= dog.breed %>
-                </p>
-                <p class="card-text">
-                  <%= dog.age %>
-                </p>
+        <div class="row text-center">
+          <% unless @dogs.blank? %>
+            <% @dogs.each do |dog| %>
+              <div class="card mr-3 mx-auto border-dark px-1 pt-1 mb-3" style="width: 18rem;">
+                <% if dog.dog_image.attached? %>
+                  <%= image_tag dog.dog_image.variant(resize:'300x300').processed %>
+                <% else %>
+                  <%= image_tag("no_dogimage.jpg", :size => "275x285") %>
+                <% end %>
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%= link_to dog_path(dog.id) do %>
+                      <%= dog.name %>
+                    <% end %>
+                  </h5>
+                  <div class="card-text">
+                    <%= dog.breed %>
+                  </div>
+                  <div class="card-text">
+                    <%= dog.age %>
+                  </div>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         <% else %>
         <div class="mx-auto">
           <p>まだ愛犬が登録されていません</p>
@@ -75,7 +76,7 @@
         <% if @customer.introduction.blank? %>
           <p>紹介文はまだ書かれていません</p>
         <% else %>
-          <%= @customer.introduction %>
+         <p><%= @customer.introduction %></p>
         <% end %>
       </div>
       <h3 class="mt-5">トリミング画像</h3>

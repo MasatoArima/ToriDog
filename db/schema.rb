@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_044032) do
+ActiveRecord::Schema.define(version: 2021_11_21_170908) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -123,9 +123,11 @@ ActiveRecord::Schema.define(version: 2021_11_17_044032) do
     t.string "profile_image"
     t.float "lat"
     t.float "lng"
+    t.integer "info_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
+    t.index ["info_id"], name: "index_customers_on_info_id"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
@@ -142,6 +144,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_044032) do
     t.string "profile_image"
     t.string "birthday", null: false
     t.string "medical_history"
+    t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_dogs_on_customer_id"
@@ -163,6 +166,18 @@ ActiveRecord::Schema.define(version: 2021_11_17_044032) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contract_id"], name: "index_evaluations_on_contract_id"
+  end
+
+  create_table "infos", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.string "best_breed"
+    t.string "best_cut"
+    t.integer "price_large"
+    t.integer "price_medium"
+    t.integer "price_small"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_infos_on_customer_id"
   end
 
   create_table "messages", force: :cascade do |t|

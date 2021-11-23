@@ -49,6 +49,9 @@
         名前
       </th>
       <th>
+        愛犬(犬種)
+      </th>
+      <th>
         住所
       </th>
     </tr>
@@ -66,6 +69,11 @@
         <td>
           <%= link_to customer_path(dog_owner.id) do %>
             <p><%= dog_owner.full_name %></p>
+          <% end %>
+        </td>
+        <td>
+          <% dog_owner.dogs.each do |dog| %>
+            <%= dog.breed %><br>
           <% end %>
         </td>
         <td>

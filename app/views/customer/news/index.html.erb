@@ -1,10 +1,11 @@
 <div class="container">
   <div class="row">
-    <header>
-      <h1>⭐️犬情報⭐️</h1>
-      <p>Powered by <a href="https://newsapi.org">News API</a></p>
-    </header>
-    <hr>
+    <div class="col-12 text-center">
+      <header>
+        <h1 class="text-center"><strong>Dog infomation</strong></h1>
+        <p>Powered by <a href="https://newsapi.org">News API</a></p>
+      </header>
+    </div>
 
     <div class="articles">
       <% @articles["articles"].first(9).each do |article| %>

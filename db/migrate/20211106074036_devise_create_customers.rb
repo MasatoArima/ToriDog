@@ -48,6 +48,7 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
       t.string :profile_image
       t.float :lat
       t.float :lng
+      t.references :info
 
       t.timestamps null: false
     end

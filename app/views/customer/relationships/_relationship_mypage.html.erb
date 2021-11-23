@@ -1,0 +1,20 @@
+<table id="follow" class="table">
+  <tbody>
+    <tr>
+      <td style="width: 120px">
+        フォロー
+      </td>
+      <td>
+        <%= link_to customer.followings.count, customer_followings_path(customer) %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        フォロワー
+      </td>
+      <td>
+        <%= link_to customer.followers.count, customer_followers_path(customer) %>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -45,7 +45,7 @@
         user_status: 0,
       )
   end
-  1.times do |n|
+  7.times do |n|
       Customer.create!(
         email: "tatuo#{n + 1}@test.com",
         password: "111111",
@@ -61,7 +61,7 @@
         user_status: 1,
       )
   end
-  1.times do |n|
+  7.times do |n|
       Customer.create!(
         email: "tat#{n + 1}@test.com",
         password: "111111",

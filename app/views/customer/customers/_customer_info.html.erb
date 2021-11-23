@@ -6,7 +6,7 @@
       <%= image_tag("no_image.jpg", :size => "200x200") %>
     <% end %>
   </div>
-  <table class="table mt-2">
+  <table class="table mt-2 mb-0">
     <tbody>
       <tr>
         <td style="width: 120px">
@@ -83,80 +83,87 @@
           </td>
         </tr>
       <% end %>
-      <% if request.fullpath == customers_mypage_path %>
-        <tr>
-          <td>
-            フォロー
-          </td>
-          <td>
-            <%= link_to customer.followings.count, customer_followings_path(customer) %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            フォロワー
-          </td>
-          <td>
-            <%= link_to customer.followers.count, customer_followers_path(customer) %>
-          </td>
-        </tr>
-        <% if customer.user_status == "trimmer" %>
-          <tr>
-            <td>
-              いいね
-            </td>
-            <td>
-              <%= link_to customer.likers.count, customer_likers_path(customer) %>
-            </td>
-          </tr>
-        <% end %>
-      <% else %>
-        <tr>
-          <td>
-            フォロー
-          </td>
-          <td>
-            <%= customer.followings.count %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            フォロワー
-          </td>
-          <td>
-            <%= customer.followers.count %>
-          </td>
-        </tr>
-        <% if customer.user_status == "trimmer" %>
-          <tr>
-            <td>
-              いいね
-            </td>
-            <td>
-              <%= customer.likers.count %>
-            </td>
-          </tr>
-        <% end %>
-      <% end %>
-      <% if customer.user_status == "trimmer" %>
-        <tr>
-          <td>評価</td>
-          <td class="average-rate" data-score="<%= evaluation_ave(customer) %>"></td>
-          <script>
-            $('.average-rate').raty({
-              readOnly: true,
-              starOn: "<%= asset_path('star-on.png') %>",
-              starOff: "<%= asset_path('star-off.png') %>",
-              starHalf: "<%= asset_path('star-half.png') %>",
-              score: function() {
-                return $(this).attr('data-score');
-              },
-            });
-          </script>
-        </tr>
-      <% end %>
     </tbody>
   </table>
+  <%= render "customer/assessments/assessment", customer: customer %>
+
+
+  <% if request.fullpath == customers_mypage_path %>
+    <%= render "customer/relationships/relationship_mypage", customer: customer %>
+  <% else %>
+    <%= render "customer/relationships/relationship", customer: customer %>
+  <% end %>
+
+  <% if customer.user_status == "trimmer" %>
+    <% unless ( customer.info.nil? )%>
+      <table class="table mb-0">
+        <tbody>
+          <tr>
+            <td style="width: 120px">
+              得意犬種
+            </td>
+            <td>
+              <%= customer.info.best_breed %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              得意なカット
+            </td>
+            <td>
+              <%= customer.info.best_cut %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              大型犬の値段
+            </td>
+            <td>
+              <%= customer.info.price_large %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              中型犬の値段
+            </td>
+            <td>
+              <%= customer.info.price_medium %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              小型犬の値段
+            </td>
+            <td>
+              <%= customer.info.price_small %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+  <% if customer.user_status == "trimmer" %>
+  <table class="table mb-0">
+    <tbody>
+      <tr>
+        <td>評価</td>
+        <td class="average-rate" data-score="<%= evaluation_ave(customer) %>"></td>
+        <script>
+          $('.average-rate').empty();
+          $('.average-rate').raty({
+            readOnly: true,
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
+            score: function() {
+              return $(this).attr('data-score');
+            },
+          });
+        </script>
+      </tr>
+    </tbody>
+  </table>
+  <% end %>
 
   <div>自己紹介文</div>
   <p style="word-break : break-all"><%= customer.introduction%></p>
@@ -173,20 +180,10 @@
       <% end %>
     <% else %>
       <div class="mt-1">
-        <div>
-          <% if current_customer.following?(customer) %>
-            <%= link_to "フォロー外す", customer_relationships_path(customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
-          <% else %>
-            <%= link_to "フォローする", customer_relationships_path(customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
-          <% end %>
-        </div>
-        <div>
-          <% if current_customer.liking?(customer)%>
-            <%= link_to "いいねを消す", customer_assessments_path(customer.id), method: :delete, class: "btn btn-danger mb-1", style: "width:150px" %>
-          <% else %>
-            <%= link_to "いいねする", customer_assessments_path(customer.id), method: :post, class: "btn btn-primary mb-1", style: "width:150px" %>
-          <% end %>
-        </div>
+        <%= render "customer/relationships/relationship_btn", customer: customer %>
+        <% if customer.user_status == "trimmer" %>
+          <%= render "customer/assessments/assessment_btn", customer: customer %>
+        <% end %>
         <div>
           <%= link_to 'chatを始める', chat_path(customer.id), class: "btn btn-primary", style: "width:150px" %>
         </div>

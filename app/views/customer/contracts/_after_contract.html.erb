@@ -24,7 +24,7 @@
     </div>
     <div class="col-3">
       <div>Chat</div>
-      <div class="actioncable">
+      <div class="actioncable" style="padding: 0 10px 0 0; height: 600px; overflow-y: scroll;">
         <div id="messages" data-contract_id="<%= contract.id %>" data-sender="<%= current_customer.full_name %>" style="word-break : break-all">
           <%= render @messages %>
         </div>

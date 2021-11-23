@@ -1,0 +1,27 @@
+<table id="assessment" class="table mt-2 mb-0">
+  <tbody>
+    <% if request.fullpath == customers_mypage_path %>
+      <% if customer.user_status == "trimmer" %>
+        <tr>
+          <td style="width: 120px">
+            いいね
+          </td>
+          <td>
+            <%= link_to customer.likers.count, customer_likers_path(customer) %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <% if customer.user_status == "trimmer" %>
+        <tr>
+          <td style="width: 120px">
+            いいね
+          </td>
+          <td>
+            <%= customer.likers.count %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

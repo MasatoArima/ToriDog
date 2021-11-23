@@ -1,5 +1,6 @@
 <% if contract.is_status == "in_preparation" %>
   <h3>契約準備中</h3>
+  <p>※契約完了後に登録してある住所、電話番号が契約書に追加されます</p>
   <div class="row">
      <div class="col-5">
       <% if (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
@@ -127,41 +128,36 @@
     </div>
   </div>
 <% elsif contract.is_status == "completion" %>
-
-
-    <div class="row">
-      <div class="col-6">
-        <h3>完了</h3>
-      </div>
-      <div class="col-6">
-        <table>
-          <thead>
-            <tr>
-              <th>コメント</th>
-              <th>この施術に対する評価</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr>
-                <td><%=evaluation.comment %></td>
-                <td class="contract-rate" data-score="<%= evaluation.rate %>"></td>
-              </tr>
-          </tbody>
-        </table>
-        <script>
-          $('.contract-rate').raty({
-            readOnly: true,
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            score: function() {
-              return $(this).attr('data-score');
-            },
-          });
-        </script>
-      </div>
+  <div class="row">
+    <div class="col-6">
+      <h3>完了</h3>
     </div>
-
-
-
+    <div class="col-6">
+      <table>
+        <thead>
+          <tr>
+            <th>コメント</th>
+            <th>この施術に対する評価</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><%=evaluation.comment %></td>
+              <td class="contract-rate" data-score="<%= evaluation.rate %>"></td>
+            </tr>
+        </tbody>
+      </table>
+      <script>
+        $('.contract-rate').raty({
+          readOnly: true,
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          score: function() {
+            return $(this).attr('data-score');
+          },
+        });
+      </script>
+    </div>
+  </div>
 <% end %>

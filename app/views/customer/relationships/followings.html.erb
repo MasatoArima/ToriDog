@@ -13,7 +13,13 @@
         <tbody>
           <% @customers.each do |customer| %>
             <tr>
-              <td></td>
+              <td>
+                <% if customer.profile_image.attached? %>
+                  <%= image_tag customer.profile_image.variant(resize:'50x50').processed %>
+                <% else %>
+                  <%= image_tag("no_image.jpg", :size => "50x50") %>
+                <% end %>
+              </td>
               <td><%= customer.full_name %></td>
               <td><%= link_to 'Show', customer_path(customer) %></td>
             </tr>

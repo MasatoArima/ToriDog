@@ -17,12 +17,19 @@
           cancel: "中止"
     activerecord:
       models:
-        contact: お問い合わせ
+        contact: "お問い合わせ"
       attributes:
         contact:
-          name: お名前
-          subject: 要件
-        　message: メッセージ
+          name: "お名前"
+          subject: "要件"
+        　message: "メッセージ"
+      models:
+        info: "トリマー情報"
+      attributes:
+        info:
+          price_large: "大型犬の値段"
+          price_medium: "中型犬の値段"
+        　price_small: "小型犬の値段"
       errors:
         messages:
           record_invalid: 'バリデーションに失敗しました: %{errors}'

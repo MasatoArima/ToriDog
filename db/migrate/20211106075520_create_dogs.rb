@@ -13,6 +13,7 @@ class CreateDogs < ActiveRecord::Migration[5.2]
       t.string :profile_image
       t.string :birthday, null: false
       t.string :medical_history
+      t.boolean :is_deleted, null: false, default: false
 
       t.timestamps
     end

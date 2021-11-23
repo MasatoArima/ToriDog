@@ -26,73 +26,71 @@
         <%= f.label :last_name, "(姓)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name" %>
+        <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name", placeholder: "山田" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :first_name, "(名)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :first_name, autofocus: true, autocomplete: "name" %>
+        <%= f.text_field :first_name, autofocus: true, autocomplete: "name", placeholder: "花子" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :last_name_kana, "(セイ)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "family-name" %>
+        <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "family-name", placeholder: "ヤマダ" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :first_name_kana, "(メイ)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "name" %>
+        <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "name", placeholder: "ハナコ" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :email, "メールアドレス" %>
       </div>
       <div class="col-5 pb-2 ">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "25" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "25", placeholder: "XXX@XX.XXX" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
+        <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code", placeholder: "1234567" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :prefecture_code, "都道府県" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県' %>
+        <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県', placeholder: "東京都" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :city, "市区町村" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :city, autofocus: true %>
+        <%= f.text_field :city, autofocus: true, placeholder: "江東区" %>
       </div>
       <div class="col-5 pb-2 offset-2">
-        <%= f.label :street, "番地" %>
+        <%= f.label :street, "番地"%>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :street, autofocus: true, size: "25" %>
+        <%= f.text_field :street, autofocus: true, size: "25", placeholder: "豊洲〇-〇-〇"  %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :other_address, "マンション名等" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :other_address, autofocus: true, size: "25" %>
+        <%= f.text_field :other_address, autofocus: true, size: "25", placeholder: "マンション名" %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
       </div>
       <div class="col-5 pb-2">
-        <%= f.text_field :phone_number, autofocus: true %>
+        <%= f.text_field :phone_number, autofocus: true, placeholder: "0801234XXXX"  %>
       </div>
       <div class="col-5 pb-2 offset-2">
         <%= f.label :password, "パスワード" %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> 文字以上)</em>
-        <% end %>
+        <em>(6 文字以上)</em>
       </div>
       <div class="col-5 pb-2">
         <%= f.password_field :password, autocomplete: "new-password" %>
@@ -104,8 +102,20 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
       <div class="col-5 pb-2 offset-7">
-        <%= f.button '新規登録', type: 'button', onclick: 'submit();' %>
+        <%= f.submit '新規登録', class: "clickon" %>
       </div>
     </div>
   <% end %>
 </div>
+
+<script>
+    $(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+</script>

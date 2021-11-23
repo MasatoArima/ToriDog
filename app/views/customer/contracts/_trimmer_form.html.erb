@@ -1,5 +1,6 @@
 <% if contract.is_status == "in_preparation" %>
   <h3>契約準備中</h3>
+  <p>※契約完了後に登録してある住所、電話番号が契約書に追加されます</p>
   <div class="row">
     <div class="col-3">
     </div>
@@ -61,12 +62,9 @@
           <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
           <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
         <% end %>
-        <% end %>
-
+      <% end %>
     </div>
   </div>
-
-
 <% elsif contract.is_status == "cancel" %>
   <div class="row">
     <div class="col-12">
@@ -106,5 +104,4 @@
       </script>
     </div>
   </div>
-
 <% end %>

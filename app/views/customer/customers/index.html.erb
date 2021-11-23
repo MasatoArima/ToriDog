@@ -1,16 +1,61 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <h4 class="text-center">ユーザー検索欄</h4>
+      <h4 class="text-center">詳細検索</h4>
       <%= search_form_for @q do |f| %>
-        <%= f.label "　　　　" %>
-        <%=f.search_field:last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_cont, placeholder: "キーワード検索"%><br>
-
-        <%= f.label :prefecture_code, "都道府県" %>
-        <%= f.search_field :prefecture_code_cont %><br>
-        <%= f.label :city, "市区町村" %>
-        <%= f.search_field :city_cont %><br>
-        <%= f.submit "検索" %>
+          <div class="text-right mb-1 mr-4">
+            <%= f.select( :sorts, { '並び替え': 'id desc', '登録の古い順': 'id asc', '登録の新しい順': 'id desc' } , { onchange: 'this.form.submit()'} ) %>
+          </div>
+          <div class="text-right mb-1 mr-4">
+            <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_cont, size: 23, placeholder: "検索ワード1"%>
+          </div>
+        <% unless is_trimmer? %>
+          <div class="text-right mb-1 mr-4">
+            <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_or_info_price_large_cont, size: 23, placeholder: "検索ワード2"%>
+          </div>
+          <div class="text-right mb-1 mr-4">
+            <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_or_info_price_small_cont, size: 23, placeholder: "検索ワード3"%>
+          </div>
+        <% end %>
+        <div class="text-right mr-4">
+          <%= f.label :prefecture_code, "都道府県" %>
+          <%= f.search_field :prefecture_code_cont, size: 23 %>
+        </div>
+        <div class="text-right mr-4">
+          <%= f.label :city, "市区町村" %>
+          <%= f.search_field :city_cont, size: 23 %>
+        </div>
+        <% unless is_trimmer? %>
+          <div class="text-right mb-1 mr-4">
+            <span>大型犬</span>
+            <%= f.search_field :info_price_large_gteq, size: 9, placeholder: "¥ Min" %>
+              <span>~</span>
+            <%= f.search_field :info_price_large_lteq, size: 9, placeholder: "¥ Max" %>
+          </div>
+          <div class="text-right mb-1 mr-4">
+            <span>中型犬</span>
+            <%= f.search_field :info_price_medium_gteq, size: 9, placeholder: "¥ Min" %>
+              <span>~</span>
+            <%= f.search_field :info_price_medium_lteq, size: 9, placeholder: "¥ Max" %>
+          </div>
+          <div class="text-right mb-1 mr-4">
+            <span>小型犬</span>
+            <%= f.search_field :info_price_small_gteq, size: 9, placeholder: "¥ Min" %>
+              <span>~</span>
+            <%= f.search_field :info_price_small_lteq, size: 9, placeholder: "¥ Max" %>
+          </div>
+        <% end %>
+        <% if is_trimmer? %>
+          <div class="text-center">
+            <%= link_to "クリア", "/customers",type: "button" %>
+            <%= f.submit "検索" %>
+          </div>
+        <% else %>
+          <div class="text-right mt-3 mr-5">
+            <%= link_to "クリア", "/customers",type: "button" %>
+            <%= f.submit "検索" %>
+          </div>
+        <% end %>
       <% end %>
 
     </div>

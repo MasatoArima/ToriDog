@@ -4,6 +4,7 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
 
+  belongs_to :info, optional: true
   has_many :dogs, dependent: :destroy
   has_many :requests, dependent: :destroy
   has_many :applications, dependent: :destroy
@@ -28,7 +29,7 @@ class Customer < ApplicationRecord
   has_many_attached :cut_images
 
   validates :email, presence: true
-  #validates :encrypted_password, presence: true
+  validates :encrypted_password, presence: true
   validates :last_name, presence: true
   validates :first_name, presence: true
   validates :last_name_kana, presence: true

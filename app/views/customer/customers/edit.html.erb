@@ -1,103 +1,152 @@
 <script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
-
 <div class="container">
-  <%= form_with model: @customer, url: customer_path, local: true do |f| %>
-    <div class="row w-50 form">
-      <div class="col-12 text-center pb-2">
-        <h2>会員情報編集</h2>
-      </div>
-      <div class="col-2 pb-2">
-        <span class="text-right">名前</span>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.label :last_name, "(姓)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :first_name, "(名)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :first_name, autofocus: true, autocomplete: "name" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :last_name_kana, "(セイ)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "family-name" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :first_name_kana, "(メイ)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "name" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :email, "メールアドレス" %>
-      </div>
-      <div class="col-5 pb-2 ">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "25" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :prefecture_code, "都道府県" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県' %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :city, "市区町村" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :city, autofocus: true %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :street, "番地" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :street, autofocus: true, size: "25" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :other_address, "マンション名等" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :other_address, autofocus: true, size: "25" %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_field :phone_number, autofocus: true %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :introduction, "自己紹介文" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.text_area :introduction, size: "50x10", autofocus: true %>
-      </div>
-      <div class="col-5 pb-2 offset-2">
-        <%= f.label :profile_image , "プロファイル画像変更" %>
-      </div>
-      <div class="col-5 pb-2">
-        <%= f.file_field :profile_image %>
-      </div>
-      <% if is_trimmer? %>
-        <div class="col-5 pb-2 offset-2">
-          <%= f.label :cut_images , "トリミング画像追加" %>
-        </div>
-        <div class="col-5 pb-2">
-          <%= f.file_field :cut_images, multiple: true %>
+  <div class="row">
+    <div class="col-7">
+      <%= form_with model: @customer, url: customer_path, local: true do |f| %>
+        <div class="row form">
+          <div class="col-12 text-center pb-2">
+            <h2>会員情報編集</h2>
+          </div>
+          <div class="col-2 pb-2">
+            <span class="text-right">名前</span>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.label :last_name, "(姓)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :last_name, autofocus: true, autocomplete: "family-name" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :first_name, "(名)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :first_name, autofocus: true, autocomplete: "name" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :last_name_kana, "(セイ)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :last_name_kana, autofocus: true, autocomplete: "family-name" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :first_name_kana, "(メイ)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :first_name_kana, autofocus: true, autocomplete: "name" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :email, "メールアドレス" %>
+          </div>
+          <div class="col-5 pb-2 ">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "25" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :prefecture_code, "都道府県" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :prefecture_code, collection: JpPrefecture::Prefecture.all, :value_method => :name, include_blank: '都道府県' %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :city, "市区町村" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :city, autofocus: true %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :street, "番地" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :street, autofocus: true, size: "25" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :other_address, "マンション名等" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :other_address, autofocus: true, size: "25" %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_field :phone_number, autofocus: true %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :introduction, "自己紹介文" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.text_area :introduction, size: "50x10", autofocus: true %>
+          </div>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :profile_image , "プロファイル画像変更" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.file_field :profile_image %>
+          </div>
+          <% if is_trimmer? %>
+            <div class="col-5 pb-2 offset-2">
+              <%= f.label :cut_images , "トリミング画像追加" %>
+            </div>
+            <div class="col-5 pb-2">
+              <%= f.file_field :cut_images, multiple: true %>
+            </div>
+            <%= f.fields_for @info do |i| %>
+                <%= i.hidden_field :customer_id, :value => current_customer.id %>
+                <div class="col-5 pb-2 offset-2">
+                <%= i.label :best_breed, "得意な犬種" %><br>
+                </div>
+                <div class="col-5 pb-2">
+                <%= i.text_area :best_breed, size:"50x5", autofocus: true %>
+                </div>
+                <div class="col-5 pb-2 offset-2">
+                <%= i.label :best_cut, "得意なカット" %><br>
+                </div>
+                <div class="col-5 pb-2">
+                <%= i.text_area :best_cut, size:"50x5", autofocus: true %>
+                </div>
+                <div class="col-5 pb-2 offset-2">
+                <%= i.label :price_large, "大型犬の値段" %><br>
+                </div>
+                <div class="col-5 pb-2">
+                <%= i.text_field :price_large, autofocus: true %>
+                </div>
+                <div class="col-5 pb-2 offset-2">
+                <%= i.label :price_medium, "中型犬の値段" %><br>
+                </div>
+                <div class="col-5 pb-2">
+                <%= i.text_field :price_medium, autofocus: true %>
+                </div>
+                <div class="col-5 pb-2 offset-2">
+                <%= i.label :price_small, "小型犬の値段" %><br>
+                </div>
+                <div class="col-5 pb-2">
+                <%= i.text_field :price_small, autofocus: true %>
+                </div>
+            <% end %>
+          <% end %>
+          <div class="col-5 pb-2 offset-7">
+            <%= f.button '情報更新', type: 'button', onclick: 'submit();' %>
+          </div>
         </div>
       <% end %>
-      <div class="col-5 pb-2 offset-7">
-        <%= f.button '新規登録', type: 'button', onclick: 'submit();' %>
-      </div>
     </div>
-  <% end %>
+    <% if is_trimmer? %>
+      <div class="col-5 text-center">
+        <%= form_with model: @customer, local: true  do |f| %>
+          <p>現在登録されている画像<br>（削除するものはチェックしてください）</p>
+          <% @customer.cut_images.each do |image| %>
+            <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
+              <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
+          <% end %>
+          <%= f.submit "削除する" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
+

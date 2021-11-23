@@ -8,16 +8,28 @@ class Customer::CustomersController < ApplicationController
       @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
       @applications = current_customer.applications
       @dogs = Dog.all
-      @q = Customer.where(user_status: 0).ransack(params[:q])
+      @q = Customer.left_joins(:dogs).where(user_status: 0).ransack(params[:q])
       unless params[:q].nil?
         @q.result(distinct: true).page(params[:customer_page]).per(5)
-         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
+        @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
+        requests = []
+        @dog_owners.each do |dog_owner|
+          requests.append(dog_owner.requests.where(is_complete: "false"))
+        end
+        if requests.sum() == 0
+          requests = []
+        else
+          requests.sum()
+        end
+        # binding.pry
+        @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
+        # @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
       end
     else
       @map_trimmers = Customer.where(user_status: 1)
       trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort { |a, b| b.likers.size <=> a.likers.size }
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
-      @q = Customer.where(user_status: 1).ransack(params[:q])
+      @q = Customer.left_joins(:info).where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
         trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
         @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
@@ -41,6 +53,11 @@ class Customer::CustomersController < ApplicationController
       @applications = Application.all
       @dogs = current_customer.dogs
     end
+    if Info.find_by(customer_id: @customer.id).nil?
+      @info = Info.new(customer_id: @customer.id)
+      @info.save
+      @customer.update(info_id: @info.id)
+    end
 
   end
 
@@ -53,27 +70,35 @@ class Customer::CustomersController < ApplicationController
 
   def edit
     @customer = current_customer
+    @info = Info.find_by(customer_id: @customer.id)
   end
 
   def update
-    myself = current_customer
-    if Geocoder.search(myself.open_addres).blank?
-      if myself.update(customer_params)
-        myself.update(lat: nil, lng: nil)
+    @customer = current_customer
+    @info = Info.find_by(customer_id: @customer.id)
+    if Geocoder.search(@customer.open_addres).blank?
+      if @customer.update(customer_params)
+        if @customer.user_status == "trimmer"
+          @info.update(trimmer_info_params[:info])
+        end
+        @customer.update(lat: nil, lng: nil)
         redirect_to customers_mypage_path, notice: '更新しました'
       else
         flash[:alert] = '更新に失敗しました'
-        render :edit
+        redirect_to request.referer
       end
     else
-      lat = Geocoder.search(myself.open_addres).first.coordinates[0]
-      lng = Geocoder.search(myself.open_addres).first.coordinates[1]
-      if myself.update(customer_params)
-        myself.update(lat: lat, lng: lng)
+      lat = Geocoder.search(@customer.open_addres).first.coordinates[0]
+      lng = Geocoder.search(@customer.open_addres).first.coordinates[1]
+      if @customer.update(customer_params)
+        if @customer.user_status == "trimmer"
+          @info.update(trimmer_info_params[:info])
+        end
+        @customer.update(lat: lat, lng: lng)
         redirect_to customers_mypage_path, notice: '更新しました'
       else
         flash[:alert] = '更新に失敗しました'
-        render :edit
+        redirect_to request.referer
       end
     end
   end
@@ -94,6 +119,10 @@ class Customer::CustomersController < ApplicationController
 
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :prefecture_code, :city, :street, :other_address, :post_code, :phone_number, :introduction, :profile_image, :lat, :lng, cut_images: [])
+  end
+
+  def trimmer_info_params
+    params.require(:customer).permit(info: [:customer_id, :best_breed, :best_cut, :price_large, :price_medium, :price_small])
   end
 
 end

@@ -41,6 +41,7 @@
         </td>
         <td class="average-rate<%= trimmer.id %>" data-score="<%= evaluation_ave(trimmer) %>"></td>
         <script>
+          $('.average-rate<%= trimmer.id %>').empty();
           $('.average-rate<%= trimmer.id %>').raty({
             readOnly: true,
             starOn: "<%= asset_path('star-on.png') %>",
@@ -64,7 +65,7 @@
 
 <h2>地図から検索</h2>
 
-<input id="address" type="textbox" value="GeekSalon">
+<input id="address" type="textbox" placeholder="都道府県や地名を入力">
 <input type="button" value="Encode" onclick="codeAddress()">
 <div id='map'></div>
 
