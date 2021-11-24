@@ -15,5 +15,4 @@ describe 'method', type: :model do
   it 'inoculation_day_method' do
     expect(dog.inoculation_day).to eq("0000年00月00日")
   end
-
 end

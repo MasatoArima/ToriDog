@@ -22,4 +22,3 @@ class Customer::RelationshipsController < ApplicationController
     @customers = customer.followers
   end
 end
-

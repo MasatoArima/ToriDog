@@ -14,5 +14,4 @@ module Customer::DogsHelper
       "未接種"
     end
   end
-
 end

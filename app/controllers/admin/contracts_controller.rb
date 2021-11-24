@@ -20,5 +20,4 @@ class Admin::ContractsController < ApplicationController
     @requests = Request.all
     @customers = Customer.all
   end
-
 end

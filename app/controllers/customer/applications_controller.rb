@@ -23,6 +23,7 @@ class Customer::ApplicationsController < ApplicationController
   end
 
   private
+
   def application_params
     params.require(:application).permit(:comment, :request_id, :first_preferred_date, :last_preferred_date)
   end

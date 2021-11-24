@@ -38,7 +38,6 @@ Rails.application.routes.draw do
 
     resources :chats, only: [:show, :create, :destroy]
     resources :news, only: [:index]
-
   end
 
   namespace :admin do

@@ -16,13 +16,13 @@ class Customer::CustomersController < ApplicationController
         @dog_owners.each do |dog_owner|
           requests.append(dog_owner.requests.where(is_complete: "false"))
         end
-        if requests.sum() == 0
+        if requests.sum == 0
           requests = []
         else
-          requests.sum()
+          requests.sum
         end
         # binding.pry
-        @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
+        @requests = Kaminari.paginate_array(requests.sum).page(params[:request_page]).per(5)
         # @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
       end
     else
@@ -58,7 +58,6 @@ class Customer::CustomersController < ApplicationController
       @info.save
       @customer.update(info_id: @info.id)
     end
-
   end
 
   def show
@@ -124,5 +123,4 @@ class Customer::CustomersController < ApplicationController
   def trimmer_info_params
     params.require(:customer).permit(info: [:customer_id, :best_breed, :best_cut, :price_large, :price_medium, :price_small])
   end
-
 end

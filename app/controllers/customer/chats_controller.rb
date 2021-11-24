@@ -5,13 +5,13 @@ class Customer::ChatsController < ApplicationController
     rooms = current_customer.entries.pluck(:room_id)
     entries = Entry.find_by(customer_id: @customer.id, room_id: rooms)
 
-    unless entries.nil?
-      @room = entries.room
-    else
+    if entries.nil?
       @room = Room.new
       @room.save
       Entry.create(customer_id: current_customer.id, room_id: @room.id)
       Entry.create(customer_id: @customer.id, room_id: @room.id)
+    else
+      @room = entries.room
     end
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)

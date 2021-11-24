@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe "dog_owner_test", type: :system do
-
   # 新規登録テスト未
   let!(:dog_owner) { create(:dog_owner) }
   let!(:trimmer) { create(:trimmer) }
@@ -18,13 +17,14 @@ describe "dog_owner_test", type: :system do
     end
 
     context "Login" do
-      it 'is login test' do
+      it 'ログイン test' do
         expect(current_path).to eq root_path
       end
     end
-# ヘッダー-----------------------------------------------
+    # ヘッダー-----------------------------------------------
+
     context "header_link" do
-      it 'is link test' do
+      it 'リンク test' do
         click_link "News"
         expect(current_path).to eq news_index_path
         click_link "トリマー一覧"
@@ -39,33 +39,37 @@ describe "dog_owner_test", type: :system do
         expect(current_path).to eq contacts_path
       end
     end
-# -------------------------------------------------------
-# トリマ一覧---------------------------------------------
+    # -------------------------------------------------------
+    # トリマ一覧---------------------------------------------
+
     context "customers_index" do
       before do
         visit customers_path
       end
-      it 'is link test' do
+
+      it 'showpage test' do
         click_link "トリマ test1"
         expect(current_path).to eq '/customers/2'
       end
-      it 'have_content test' do
+      it '検索時 test' do
         fill_in 'q[last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_cont]', with: "トリマ"
         click_button "検索"
         expect(page).to have_content 'トリマ test1'
       end
     end
-# -------------------------------------------------------
-# 愛犬ページ---------------------------------------------
+    # -------------------------------------------------------
+    # 愛犬ページ---------------------------------------------
+
     context "dog_index_page" do
       before do
         visit dogs_path
       end
-      it 'is link test' do
+
+      it 'showpage test' do
         click_link "犬"
         expect(current_path).to eq '/dogs/1'
       end
-      it 'is link test' do
+      it '新規登録 test' do
         click_link "愛犬登録"
         expect(current_path).to eq '/dogs/new'
       end
@@ -76,29 +80,32 @@ describe "dog_owner_test", type: :system do
         visit dogs_path
         click_link "犬"
       end
-      it 'is link test' do
+
+      it '愛犬編集リンク test' do
         expect(page).to have_content '既往歴'
         click_link "愛犬編集"
         expect(current_path).to eq '/dogs/1/edit'
       end
-      it 'is link test' do
+      it '愛犬編集 test' do
         click_link "愛犬編集"
         fill_in 'dog[medical_history]', with: "既往歴"
         click_button "変更"
         expect(current_path).to eq '/dogs/1'
         expect(page).to have_content '既往歴'
       end
-      it 'is link test' do
+      it '愛犬削除 test' do
         click_link "愛犬情報削除"
         expect(current_path).to eq '/dogs'
       end
     end
-# -------------------------------------------------------
-# マイページ---------------------------------------------
+    # -------------------------------------------------------
+    # マイページ---------------------------------------------
+
     context "mypage_show_page" do
       before do
         visit customers_mypage_path
       end
+
       it '依頼作成~削除テスト' do
         click_link "依頼作成"
         expect(current_path).to eq '/requests/new'
@@ -112,7 +119,7 @@ describe "dog_owner_test", type: :system do
         expect(page).to have_content '飼い主'
         click_link "会員編集"
         expect(current_path).to eq '/customers/1/edit'
-          fill_in 'customer[last_name]', with: "tttttt"
+        fill_in 'customer[last_name]', with: "tttttt"
         click_button "情報更新"
         expect(current_path).to eq '/customers/mypage'
         expect(page).to have_content 'tttttt'
@@ -140,12 +147,14 @@ describe "dog_owner_test", type: :system do
       end
     end
     #------契約テスト---------
-# -------------------------------------------------------------
-# コンタクト---------------------------------------------------
+    # -------------------------------------------------------------
+    # コンタクト---------------------------------------------------
+
     context "mypage_show_page" do
       before do
         visit contacts_path
       end
+
       it 'have content test' do
         fill_in 'お名前', with: Faker::Lorem.characters(number: 10)
         fill_in '要件', with: Faker::Lorem.characters(number: 10)
@@ -154,6 +163,6 @@ describe "dog_owner_test", type: :system do
         expect(current_path).to eq '/'
       end
     end
-# -------------------------------------------------------------
+    # -------------------------------------------------------------
   end
 end

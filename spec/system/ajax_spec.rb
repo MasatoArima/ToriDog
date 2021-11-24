@@ -12,7 +12,8 @@ describe "dog_owner_test", type: :system do
     visit customers_path
     click_link "トリマ test1"
   end
-  it "いいねする、解除する", js: true  do
+
+  it "いいねする、解除する", js: true do
     click_link "いいねする", href: "/customers/2/assessments"
     expect(page).to have_link 'いいねを消す', href: "/customers/2/assessments"
     expect(trimmer.likers.count).to eq(1)
@@ -20,7 +21,7 @@ describe "dog_owner_test", type: :system do
     expect(page).to have_link 'いいねする', href: "/customers/2/assessments"
     expect(trimmer.likers.count).to eq(0)
   end
-  it "フォローする、解除する", js: true  do
+  it "フォローする、解除する", js: true do
     click_link "フォローする", href: "/customers/2/relationships"
     expect(page).to have_link 'フォロー外す', href: "/customers/2/relationships"
     expect(trimmer.followers.count).to eq(1)
@@ -28,7 +29,7 @@ describe "dog_owner_test", type: :system do
     expect(page).to have_link 'フォローする', href: "/customers/2/relationships"
     expect(trimmer.followers.count).to eq(0)
   end
-  it "フォローする、解除する", js: true  do
+  it "chat機能", js: true do
     click_link "chatを始める", href: "/chats/2"
     expect(current_path).to eq "/chats/2"
     fill_in "chat[message]", with: "chatテストです"

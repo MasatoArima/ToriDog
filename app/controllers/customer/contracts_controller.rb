@@ -3,7 +3,7 @@ class Customer::ContractsController < ApplicationController
   def show
     @contract = Contract.find(params[:id])
     @customers = Customer.all
-    @messages = Message.where(contract_id: (params[:id]))
+    @messages = Message.where(contract_id: params[:id])
     @application = Application.find(@contract.application_id)
     @request = Request.find(@application.request_id)
     @dog = Dog.find(@request.dog_id)
@@ -82,5 +82,4 @@ class Customer::ContractsController < ApplicationController
   def rate_params
     params.require(:evaluation).permit(:rate)
   end
-
 end

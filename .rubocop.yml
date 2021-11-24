@@ -1,6 +1,7 @@
 inherit_from:
   - .rubocop_airbnb.yml
-
+LineLength:
+  Max: 300
 #ここにはrubocopでコード解析したくないファイルやフォルダを指定します
 AllCops:
   Exclude:

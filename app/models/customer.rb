@@ -68,19 +68,19 @@ class Customer < ApplicationRecord
   end
 
   def full_name
-    self.last_name + " " + self.first_name
+    last_name + " " + first_name
   end
 
   def full_name_kana
-    self.last_name_kana + " " + self.first_name_kana
+    last_name_kana + " " + first_name_kana
   end
 
   def open_addres
-    self.prefecture_code + self.city
+    prefecture_code + city
   end
 
   def addres
-    self.prefecture_code.to_s + self.city.to_s + self.street.to_s + self.other_address.to_s
+    prefecture_code.to_s + city.to_s + street.to_s + other_address.to_s
   end
 
   # 住所自動入力

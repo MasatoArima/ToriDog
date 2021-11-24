@@ -3,38 +3,45 @@ module Customer::CustomersHelper
     current_customer.user_status == "trimmer"
   end
 
- # 依頼関連
+  # 依頼関連
   def request_dog_name(data)
-    @dogs.find(data.dog_id).name
+    dogs = Dog.all
+    dogs.find(data.dog_id).name
   end
 
   def request_dog_owner_name(data)
-    @customers.find(data.customer_id).full_name
+    customers = Customer.where(user_status: 0)
+    customers.find(data.customer_id).full_name
   end
-  # def application_count(data)
-  #   data.applications.count
-  # end
 
   def request_status(data)
-    if @applications.find_by(customer_id: current_customer.id, request_id: data.id)
+    applications = Application.all
+    if applications.find_by(customer_id: current_customer.id, request_id: data.id)
       "済"
     else
       "未"
     end
   end
 
- # 契約関連
+  # 契約関連
   def contract_dog_name(data)
-    @dogs.find(@requests.find(@applications.find(data.application_id).request_id).dog_id).name
+    applications = Application.all
+    dogs = Dog.all
+    requests = Request.all
+    dogs.find(requests.find(applications.find(data.application_id).request_id).dog_id).name
   end
 
   def contract_dog_owner_name(data)
-    @customers.find(@requests.find(@applications.find(data.application_id).request_id).customer_id).full_name
+    applications = Application.all
+    requests = Request.all
+    customers = Customer.where(user_status: 0)
+    customers.find(requests.find(applications.find(data.application_id).request_id).customer_id).full_name
   end
 
   def contract_trimmer_name(data)
+    customers = Customer.where(user_status: 1)
     link_to customer_path(data.trimmer_id) do
-      @customers.find(data.trimmer_id).full_name
+      customers.find(data.trimmer_id).full_name
     end
   end
 
@@ -88,22 +95,21 @@ module Customer::CustomersHelper
     contracts = data.trimmer_contract.includes(:evaluation)
     rate_average = 0
     count = 0
-    unless contracts.blank?
+    if contracts.blank?
+      0
+    else
       contracts.each do |contract|
         if contract.evaluation.nil?
         else
-          rate_average += (contract.evaluation.rate).to_i
+          rate_average += contract.evaluation.rate.to_i
           count += 1
         end
       end
-      unless rate_average == 0
-        return rate_average / count
-      else
+      if rate_average == 0
         0
+      else
+        rate_average / count
       end
-    else
-      0
     end
   end
-
 end

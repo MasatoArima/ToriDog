@@ -66,7 +66,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::ControllerHelpers, type: :controller
 
-config.before(:each) do |example|
+  config.before(:each) do |example|
     if example.metadata[:type] == :system
       if example.metadata[:js]
         driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
@@ -76,4 +76,3 @@ config.before(:each) do |example|
     end
   end
 end
-

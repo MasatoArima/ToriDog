@@ -17,5 +17,4 @@ describe 'method', type: :model do
   it 'addres_method' do
     expect(dog_owner.addres).to eq("福島県須賀川市滑川")
   end
-
 end

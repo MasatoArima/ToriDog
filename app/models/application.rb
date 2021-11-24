@@ -7,12 +7,12 @@ class Application < ApplicationRecord
   # ー－－－－－－－－－－－
 
   def preferred_dates
-    if self.first_preferred_date.nil?
+    if first_preferred_date.nil?
       "指定なし"
-    elsif self.last_preferred_date.nil?
-      self.first_preferred_date.to_s(:datetime_jp_time)
+    elsif last_preferred_date.nil?
+      first_preferred_date.to_s(:datetime_jp_time)
     else
-      self.first_preferred_date.to_s(:datetime_jp_time) + "~" + self.last_preferred_date.to_s(:datetime_jp_time)
+      first_preferred_date.to_s(:datetime_jp_time) + "~" + last_preferred_date.to_s(:datetime_jp_time)
     end
   end
 end
