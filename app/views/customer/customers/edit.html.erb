@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-7">
       <%= form_with model: @customer, url: customer_path, local: true do |f| %>
-        <div class="row form">
+        <div class="row w-75 form">
           <div class="col-12 text-center pb-2">
             <h2>会員情報編集</h2>
           </div>
@@ -41,7 +41,7 @@
             <%= f.email_field :email, autofocus: true, autocomplete: "email", size: "25" %>
           </div>
           <div class="col-5 pb-2 offset-2">
-            <%= f.label :post_code, "郵便番号(ハイフンなし)" %>
+            <%= f.label :post_code, "郵便番号(-なし)" %>
           </div>
           <div class="col-5 pb-2">
             <%= f.text_field :post_code, autofocus: true, autocomplete: "postal-code" %>
@@ -71,7 +71,7 @@
             <%= f.text_field :other_address, autofocus: true, size: "25" %>
           </div>
           <div class="col-5 pb-2 offset-2">
-            <%= f.label :phone_number, "電話番号(ハイフンなし)" %>
+            <%= f.label :phone_number, "電話番号(-なし)" %>
           </div>
           <div class="col-5 pb-2">
             <%= f.text_field :phone_number, autofocus: true %>
@@ -80,34 +80,22 @@
             <%= f.label :introduction, "自己紹介文" %>
           </div>
           <div class="col-5 pb-2">
-            <%= f.text_area :introduction, size: "50x10", autofocus: true %>
-          </div>
-          <div class="col-5 pb-2 offset-2">
-            <%= f.label :profile_image , "プロファイル画像変更" %>
-          </div>
-          <div class="col-5 pb-2">
-            <%= f.file_field :profile_image %>
+            <%= f.text_area :introduction, size: "35x5", autofocus: true %>
           </div>
           <% if is_trimmer? %>
-            <div class="col-5 pb-2 offset-2">
-              <%= f.label :cut_images , "トリミング画像追加" %>
-            </div>
-            <div class="col-5 pb-2">
-              <%= f.file_field :cut_images, multiple: true %>
-            </div>
             <%= f.fields_for @info do |i| %>
                 <%= i.hidden_field :customer_id, :value => current_customer.id %>
                 <div class="col-5 pb-2 offset-2">
                 <%= i.label :best_breed, "得意な犬種" %><br>
                 </div>
                 <div class="col-5 pb-2">
-                <%= i.text_area :best_breed, size:"50x5", autofocus: true %>
+                <%= i.text_area :best_breed, size:"35x2", autofocus: true %>
                 </div>
                 <div class="col-5 pb-2 offset-2">
                 <%= i.label :best_cut, "得意なカット" %><br>
                 </div>
                 <div class="col-5 pb-2">
-                <%= i.text_area :best_cut, size:"50x5", autofocus: true %>
+                <%= i.text_area :best_cut, size:"35x2", autofocus: true %>
                 </div>
                 <div class="col-5 pb-2 offset-2">
                 <%= i.label :price_large, "大型犬の値段" %><br>
@@ -128,7 +116,19 @@
                 <%= i.text_field :price_small, autofocus: true %>
                 </div>
             <% end %>
+            <div class="col-5 pb-2 offset-2">
+              <%= f.label :cut_images , "カット画像追加" %>
+            </div>
+            <div class="col-5 pb-2">
+              <%= f.file_field :cut_images, multiple: true %>
+            </div>
           <% end %>
+          <div class="col-5 pb-2 offset-2">
+            <%= f.label :profile_image , "トップ画像変更" %>
+          </div>
+          <div class="col-5 pb-2">
+            <%= f.file_field :profile_image %>
+          </div>
           <div class="col-5 pb-2 offset-7">
             <%= f.submit "情報更新", class: "clickon" %>
           </div>
@@ -143,21 +143,9 @@
             <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
               <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
           <% end %>
-          <%= f.submit "削除する" %>
+          <%= f.submit "削除する", class: "clickon" %>
         <% end %>
       </div>
     <% end %>
   </div>
 </div>
-
-<script>
-    $(function(){
-        $("input").on("keydown", function(e) {
-            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
-                return false;
-            } else {
-                return true;
-            }
-        });
-    });
-</script>

@@ -22,6 +22,7 @@
 //= require jcanvas
 
 /*global $*/
+/*global gon*/
 
 $(document).ready(function () {
   $("#images").skippr({
@@ -37,3 +38,38 @@ $(document).ready(function () {
     hidePrevious : false
   });
 });
+
+// Enterで次に進まないように
+$(function(){
+  $("input").on("keydown", function(e) {
+    if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+});
+
+// 星表示
+
+
+$(document).on('turbolinks:load', function () {
+  var data = gon.trimmers
+  var array = data, i = 0, len = array.length;
+  while (i < len) {
+    $(".average-rate" + array[i] ).empty();
+    $(".average-rate" + array[i] ).raty({
+      readOnly: true,
+      cancelOff: '/cancel-off.png',
+      cancelOn: '/cancel-on.png',
+      starHalf: '/star-half.png',
+      starOff: '/star-off.png',
+      starOn: '/star-on.png',
+      score: function() {
+        return $(this).attr('data-score');
+      },
+    });
+    console.log(array[i++]);
+  }
+});
+

@@ -48,12 +48,12 @@
         <% if is_trimmer? %>
           <div class="text-center">
             <%= link_to "クリア", "/customers",type: "button" %>
-            <%= f.submit "検索" %>
+            <%= f.submit "検索", class: "clickon" %>
           </div>
         <% else %>
           <div class="text-right mt-3 mr-5">
             <%= link_to "クリア", "/customers",type: "button" %>
-            <%= f.submit "検索" %>
+            <%= f.submit "検索", class: "clickon" %>
           </div>
         <% end %>
       <% end %>

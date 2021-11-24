@@ -18,5 +18,7 @@ module ToriDog
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config/locales/*.yml').to_s]
     config.time_zone = 'Tokyo'
+    config.assets.paths << Rails.root.join('public')
+    config.assets.precompile << %w( cancel-off.png cencel-on.png star-off.png star-on.png star-half.png)
   end
 end

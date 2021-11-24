@@ -40,18 +40,6 @@
           <%= trimmer.likers.count %>
         </td>
         <td class="average-rate<%= trimmer.id %>" data-score="<%= evaluation_ave(trimmer) %>"></td>
-        <script>
-          $('.average-rate<%= trimmer.id %>').empty();
-          $('.average-rate<%= trimmer.id %>').raty({
-            readOnly: true,
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            score: function() {
-              return $(this).attr('data-score');
-            },
-          });
-        </script>
       </tr>
     <% end %>
   </tbody>
@@ -110,20 +98,3 @@ function codeAddress(){
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&callback=initMap" async defer></script>
-
-
-
-
-<!--<div id="map-container"></div>-->
-<!--<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>-->
-<!--<%#= javascript_include_tag 'jquery.japan-map.min.js' %>-->
-<!--<script>-->
-<!--  $(function(){-->
-<!--    $("#map-container").japanMap({-->
-<!--        width:600,-->
-<!--        onSelect : function(data){-->
-<!--            alert(data.name);-->
-<!--        }-->
-<!--      });-->
-<!--  });-->
-<!--</script>-->

@@ -7,8 +7,8 @@
     <div class="col-6">
       <% if contract.trimmer_is_consent == false %>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-            <%= f.button '契約に同意する', type: 'button', onclick: 'submit();' %>
+          <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
+          <%= f.submit "契約に同意する", class: "clickon" %>
         <% end %>
       <% else %>
         <div>
@@ -18,8 +18,8 @@
           </strong>
         </div>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-            <%= f.button '同意を解除する', type: 'button', onclick: 'submit();', class: "btn btn-danger" %>
+          <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+          <%= f.submit "同意を解除す", class: "clickon btn btn-danger" %>
         <% end %>
       <% end %>
     </div>
