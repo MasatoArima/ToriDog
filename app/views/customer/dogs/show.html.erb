@@ -4,8 +4,8 @@
       <%= render 'customer/dogs/dog_info', dog: @dog %>
       <div class="text-center mt-4">
         <% if current_customer.id == @dog.customer_id %>
-          <%= link_to "愛犬編集", edit_dog_path(@dog), class: "btn btn-success", style: "width:150px" %>
-          <%= link_to "愛犬情報削除", dog_path(@dog), method: :delete, class: "btn btn-danger", style: "width:150px", data: { confirm: "愛犬に関する情報がすべて削除されます"} %>
+          <%= link_to "愛犬編集", edit_dog_path(@dog), class: "btn btn-success", style: "width:130px" %>
+          <%= link_to "愛犬情報削除", dog_path(@dog), method: :delete, class: "btn btn-danger", style: "width:130px", data: { confirm: "愛犬に関する情報がすべて削除されます"} %>
         <% end %>
       </div>
     </div>
@@ -13,6 +13,7 @@
       <div class="ml-1 mb-3">
         <%= render 'customer/dogs/show', blob: @blob, dog: @dog %>
       </div>
+      <h5>トリミング画像一覧</h5>
       <% @dog.trimming_images.each do |image| %>
         <%= link_to dog_path(@dog.id, blob: image.id),remote: true do %>
           <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>

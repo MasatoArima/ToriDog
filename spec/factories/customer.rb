@@ -5,7 +5,7 @@ FactoryBot.define do
     password_confirmation {"111111"}
     last_name {"飼い主"}
     first_name {"test1"}
-    last_name_kana {"テスト"}
+    last_name_kana {"カイヌシ"}
     first_name_kana {"テスト"}
     post_code {"9620403"}
     prefecture_code {"福島県"}
@@ -20,9 +20,9 @@ FactoryBot.define do
     email {"trimmer@test.com"}
     password {"111111"}
     password_confirmation {"111111"}
-    last_name {"飼い主"}
+    last_name {"トリマ"}
     first_name {"test1"}
-    last_name_kana {"テスト"}
+    last_name_kana {"トリマ"}
     first_name_kana {"テスト"}
     post_code {"9620403"}
     prefecture_code {"福島県"}

@@ -8,19 +8,19 @@
         <%= f.label :name, "名前*" %>
       </div>
       <div class="col-6 pb-2">
-        <%= f.text_field :name, autofocus: true %>
+        <%= f.text_field :name, autofocus: true, placeholder: "太郎" %>
       </div>
       <div class="col-6 text-right pb-2">
         <%= f.label :name_kana, "フリガナ*" %>
       </div>
       <div class="col-6 pb-2">
-        <%= f.text_field :name_kana, autofocus: true, autocomplete: "name" %>
+        <%= f.text_field :name_kana, autofocus: true, placeholder: "タロウ" %>
       </div>
       <div class="col-6 text-right pb-2">
         <%= f.label :breed, "犬種*" %>
       </div>
       <div class="col-6 pb-2">
-        <%= f.text_field :breed, autofocus: true, autocomplete: "family-name" %>
+        <%= f.text_field :breed, autofocus: true %>
       </div>
       <div class="col-6 text-right pb-2">
         <%= f.label :"性別*" %>
@@ -55,13 +55,13 @@
         <%= f.label :inoculation_date, "接種日" %>
       </div>
       <div class="col-6 pb-2">
-        <%= f.text_field :inoculation_date, autofocus: true %>
+        <%= f.text_field :inoculation_date, autofocus: true, placeholder: "20200505" %>
       </div>
       <div class="col-6 text-right pb-2">
         <%= f.label :birthday, "生年月日*" %>
       </div>
       <div class="col-6 pb-2">
-        <%= f.text_field :birthday, autofocus: true %>
+        <%= f.text_field :birthday, autofocus: true, placeholder: "20200505" %>
       </div>
       <div class="col-6 text-right pb-2">
         <%= f.label :medical_history, "既往歴" %>
@@ -84,8 +84,20 @@
       <div class="col-6 pb-2">
       </div>
       <div class="col-6 pb-2">
-        <%= f.button '愛犬登録', type: 'button', onclick: 'submit();' %>
+        <%= f.submit '愛犬登録', class: "clickon" %>
       </div>
     </div>
   <% end %>
 </div>
+
+<script>
+    $(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+</script>

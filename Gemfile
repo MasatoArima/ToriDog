@@ -59,6 +59,8 @@ group :test do
   gem 'rspec-rails'
   gem "factory_bot_rails"
   gem 'faker'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -77,6 +79,7 @@ gem 'kaminari-bootstrap', '~> 3.0.1'
 
 gem 'dotenv-rails'
 gem 'ransack'
+gem 'rails-i18n'
 
 gem 'jp_prefecture'
 gem 'image_processing', '~> 1.2'

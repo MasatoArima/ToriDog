@@ -4,7 +4,7 @@ class Customer::CustomersController < ApplicationController
     # @customers = Customer.all
     @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
-      @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
+      @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5).includes([:dogs]).includes([:profile_image_attachment])
       @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
       @applications = current_customer.applications
       @dogs = Dog.all

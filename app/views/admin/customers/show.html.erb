@@ -1,7 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <p><%= @customer.profile_image %></p>
+      <p>
+        <% if @customer.profile_image.attached? %>
+          <%= image_tag @customer.profile_image.variant(resize:'200x200').processed %>
+        <% else %>
+          <%= image_tag("no_image.jpg", :size => "200x200") %>
+        <% end %>
+      </p>
       <p>ステータス : <%= @customer.user_status_i18n%></p>
       <p>名前 : <%= @customer.last_name %><%= @customer.first_name %></p>
       <p>カナ : <%= @customer.last_name_kana %><%= @customer.first_name_kana %></p>

@@ -92,7 +92,7 @@
           <div class="col-6 pb-2">
           </div>
           <div class="col-6 pb-2">
-            <%= f.button '変更', type: 'button', onclick: 'submit();' %>
+            <%= f.submit '変更', class: "clickon" %>
           </div>
         </div>
       <% end %>
@@ -104,8 +104,20 @@
           <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
           <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
         <% end %>
-        <%= f.submit "削除する" %>
+        <%= f.submit "削除する", class: "clickon" %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+    $(function(){
+        $("input").on("keydown", function(e) {
+            if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+</script>

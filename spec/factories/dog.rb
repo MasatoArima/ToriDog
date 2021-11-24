@@ -9,5 +9,6 @@ FactoryBot.define do
     is_inoculate {"true"}
     inoculation_date {"00000000"}
     birthday {"00000000"}
+    medical_history {"既往歴"}
   end
 end
