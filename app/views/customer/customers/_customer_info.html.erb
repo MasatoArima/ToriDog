@@ -146,14 +146,18 @@
   <table class="table mb-0">
     <tbody>
       <tr>
-        <td>評価</td>
+        <td style="width: 120px">評価</td>
         <td class="average-rate<%= customer.id %>" data-score="<%= evaluation_ave(customer) %>"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <% end %>
 
-  <div>自己紹介文</div>
+  <div class="text-center pt-3"><strong>自己紹介文</strong></div>
   <p style="word-break : break-all"><%= customer.introduction%></p>
 
   <div class="mt-4">
