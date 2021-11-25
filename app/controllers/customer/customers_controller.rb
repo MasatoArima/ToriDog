@@ -1,6 +1,7 @@
 class Customer::CustomersController < ApplicationController
   before_action :authenticate_customer!
   before_action :setup, only: [:index, :mypage, :show]
+  before_action :correct_contract, only: [:edit,]
   def index
     @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
@@ -25,12 +26,16 @@ class Customer::CustomersController < ApplicationController
       end
     else
       @map_trimmers = Customer.where(user_status: 1)
-      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort { |a, b| b.likers.size <=> a.likers.size }
+      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.left_joins(:info).where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
-        trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
+        trimmers = @q.result(distinct: true)
         @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
+        if params[:q][:sorts] == "likers_count desc"
+          trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
+          @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
+        end
       end
     end
   end
@@ -129,5 +134,11 @@ class Customer::CustomersController < ApplicationController
       tmp.push(d.id)
     end
     gon.trimmers = tmp
+  end
+  def correct_contract
+    @customer = Customer.find(params[:id])
+    unless (@customer.id == current_customer.id)
+      redirect_to customers_mypage_path
+    end
   end
 end

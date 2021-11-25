@@ -13,12 +13,17 @@
       <div class="ml-1 mb-3">
         <%= render 'customer/dogs/show', blob: @blob, dog: @dog %>
       </div>
-      <h5>トリミング画像一覧</h5>
-      <% @dog.trimming_images.each do |image| %>
-        <%= link_to dog_path(@dog.id, blob: image.id),remote: true do %>
-          <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>
+      <h6><strong>投稿画像一覧</strong></h6>
+        <% if @dog.trimming_images.attached? %>
+          <% @dog.trimming_images.each do |image| %>
+            <%= link_to dog_path(@dog.id, blob: image.id),remote: true do %>
+              <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p>画像はまだ投稿されていません</p>
         <% end %>
-      <% end %>
+
     </div>
   </div>
 </div>

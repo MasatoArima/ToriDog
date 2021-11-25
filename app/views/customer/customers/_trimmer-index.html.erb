@@ -2,18 +2,10 @@
 <table class="table">
   <thead>
     <tr>
-      <th>
-        依頼日
-      </th>
-      <th>
-        愛犬名
-      </th>
-      <th>
-        依頼主
-      </th>
-      <th>
-        応募
-      </th>
+      <th>依頼日 </th>
+      <th>愛犬名 </th>
+      <th>依頼主 </th>
+      <th>応募   </th>
     </tr>
   </thead>
   <tbody>
@@ -24,15 +16,9 @@
             <%= requesta.updated_at.to_s(:datetime_jp) %>
           <% end %>
         </td>
-        <td>
-          <%= request_dog_name(requesta) %>
-        </td>
-        <td>
-          <%= request_dog_owner_name(requesta) %>
-        </td>
-        <td>
-          <%= request_status(requesta) %>
-        </td>
+        <td><%= request_dog_name(requesta) %></td>
+        <td><%= request_dog_owner_name(requesta) %></td>
+        <td><%= request_status(requesta) %></td>
       </tr>
   　<% end %>
   </tbody>
@@ -44,16 +30,10 @@
 <table class="table">
   <thead>
     <tr>
-      <th></th>
-      <th>
-        名前
-      </th>
-      <th>
-        愛犬(犬種)
-      </th>
-      <th>
-        住所
-      </th>
+      <th>           </th>
+      <th>名前       </th>
+      <th>愛犬(犬種) </th>
+      <th>住所       </th>
     </tr>
   </thead>
   <tbody>
@@ -76,9 +56,7 @@
             <%= dog.breed %><br>
           <% end %>
         </td>
-        <td>
-          <%= dog_owner.open_addres %>
-        </td>
+        <td><%= dog_owner.open_addres %></td>
       </tr>
     <% end %>
   </tbody>

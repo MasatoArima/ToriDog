@@ -1,42 +1,42 @@
 <div class="container">
   <div class="row">
+    <div class="col-12 text-center pb-3">
+      <h2>愛犬編集</h2>
+    </div>
     <div class="col-6">
       <%= form_with model: @dog, url: dog_path(@dog.id), local: true do |f| %>
         <div class="row form">
-          <div class="col-6 offset-6 pb-2">
-            <h2>愛犬編集</h2>
-          </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :name, "名前" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_field :name, autofocus: true %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :name_kana, "フリガナ" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_field :name_kana, autofocus: true, autocomplete: "name" %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :breed, "犬種" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_field :breed, autofocus: true, autocomplete: "family-name" %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :"性別" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.label :sex_true, "オス" %>
             <%= f.radio_button :sex, :true %>
             <%= f.label :sex_false, "メス" %>
             <%= f.radio_button :sex, :false %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :"大きさ" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.label :size_large, "大型犬" %>
             <%= f.radio_button :size, :large %>
             <%= f.label :size_medium, "中型犬" %>
@@ -44,55 +44,55 @@
             <%= f.label :size_small, "小型犬" %>
             <%= f.radio_button :size, :small %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :"予防接種" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.label :is_inoculate_true, "接種済" %>
             <%= f.radio_button :is_inoculate, :true %>
             <%= f.label :is_inoculate_false, "未接種" %>
             <%= f.radio_button :is_inoculate, :false %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :inoculation_date, "接種日" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_field :inoculation_date, autofocus: true %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :birthday, "生年月日" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_field :birthday, autofocus: true %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :medical_history, "既往歴" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.text_area :medical_history, size: '5x5', class: 'form-control' %>
           </div>
-          <div class="col-6 text-right pb-2">
+          <div class="col-5 text-right pb-2">
             <%= f.label :introduction, "紹介文" %>
           </div>
-          <div class="col-6 pb-2">
-            <%= f.text_area :introduction, size: '10x10', class: 'form-control' %>
+          <div class="col-7 pb-2">
+            <%= f.text_area :introduction, size: '5x5', class: 'form-control' %>
           </div>
-          <div class="col-6 text-right pb-2">
-            <%= f.label :dog_image , "プロファイル画像" %>
+          <div class="col-5 text-right pb-2">
+            <%= f.label :dog_image , "トップ画像変更" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.file_field :dog_image %>
           </div>
-          <div class="col-6 text-right pb-2">
-            <%= f.label :trimming_images , "トリミング画像" %>
+          <div class="col-5 text-right pb-2">
+            <%= f.label :trimming_images , "トリミング画像追加" %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-7 pb-2">
             <%= f.file_field :trimming_images, multiple: true %>
           </div>
-          <div class="col-6 pb-2">
+          <div class="col-5 pb-2">
           </div>
-          <div class="col-6 pb-2">
-            <%= f.submit '変更', class: "clickon" %>
+          <div class="col-7 pb-2">
+            <%= f.submit '変更', class: "clickon btn btn-success" %>
           </div>
         </div>
       <% end %>
@@ -104,7 +104,7 @@
           <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
           <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
         <% end %>
-        <%= f.submit "削除する", class: "clickon" %>
+        <%= f.submit "削除する", class: "clickon btn btn-danger" %>
       <% end %>
     </div>
   </div>

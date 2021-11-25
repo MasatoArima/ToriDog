@@ -25,7 +25,7 @@
 /*global gon*/
 
 $(document).ready(function () {
-  $("#images").skippr({
+  $(".main-view").skippr({
     transition : 'fade',
     speed : 1000,
     easing : 'easeOutQuart',

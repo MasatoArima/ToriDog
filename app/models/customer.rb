@@ -83,6 +83,14 @@ class Customer < ApplicationRecord
     prefecture_code.to_s + city.to_s + street.to_s + other_address.to_s
   end
 
+    # -----------------------SQL??----------------------
+    # ransacker :likers_count do
+    # # Customer.left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
+    # # SELECT "customers".* FROM "customers" LEFT OUTER JOIN "assessments" ON "assessments"."get_like_id" = "customers"."id" LEFT OUTER JOIN "customers" "likers_customers" ON "likers_customers"."id" = "assessments"."like_id" GROUP BY "customers"."id" ORDER BY count(get_like_id) desc
+    #   query = '(SELECT COUNT("get_like_id") FROM "customers" LEFT OUTER JOIN "assessments" ON "assessments"."get_like_id" = "customers"."id" LEFT OUTER JOIN "customers" "likers_customers" ON "likers_customers"."id" = "assessments"."like_id" GROUP BY "customers"."id")'
+    #   Arel.sql(query)
+    # end
+
   # 住所自動入力
   include JpPrefecture
   jp_prefecture :prefecture_code

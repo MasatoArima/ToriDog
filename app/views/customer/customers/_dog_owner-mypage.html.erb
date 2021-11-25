@@ -6,15 +6,9 @@
   <table class="table mb-5">
     <thead>
       <tr>
-        <th>
-          依頼日
-        </th>
-        <th>
-          トリミング犬
-        </th>
-        <th>
-          応募数
-        </th>
+        <th>依頼日       </th>
+        <th>トリミング犬 </th>
+        <th>応募数       </th>
       </tr>
     </thead>
     <tbody>
@@ -26,12 +20,8 @@
                 <%= requesta.updated_at.to_s(:datetime_jp) %>
               <% end %>
             </td>
-            <td>
-              <%= request_dog_name(requesta) %>
-            </td>
-            <td>
-              <%= requesta.applications.count %>
-            </td>
+            <td><%= request_dog_name(requesta) %></td>
+            <td><%= requesta.applications.count %></td>
           </tr>
         <% end %>
       <% end %>
@@ -42,18 +32,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th>
-          施術日
-        </th>
-        <th>
-          トリミング犬
-        </th>
-        <th>
-          トリマー
-        </th>
-        <th>
-          ステータス
-        </th>
+        <th>施術日       </th>
+        <th>トリミング犬 </th>
+        <th>トリマー     </th>
+        <th>ステータス   </th>
       </tr>
     </thead>
     <tbody>
@@ -64,16 +46,9 @@
               <%= contract.preferred_date.to_s(:datetime_jp) %>
             <% end %>
           </td>
-          <td>
-            <%= contract_dog_name(contract) %>
-          </td>
-          <td>
-            <%= contract_trimmer_name(contract) %>
-          </td>
-          <td>
-            <%= contract.is_status_i18n %><br>
-            <%= consent_status(contract) %>
-          </td>
+          <td><%= contract_dog_name(contract) %></td>
+          <td><%= contract_trimmer_name(contract) %></td>
+          <td><%= contract.is_status_i18n %><br><%= consent_status(contract) %></td>
         </tr>
       <% end %>
     </tbody>

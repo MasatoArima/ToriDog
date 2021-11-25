@@ -3,35 +3,35 @@
     <div class="col-8">
       <table class="table">
         <tbody>
-          <tr><th>施術日</th><td><%= contract.preferred_date.to_s(:datetime_jp_time) %></td></tr>
-          <tr><th>飼い主</th><td><%= dog_owner.full_name %></td></tr>
+          <tr><th>施術日 </th><td> <%= contract.preferred_date.to_s(:datetime_jp_time) %> </td></tr>
+          <tr><th>飼い主 </th><td> <%= dog_owner.full_name %>                             </td></tr>
           <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
-            <tr><th>郵便番号</th><td><%= dog_owner.post_code %></td></tr>
-            <tr><th>住所</th><td><%= dog_owner.addres %></td></tr>
-            <tr><th>電話番号</th><td><%= dog_owner.phone_number %></td></tr>
+            <tr><th>郵便番号 </th><td> <%= dog_owner.post_code %>    </td></tr>
+            <tr><th>住所     </th><td> <%= dog_owner.addres %>       </td></tr>
+            <tr><th>電話番号 </th><td> <%= dog_owner.phone_number %> </td></tr>
           <% end %>
-          <tr><th></th><td></td></tr>
-          <tr><th>愛犬名</th><td><%= dog.name %></td></tr>
-          <tr><th>犬種</th><td><%= dog.breed %></td></tr>
-          <tr><th>性別</th><td><%= sex(dog) %></td></tr>
-          <tr><th>サイズ</th><td><%= dog.size_i18n %></td></tr>
+          <tr><th>       </th><td>                      </td></tr>
+          <tr><th>愛犬名 </th><td> <%= dog.name %>      </td></tr>
+          <tr><th>犬種   </th><td> <%= dog.breed %>     </td></tr>
+          <tr><th>性別   </th><td> <%= sex(dog) %>      </td></tr>
+          <tr><th>サイズ </th><td> <%= dog.size_i18n %> </td></tr>
           <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
-            <tr><th>ワクチン</th><td><%= is_inoculate(dog) %></td>
-            </tr><tr><th>誕生日</th><td><%= dog.birth_day %>(<%= dog.age %>)</td></tr>
-            <tr><th>既往歴</th><td><%= dog.medical_history %></td></tr>
+            <tr><th>ワクチン </th><td> <%= is_inoculate(dog) %>             </td></tr>
+            <tr><th>誕生日   </th><td> <%= dog.birth_day %>(<%= dog.age %>) </td></tr>
+            <tr><th>既往歴   </th><td> <%= dog.medical_history %>          </td></tr>
           <% end %>
-            <tr><th></th><td></td></tr>
-            <tr><th>トリマー</th><td><%= trimmer.full_name %></td></tr>
+            <tr><th>         </th><td>                         </td></tr>
+            <tr><th>トリマー </th><td> <%= trimmer.full_name %> </td></tr>
           <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
-            <tr><th>郵便番号</th><td><%= trimmer.post_code %></td></tr>
-            <tr><th>住所</th><td><%= trimmer.addres %></td></tr>
-            <tr><th>電話番号</th><td><%= trimmer.phone_number %></td></tr>
+            <tr><th>郵便番号 </th><td> <%= trimmer.post_code %>    </td></tr>
+            <tr><th>住所     </th><td> <%= trimmer.addres %>       </td></tr>
+            <tr><th>電話番号 </th><td> <%= trimmer.phone_number %> </td></tr>
           <% end %>
           <tr><th></th><td></td></tr>
           <% if contract.is_status == "completion" %>
-            <tr><th></th><td>飼い主評価</td></tr>
-            <tr><th>この施術に対する評価</th><td class="contract-rate" data-score="<%= evaluation.rate %>"></td></tr>
-            <tr><th>コメント</th><td><%=evaluation.comment %></td></tr>
+            <tr><th>                     </th><td>飼い主評価                                                 </td></tr>
+            <tr><th>この施術に対する評価 </th><td class="contract-rate" data-score="<%= evaluation.rate %>"> </td></tr>
+            <tr><th>コメント             </th><td><%=evaluation.comment %>                                   </td></tr>
           <% end %>
         </tbody>
       </table>

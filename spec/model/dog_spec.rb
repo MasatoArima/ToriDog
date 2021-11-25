@@ -10,7 +10,7 @@ describe 'method', type: :model do
     expect(dog.age).to eq("2021才")
   end
   it 'birth_day_method' do
-    expect(dog.birth_day).to eq("0000年00月00日")
+    expect(dog.birth_day).to eq("0000年00月00日(2021才)")
   end
   it 'inoculation_day_method' do
     expect(dog.inoculation_day).to eq("0000年00月00日")

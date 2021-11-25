@@ -19,7 +19,7 @@ class Dog < ApplicationRecord
   end
 
   def birth_day
-    birthday.slice(0..3) + "年" + birthday.slice(4..5) + "月" + birthday.slice(6..7) + "日"
+    birthday.slice(0..3) + "年" + birthday.slice(4..5) + "月" + birthday.slice(6..7) + "日" + "(" + ((Date.today.strftime("%Y%m%d").to_i - birthday.to_i) / 10000).to_s + "才)"
   end
 
   def inoculation_day

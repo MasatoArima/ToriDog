@@ -2,20 +2,11 @@
 <table class="table">
   <thead>
     <tr>
-      <th>
-      </th>
-      <th>
-        名前
-       </th>
-      <th>
-        住所
-      </th>
-      <th>
-        いいね数
-      </th>
-      <th>
-        評価
-      </th>
+      <th>         </th>
+      <th>名前     </th>
+      <th>住所     </th>
+      <th>いいね数 </th>
+      <th>評価     </th>
     </tr>
   </thead>
   <tbody>
@@ -33,23 +24,17 @@
             <p><%= trimmer.full_name %></p>
           <% end %>
         </td>
-        <td>
-          <%= trimmer.open_addres %>
-        </td>
-        <td>
-          <%= trimmer.likers.count %>
-        </td>
+        <td><%= trimmer.open_addres %></td>
+        <td><%= trimmer.likers.count %></td>
         <td class="average-rate<%= trimmer.id %>" data-score="<%= evaluation_ave(trimmer) %>"></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
 <div class="center-block">
 <%= paginate trimmers, :param_name => 'customer_page' %>
 </div>
-
-
-
 
 <h2>地図から検索</h2>
 
