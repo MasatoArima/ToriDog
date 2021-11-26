@@ -1,6 +1,6 @@
 class Customer::ContractsController < ApplicationController
   before_action :authenticate_customer!
-  before_action :correct_contract, only: [:show,:edit,]
+  before_action :correct_contract, only: [:show, :edit]
   def show
     @contract = Contract.find(params[:id])
     @customers = Customer.all
@@ -86,7 +86,10 @@ class Customer::ContractsController < ApplicationController
 
   def correct_contract
     @contract = Contract.find(params[:id])
-    unless (@contract.client_id == current_customer.id) || (@contract.trimmer_id == current_customer.id)
+    unless @contract.client_id == current_customer.id
+      redirect_to customers_mypage_path
+    end
+    unless @contract.trimmer_id == current_customer.id
       redirect_to customers_mypage_path
     end
   end

@@ -3,13 +3,21 @@
     <div class="col-4">
       <h4 class="text-center">詳細検索</h4>
       <%= search_form_for @q do |f| %>
-          <div class="text-right mb-1 mr-4">
+        <div class="text-right mb-1 mr-4">
+          <% if is_trimmer? %>
+          <%= f.select( :sorts, { '並び替え': '', '登録の古い順': 'id asc', '登録の新しい順': 'id desc' } , { onchange: 'this.form.submit()'} ) %>
+          <% else %>
             <%= f.select( :sorts, { '並び替え': '', '登録の古い順': 'id asc', '登録の新しい順': 'id desc', 'いいね!の多い順': 'likers_count desc' } , { onchange: 'this.form.submit()'} ) %>
+          <% end %>
+        </div>
+        <% if is_trimmer? %>
+          <div class="text-right mb-1 mr-4">
+            <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_dogs_breed_cont, size: 23, placeholder: "検索ワード"%>
           </div>
+        <% else %>
           <div class="text-right mb-1 mr-4">
             <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_cont, size: 23, placeholder: "検索ワード1"%>
           </div>
-        <% unless is_trimmer? %>
           <div class="text-right mb-1 mr-4">
             <%= f.search_field :last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_or_info_price_large_cont, size: 23, placeholder: "検索ワード2"%>
           </div>
@@ -47,13 +55,13 @@
         <% end %>
         <% if is_trimmer? %>
           <div class="text-center">
-            <%= link_to "クリア", "/customers",type: "button" %>
-            <%= f.submit "検索", class: "clickon" %>
+            <%= link_to "クリア", "/customers",type: "button", class: "btn btn-secondary" %>
+            <%= f.submit "検索", class: "clickon btn btn-primary" %>
           </div>
         <% else %>
           <div class="text-right mt-3 mr-5">
-            <%= link_to "クリア", "/customers",type: "button" %>
-            <%= f.submit "検索", class: "clickon" %>
+            <%= link_to "クリア", "/customers",type: "button", class: "btn btn-secondary" %>
+            <%= f.submit "検索", class: "clickon btn btn-primary" %>
           </div>
         <% end %>
       <% end %>

@@ -130,7 +130,7 @@
             <%= f.file_field :profile_image %>
           </div>
           <div class="col-5 pb-2 offset-7">
-            <%= f.submit "情報更新", class: "clickon" %>
+            <%= f.submit "情報更新", class: "clickon btn btn-success" %>
           </div>
         </div>
       <% end %>
@@ -143,7 +143,7 @@
             <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
               <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
           <% end %>
-          <%= f.submit "削除する", class: "clickon" %>
+          <%= f.submit "削除する", class: "clickon btn btn-danjer" %>
         <% end %>
       </div>
     <% end %>

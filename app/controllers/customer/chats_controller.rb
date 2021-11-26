@@ -13,7 +13,7 @@ class Customer::ChatsController < ApplicationController
     else
       @room = entries.room
     end
-    @chats = @room.chats
+    @chats = @room.chats.includes([:customer])
     @chat = Chat.new(room_id: @room.id)
   end
 

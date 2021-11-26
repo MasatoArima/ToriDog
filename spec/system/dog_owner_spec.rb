@@ -124,10 +124,6 @@ describe "dog_owner_test", type: :system do
         expect(current_path).to eq '/customers/mypage'
         expect(page).to have_content 'tttttt'
       end
-      it 'is link test' do
-        click_link "愛犬一覧"
-        expect(current_path).to eq '/dogs'
-      end
       it '退会テスト' do
         click_link "退会する"
         expect(current_path).to eq '/customers/withdraw_confirm'

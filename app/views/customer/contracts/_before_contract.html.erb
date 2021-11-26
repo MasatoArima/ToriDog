@@ -7,7 +7,7 @@
             <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
               <%= f.label :preferred_date, "施術希望日" %>
               <%= f.datetime_field :preferred_date, autofocus: true %>
-              <%= f.submit "変更する", class: "clickon" %>
+              <%= f.submit "変更する", class: "clickon btn btn-success" %>
             <% end %>
           <% else %>
             <%= contract.preferred_date.to_s(:datetime_jp_time) %>
@@ -44,4 +44,8 @@
       <input type="text" id="chat-input" data-behavior="contract_speaker" class="form-control mt-1">
       <label id="target">Enterで入力確定</label><br>
   </form>
+</div>
+
+<div class="col-8 text-right">
+  <%= link_to "契約を取り消す", contract_path(contract), method: :delete, class: "btn btn-danger", style: "width:150px", data: { confirm: "本当に契約を削除しますか？"} %>
 </div>

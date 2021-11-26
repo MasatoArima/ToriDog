@@ -3,13 +3,6 @@
     <% if is_trimmer? %>
       <h3 class="col-12 text-center pb-2">依頼詳細</h3>
       <div class="col-6">
-        <% if @request.customer_id == current_customer.id %>
-          <% if contracts_inprogress(@request) == "false" %>
-          <div class="text-right pr-5">
-            <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1 ", style: "width:150px", data: { confirm: "本当に依頼を削除しますか？"} %>
-          </div>
-          <% end %>
-        <% end %>
         <table class="table table-striped">
           <tr><th style="width: 100px"></th><th>会員情報</th></tr>
           <tr><td>名前</td>
@@ -40,7 +33,9 @@
       <h3 class="col-12 text-center pb-2">依頼詳細</h3>
       <div class="col-6">
         <% if @request.customer_id == current_customer.id %>
+          <%# binding.pry %>
           <% if contracts_inprogress(@request) == "false" %>
+
           <div class="text-right">
             <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1 ", style: "width:100px", data: { confirm: "本当に依頼を削除しますか？"} %>
           </div>

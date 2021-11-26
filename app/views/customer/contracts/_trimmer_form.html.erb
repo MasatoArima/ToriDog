@@ -8,7 +8,7 @@
       <% if contract.trimmer_is_consent == false %>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
           <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-          <%= f.submit "契約に同意する", class: "clickon" %>
+          <%= f.submit "契約に同意する", class: "clickon btn btn-success" %>
         <% end %>
       <% else %>
         <div>
@@ -19,7 +19,7 @@
         </div>
         <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
           <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-          <%= f.submit "同意を解除す", class: "clickon btn btn-danger" %>
+          <%= f.submit "同意を解除する", class: "clickon btn btn-danger" %>
         <% end %>
       <% end %>
     </div>

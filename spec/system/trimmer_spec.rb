@@ -46,7 +46,7 @@ describe "trimmer_test", type: :system do
         expect(current_path).to eq '/customers/1'
       end
       it '検索時 test' do
-        fill_in 'q[last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_info_best_cut_or_info_best_breed_cont]', with: "飼い主"
+        fill_in 'q[last_name_or_first_name_or_last_name_kana_or_first_name_kana_or_introduction_or_dogs_breed_cont]', with: "飼い主"
         click_button "検索"
         expect(page).to have_content '飼い主 test1'
       end

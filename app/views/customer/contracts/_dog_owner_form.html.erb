@@ -14,7 +14,7 @@
           <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
           <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
           <%= f.hidden_field :is_status, :value => "in_progress" %>
-          <%= f.submit "契約確定", class: "clickon" %>
+          <%= f.submit "契約確定", class: "clickon btn btn-success" %>
         <% end %>
       <% elsif (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == false) %>
         <span>両者の同意で契約を確定することが出来ます</span>
@@ -30,7 +30,7 @@
       <span><strong>契約内容がよろしければ同意してください</strong></span>
       <%= form_with model: contract, url: contract_path(contract.id), local: true do |f| %>
         <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-        <%= f.submit "契約に同意する", class: "clickon" %>
+        <%= f.submit "契約に同意する", class: "clickon btn btn-success" %>
       <% end %>
     <% else %>
       <span><strong>契約内容に同意済み</strong></span>
@@ -39,10 +39,6 @@
         <%= f.submit "同意を解除する", class: "clickon btn btn-danger" %>
       <% end %>
     <% end %>
-    </div>
-
-    <div class="col-3">
-      <%= link_to "契約を取り消す", contract_path(contract), method: :delete, class: "btn btn-danger", style: "width:150px", data: { confirm: "本当に契約を削除しますか？"} %>
     </div>
   </div>
 <% elsif contract.is_status == "in_progress" %>
@@ -66,7 +62,7 @@
             </div>
           <% end %>
           <div class="actions">
-            <%= f.submit "契約を完了する", class: "clickon", data: { confirm: "契約が完了すると評価は変えられません。契約を完了しますか？"} %>
+            <%= f.submit "契約を完了する", class: "clickon btn btn-success", data: { confirm: "契約が完了すると評価は変えられません。契約を完了しますか？"} %>
           </div>
         <% end %>
         <script>

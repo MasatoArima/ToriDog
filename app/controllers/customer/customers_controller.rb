@@ -1,7 +1,7 @@
 class Customer::CustomersController < ApplicationController
   before_action :authenticate_customer!
   before_action :setup, only: [:index, :mypage, :show]
-  before_action :correct_contract, only: [:edit,]
+  before_action :correct_contract, only: [:edit]
   def index
     @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
@@ -11,7 +11,7 @@ class Customer::CustomersController < ApplicationController
       @dogs = Dog.all
       @q = Customer.left_joins(:dogs).where(user_status: 0).ransack(params[:q])
       unless params[:q].nil?
-        @q.result(distinct: true).page(params[:customer_page]).per(5)
+        # @q.result(distinct: true).page(params[:customer_page]).per(5)
         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
         requests = []
         @dog_owners.each do |dog_owner|
@@ -19,14 +19,14 @@ class Customer::CustomersController < ApplicationController
         end
         if requests.sum == 0
           requests = []
+          @requests = Kaminari.paginate_array(requests).page(params[:request_page]).per(5)
         else
-          requests.sum
+          @requests = Kaminari.paginate_array(requests.sum).page(params[:request_page]).per(5)
         end
-        @requests = Kaminari.paginate_array(requests.sum).page(params[:request_page]).per(5)
       end
     else
       @map_trimmers = Customer.where(user_status: 1)
-      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
+      trimmers = Customer.includes([:profile_image_attachment]).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.left_joins(:info).where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
@@ -135,9 +135,10 @@ class Customer::CustomersController < ApplicationController
     end
     gon.trimmers = tmp
   end
+
   def correct_contract
     @customer = Customer.find(params[:id])
-    unless (@customer.id == current_customer.id)
+    unless @customer.id == current_customer.id
       redirect_to customers_mypage_path
     end
   end
