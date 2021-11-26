@@ -23,7 +23,7 @@
           <li class="nav-item text-center mr-3"><%= link_to destroy_admin_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
         <% else %>
           <li class="nav-item text-center mr-3"><%= link_to about_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>about<% end %></li>
-          <li class="nav-item text-center mr-3"><%= link_to new_customer_registration_path, class: 'nav-link' do %><i class="fas fa-user-plus fa-lg"></i><br>Signup<% end %></li>
+          <li class="nav-item text-center mr-3"><%= link_to new_customer_registration_path, class: 'nav-link', data: {"turbolinks"=>false} do %><i class="fas fa-user-plus fa-lg"></i><br>Signup<% end %></li>
           <li class="nav-item text-center mr-3"><%= link_to new_customer_session_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>Login<% end %></li>
         <% end %>
           <li class="nav-item text-center mr-3"><%= link_to contacts_path, class: 'nav-link' do %><i class="fas fa-envelope"></i><br>問い合わせ<% end %></li>
