@@ -1,18 +1,17 @@
-<div class="container">
+<div class="container chatview">
   <div class="d-flex align-items-center justify-content-center">
-      <div class='p-3' style="width: 50%">
-        <h3 id="room" data-room="<%= @room.id %>" data-user="<%= current_customer.id %>"><%= @customer.full_name %> さんとのチャット</h3>
-        <div id="chat" data-room_id="<%= @room.id %>" style="padding: 0 10px 0 0; height: 600px; overflow-y: scroll;">
+      <div class='p-3' style="width: 75%">
+        <h3 id="room" data-room="<%= @room.id %>" data-user="<%= current_customer.id %>" class='chatview__title text-center'><%= @customer.full_name %> さんとのチャット</h3>
+        <div id="chat" data-room_id="<%= @room.id %>" style="padding: 0 10px 0 10px; height: 600px; overflow-y: scroll;" class='chatview__body'>
           <%= render @chats %>
         </div>
         <div class="p-3 text-right">
           <%= form_with model: @chat do |f| %>
-            <%= f.text_field :message, id: "chat-btn" %>
+            <%= f.text_field :message, size:"70", id: "chat-btn" %>
             <%= f.hidden_field :room_id %>
-            <%= f.submit "投稿する" %>
+            <%= f.submit "投稿する", class: "clickon" %>
           <% end %>
         </div>
       </div>
   </div>
 </div>
-

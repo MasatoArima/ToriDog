@@ -8,85 +8,22 @@
   </div>
   <table class="table mt-2 mb-0">
     <tbody>
-      <tr>
-        <td style="width: 120px">
-          ステータス
-        </td>
-        <td>
-          <%= customer.user_status_i18n%>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          名前
-        </td>
-        <td>
-          <%= customer.full_name %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          フリガナ
-        </td>
-        <td>
-          <%= customer.full_name_kana %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          郵便番号
-        </td>
-        <td>
-          <%= customer.post_code %>
-        </td>
-      </tr>
+      <tr><td style="width: 120px">ステータス </td><td> <%= customer.user_status_i18n%> </td></tr>
+      <tr><td>名前                            </td><td> <%= customer.full_name %>       </td></tr>
+      <tr><td>フリガナ                        </td><td> <%= customer.full_name_kana %>  </td></tr>
+      <tr><td>郵便番号                        </td><td> <%= customer.post_code %>       </td></tr>
       <% if customer.id == current_customer.id %>
-        <tr>
-          <td>
-            住所
-          </td>
-          <td style="word-break : break-all">
-            <%= customer.addres %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            電話番号
-          </td>
-          <td>
-            <%= customer.phone_number %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            アドレス
-          </td>
-          <td>
-            <%= customer.email %>
-          </td>
-        </tr>
+        <tr><td>住所     </td><td style="word-break : break-all"> <%= customer.addres %>       </td></tr>
+        <tr><td>電話番号 </td><td>                                <%= customer.phone_number %> </td></tr>
+        <tr><td>アドレス </td><td>                                <%= customer.email %>        </td></tr>
       <% else %>
-        <tr>
-          <td>
-            住所
-          </td>
-          <td style="word-break : break-all">
-            <%= customer.open_addres %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            契約件数
-          </td>
-          <td>
-            <%= contracts.count %>
-          </td>
-        </tr>
+        <tr><td>住所     </td><td style="word-break : break-all"> <%= customer.open_addres %> </td></tr>
+        <tr><td>契約件数 </td><td>                                <%= contracts.count %>      </td></tr>
       <% end %>
     </tbody>
   </table>
-  <%= render "customer/assessments/assessment", customer: customer %>
 
+  <%= render "customer/assessments/assessment", customer: customer %>
 
   <% if request.fullpath == customers_mypage_path %>
     <%= render "customer/relationships/relationship_mypage", customer: customer %>
@@ -98,86 +35,33 @@
     <% unless ( customer.info.nil? )%>
       <table class="table mb-0">
         <tbody>
-          <tr>
-            <td style="width: 120px">
-              得意犬種
-            </td>
-            <td>
-              <%= customer.info.best_breed %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              得意なカット
-            </td>
-            <td>
-              <%= customer.info.best_cut %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              大型犬の値段
-            </td>
-            <td>
-              <%= customer.info.price_large %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              中型犬の値段
-            </td>
-            <td>
-              <%= customer.info.price_medium %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              小型犬の値段
-            </td>
-            <td>
-              <%= customer.info.price_small %>
-            </td>
-          </tr>
+          <tr><td style="width: 120px"> 得意犬種     </td><td> <%= customer.info.best_breed %>   </td></tr>
+          <tr><td>                      得意なカット </td><td> <%= customer.info.best_cut %>     </td></tr>
+          <tr><td>                      大型犬の値段 </td><td> <%= customer.info.price_large %>  </td></tr>
+          <tr><td>                      中型犬の値段 </td><td> <%= customer.info.price_medium %> </td></tr>
         </tbody>
       </table>
     <% end %>
-  <% end %>
-  <% if customer.user_status == "trimmer" %>
-  <table class="table mb-0">
-    <tbody>
-      <tr>
-        <td>評価</td>
-        <td class="average-rate" data-score="<%= evaluation_ave(customer) %>"></td>
-        <script>
-          $('.average-rate').empty();
-          $('.average-rate').raty({
-            readOnly: true,
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            score: function() {
-              return $(this).attr('data-score');
-            },
-          });
-        </script>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table mb-0">
+      <tbody>
+        <tr><td style="width: 120px">評価</td><td class="average-rate<%= customer.id %>" data-score="<%= evaluation_ave(customer) %>"></td></tr>
+        <tr><td></td><td></td></tr>
+      </tbody>
+    </table>
   <% end %>
 
-  <div>自己紹介文</div>
-  <p style="word-break : break-all"><%= customer.introduction%></p>
+  <% if request.fullpath == customers_mypage_path %>
+    <div class="text-center pt-3"><strong>自己紹介文</strong></div>
+    <p style="word-break : break-all"><%= customer.introduction%></p>
+  <% end %>
+
 
   <div class="mt-4">
     <% if customer.id == current_customer.id %>
-      <% if is_trimmer? %>
-        <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
-        <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
-      <% else %>
-        <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
-        <%= link_to "愛犬一覧", dogs_path, class: "btn btn-success", style: "width:90px" %>
-        <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
-      <% end %>
+    <div class="text-center">
+      <%= link_to "会員編集", edit_customer_path(customer), class: "btn btn-success", style: "width:90px" %>
+      <%= link_to "退会する", customers_withdraw_confirm_path, class: "btn btn-danger", style: "width:90px" %>
+    </div>
     <% else %>
       <div class="mt-1">
         <%= render "customer/relationships/relationship_btn", customer: customer %>

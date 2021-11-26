@@ -3,20 +3,14 @@
   <table class="table">
     <thead>
       <tr>
-        <th>
-          依頼日
-        </th>
-        <th>
-          トリミング犬
-        </th>
-        <th>
-          依頼主
-        </th>
+        <th>依頼日       </th>
+        <th>トリミング犬 </th>
+        <th> 依頼主      </th>
       </tr>
     </thead>
     <tbody>
       <% applications_page.each do |application| %>
-         <% requesta = requests.find(application.request_id) %>
+        <% requesta = requests.find(application.request_id) %>
         <% if requesta.is_complete == false %>
           <tr>
             <td>
@@ -24,12 +18,8 @@
                 <%= requesta.updated_at.to_s(:datetime_jp) %>
               <% end %>
             </td>
-            <td>
-              <%= request_dog_name(requesta) %>
-            </td>
-            <td>
-              <%= request_dog_owner_name(requesta) %>
-            </td>
+            <td><%= request_dog_name(requesta) %></td>
+            <td><%= request_dog_owner_name(requesta) %></td>
           </tr>
         <% end %>
       <% end %>
@@ -41,11 +31,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th>施術日</th>
-        <th>トリミング犬</th>
-        <th>飼い主</th>
-        <th>ステータス</th>
-        <th>評価</th>
+        <th>施術日     </th>
+        <th>愛犬       </th>
+        <th>飼い主     </th>
+        <th>ステータス </th>
+        <th>評価       </th>
       </tr>
     </thead>
     <tbody>
@@ -56,29 +46,17 @@
               <%= contract.preferred_date.to_s(:datetime_jp) %>
             <% end %>
           </td>
+          <td><%= contract_dog_name(contract) %></td>
           <td>
-            <%= contract_dog_name(contract) %>
+            <%= link_to customer_path(contract.client_id) do %>
+              <%= contract_dog_owner_name(contract) %>
+            <% end %>
           </td>
-          <td>
-            <%= contract_dog_owner_name(contract) %>
-            </td>
-          <td>
-            <%= contract.is_status_i18n %><br>
-            <%= consent_status(contract) %>
-          </td>
-          <% unless contract.evaluation.nil? %>
-            <td class="contract-rate<%= contract.id %>" data-score="<%= contract.evaluation.rate %>"></td>
-            <script>
-              $('.contract-rate<%= contract.id %>').raty({
-                readOnly: true,
-                starOn: "<%= asset_path('star-on.png') %>",
-                starOff: "<%= asset_path('star-off.png') %>",
-                starHalf: "<%= asset_path('star-half.png') %>",
-                score: function() {
-                  return $(this).attr('data-score');
-                },
-              });
-            </script>
+          <td><%= contract.is_status_i18n %><br><%= consent_status(contract) %></td>
+          <% if contract.evaluation.nil? %>
+            <td></td>
+          <% else %>
+            <td><%= contract.evaluation.rate %>点</td>
           <% end %>
         </tr>
       <% end %>

@@ -1,35 +1,137 @@
 <div class="container">
   <div class="row text-center">
-    <div class="col-9">
+    <div class="col-8">
       <table class="table">
         <tbody>
-          <tr><th>施術日</th><td><%= contract.preferred_date.to_s(:datetime_jp_time) %></td></tr>
-          <tr><th>飼い主</th><td><%= dog_owner.full_name %></td></tr>
+          <tr><th>施術日 </th><td> <%= contract.preferred_date.to_s(:datetime_jp_time) %> </td></tr>
+          <tr><th>飼い主 </th><td> <%= dog_owner.full_name %>                             </td></tr>
           <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
-            <tr><th>郵便番号</th><td><%= dog_owner.post_code %></td></tr>
-            <tr><th>住所</th><td><%= dog_owner.addres %></td></tr>
-            <tr><th>電話番号</th><td><%= dog_owner.phone_number %></td></tr>
+            <tr><th>郵便番号 </th><td> <%= dog_owner.post_code %>    </td></tr>
+            <tr><th>住所     </th><td> <%= dog_owner.addres %>       </td></tr>
+            <tr><th>電話番号 </th><td> <%= dog_owner.phone_number %> </td></tr>
+          <% end %>
+          <tr><th>       </th><td>                      </td></tr>
+          <tr><th>愛犬名 </th><td> <%= dog.name %>      </td></tr>
+          <tr><th>犬種   </th><td> <%= dog.breed %>     </td></tr>
+          <tr><th>性別   </th><td> <%= sex(dog) %>      </td></tr>
+          <tr><th>サイズ </th><td> <%= dog.size_i18n %> </td></tr>
+          <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
+            <tr><th>ワクチン </th><td> <%= is_inoculate(dog) %>             </td></tr>
+            <tr><th>誕生日   </th><td> <%= dog.birth_day %>(<%= dog.age %>) </td></tr>
+            <tr><th>既往歴   </th><td> <%= dog.medical_history %>          </td></tr>
+          <% end %>
+            <tr><th>         </th><td>                         </td></tr>
+            <tr><th>トリマー </th><td> <%= trimmer.full_name %> </td></tr>
+          <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
+            <tr><th>郵便番号 </th><td> <%= trimmer.post_code %>    </td></tr>
+            <tr><th>住所     </th><td> <%= trimmer.addres %>       </td></tr>
+            <tr><th>電話番号 </th><td> <%= trimmer.phone_number %> </td></tr>
           <% end %>
           <tr><th></th><td></td></tr>
-          <tr><th>愛犬名</th><td><%= dog.name %></td></tr>
-          <tr><th>犬種</th><td><%= dog.breed %></td></tr>
-          <tr><th>性別</th><td><%= sex(dog) %></td></tr>
-          <tr><th>サイズ</th><td><%= dog.size_i18n %></td></tr>
-          <tr><th>ワクチン</th><td><%= is_inoculate(dog) %></td>
-          </tr><tr><th>誕生日</th><td><%= dog.birth_day %>(<%= dog.age %>)</td></tr>
-          <tr><th>既往歴</th><td><%= dog.medical_history %></td></tr>
-          <tr><th></th><td></td></tr>
-          <tr><th>トリマー</th><td><%= trimmer.full_name %></td></tr>
-          <% unless (contract.is_status == "cancel") || (contract.is_status == "completion") %>
-            <tr><th>郵便番号</th><td><%= trimmer.post_code %></td></tr>
-            <tr><th>住所</th><td><%= trimmer.addres %></td></tr>
-            <tr><th>電話番号</th><td><%= trimmer.phone_number %></td></tr>
+          <% if contract.is_status == "completion" %>
+            <tr><th>                     </th><td>飼い主評価                                                 </td></tr>
+            <tr><th>この施術に対する評価 </th><td class="contract-rate" data-score="<%= evaluation.rate %>"> </td></tr>
+            <tr><th>コメント             </th><td><%=evaluation.comment %>                                   </td></tr>
           <% end %>
-          <tr><th></th><td></td></tr>
         </tbody>
       </table>
+        <script>
+          $('.contract-rate').raty({
+            readOnly: true,
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            starHalf: "<%= asset_path('star-half.png') %>",
+            score: function() {
+              return $(this).attr('data-score');
+            },
+          });
+        </script>
+
+      <% if is_trimmer? %>
+        <% if contract.is_status == "in_progress" %>
+          <div class="col-9 text-right">
+            <% if (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == false) %>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
+                <%= f.submit "契約を中止する", class: "clickon btn btn-danger" %>
+              <% end %>
+            <% elsif (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == true) %>
+              <div>
+                飼い主が契約中止を希望しています<br>
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
+                <%= f.submit "契約を中止する", class: "clickon btn btn-danger" %>
+              <% end %>
+            <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == false) %>
+              <div>
+                契約中断を希望しています<br>
+                飼い主が契約を中止するのをお待ちください<br>
+                契約を再開する場合は再開のボタンを押してください
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+                <%= f.submit "契約再開", class: "clickon btn btn-success" %>
+              <% end %>
+            <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == true) %>
+              <div>
+                飼い主が中止確定中<br>
+                契約を再開する場合は再開ボタンを押してください
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
+                <%= f.submit "契約再開", class: "clickon btn btn-success" %>
+              <% end %>
+            <% end %>
+          </div>
+          <% end %>
+      <% else %>
+        <% if contract.is_status == "in_progress" %>
+          <div class="col-9 text-right">
+            <% if (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == false) %>
+              <div>
+                <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                  <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
+                  <%= f.submit "契約を中止する", class: "clickon btn btn-danger" %>
+                <% end %>
+              </div>
+            <% elsif (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == true) %>
+              <div class="mb-2">
+                トリマーが中止を希望しています
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
+                <%= f.submit "契約を中止するる", class: "clickon btn btn-danger" %>
+              <% end %>
+            <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == false) %>
+              <div class="mb-2">
+                契約中断を希望しています<br>
+                トリマーが同意すれば契約を中止することが出来ます<br>
+                契約を再開する場合は再開のボタンを押してください
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
+                <%= f.submit "契約再開", class: "clickon btn btn-success" %>
+              <% end %>
+            <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
+              <div class="mb-2">
+                契約を中止する場合は中止を押してください<br>
+                再開する場合は契約再開を押してください
+              </div>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
+                <%= f.submit "契約再開", class: "clickon btn btn-success" %>
+              <% end %>
+              <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
+                <%= f.hidden_field :is_status, :value => "cancel" %>
+                <%= f.submit "契約を中止する", class: "clickon btn btn-danger" %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-    <div class="col-3">
+    <div class="col-4">
       <div>Chat</div>
       <div class="actioncable" style="padding: 0 10px 0 0; height: 600px; overflow-y: scroll;">
         <div id="messages" data-contract_id="<%= contract.id %>" data-sender="<%= current_customer.full_name %>" style="word-break : break-all">
@@ -42,112 +144,4 @@
       </form>
     </div>
   </div>
-  <% if contract.is_status == "completion" %>
-    <% unless is_trimmer? %>
-      <div class="col-9">
-        <table class="table">
-          <tbody>
-            <tr><th></th><td>飼い主評価</td></tr>
-            <tr><th>この施術に対する評価</th><td class="contract-rate" data-score="<%= evaluation.rate %>"></td></tr>
-            <tr><th>コメント</th><td><%=evaluation.comment %></td></tr>
-          </tbody>
-        </table>
-      </div>
-        <script>
-          $('.contract-rate').raty({
-            readOnly: true,
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            starHalf: "<%= asset_path('star-half.png') %>",
-            score: function() {
-              return $(this).attr('data-score');
-            },
-          });
-        </script>
-      </div>
-    <% end %>
-  <% end %>
-  <% if is_trimmer? %>
-    <% if contract.is_status == "in_progress" %>
-      <div class="col-9 text-right">
-        <% if (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == false) %>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-              <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% elsif (contract.trimmer_is_consent == false) && (contract.dog_owner_is_consent == true) %>
-          <div>
-            飼い主が契約中止を希望しています<br>
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :trimmer_is_consent, :value => "true" %>
-              <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == false) %>
-          <div>
-            契約中断を希望しています<br>
-            飼い主が契約を中止するのをお待ちください<br>
-            契約を再開する場合は再開のボタンを押してください
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-            <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% elsif (contract.trimmer_is_consent == true) && (contract.dog_owner_is_consent == true) %>
-          <div>
-            飼い主が中止確定中<br>
-            契約を再開する場合は再開ボタンを押してください
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-            <%= f.hidden_field :trimmer_is_consent, :value => "false" %>
-            <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% end %>
-      </div>
-      <% end %>
-  <% else %>
-    <% if contract.is_status == "in_progress" %>
-      <div class="col-9 text-right">
-        <% if (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == false) %>
-          <div>
-            <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-              <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-            <% end %>
-          </div>
-        <% elsif (contract.dog_owner_is_consent == false) && (contract.trimmer_is_consent == true) %>
-          <div class="mb-2">
-            トリマーが中止を希望しています
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-              <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == false) %>
-          <div class="mb-2">
-            契約中断を希望しています<br>
-            トリマーが同意すれば契約を中止することが出来ます<br>
-            契約を再開する場合は再開のボタンを押してください
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-              <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == true) %>
-          <div class="mb-2">
-            契約を中止する場合は中止を押してください<br>
-            再開する場合は契約再開を押してください
-          </div>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :dog_owner_is_consent, :value => "false" %>
-              <%= f.button '契約再開', type: 'button', onclick: 'submit();' %>
-          <% end %>
-          <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
-              <%= f.hidden_field :is_status, :value => "cancel" %>
-              <%= f.button '契約を中止する', type: 'button', onclick: 'submit();' %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-  <% end %>
 </div>

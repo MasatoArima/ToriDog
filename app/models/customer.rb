@@ -68,20 +68,28 @@ class Customer < ApplicationRecord
   end
 
   def full_name
-    self.last_name + " " + self.first_name
+    last_name + " " + first_name
   end
 
   def full_name_kana
-    self.last_name_kana + " " + self.first_name_kana
+    last_name_kana + " " + first_name_kana
   end
 
   def open_addres
-    self.prefecture_code + self.city
+    prefecture_code + city
   end
 
   def addres
-    self.prefecture_code.to_s + self.city.to_s + self.street.to_s + self.other_address.to_s
+    prefecture_code.to_s + city.to_s + street.to_s + other_address.to_s
   end
+
+  # -----------------------SQL??----------------------
+  # ransacker :likers_count do
+  # # Customer.left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
+  # # SELECT "customers".* FROM "customers" LEFT OUTER JOIN "assessments" ON "assessments"."get_like_id" = "customers"."id" LEFT OUTER JOIN "customers" "likers_customers" ON "likers_customers"."id" = "assessments"."like_id" GROUP BY "customers"."id" ORDER BY count(get_like_id) desc
+  #   query = '(SELECT COUNT("get_like_id") FROM "customers" LEFT OUTER JOIN "assessments" ON "assessments"."get_like_id" = "customers"."id" LEFT OUTER JOIN "customers" "likers_customers" ON "likers_customers"."id" = "assessments"."like_id" GROUP BY "customers"."id")'
+  #   Arel.sql(query)
+  # end
 
   # 住所自動入力
   include JpPrefecture

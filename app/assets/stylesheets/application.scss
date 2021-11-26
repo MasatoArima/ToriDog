@@ -36,11 +36,14 @@
    }
   }
  }
+
  #notice {color: green;}
  #error_explanation {color: red;}
+
  ul {
    list-style: none;
  }
+
  body {
   font-family: 'Kaisei Tokumin', serif;
   font-family: 'Shippori Mincho', serif;
@@ -50,13 +53,16 @@
   flex-flow: column;
   min-height: 100vh;
  }
+
  main {
    flex: 1;
  }
+
  .news {
   width: 90px;
  }
-p {
-  white-space: pre-wrap;
-}
+
+ p {
+   white-space: pre-wrap;
+ }
 

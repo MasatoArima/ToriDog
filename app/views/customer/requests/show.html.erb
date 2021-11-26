@@ -1,16 +1,9 @@
 <div class="container">
   <div class="row">
     <% if is_trimmer? %>
+      <h3 class="col-12 text-center pb-2">依頼詳細</h3>
       <div class="col-6">
-        <h3 class="text-center">依頼詳細</h3>
-        <% if @request.customer_id == current_customer.id %>
-          <% if contracts_inprogress(@request) == "false" %>
-          <div class="text-right pr-5">
-            <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1 ", style: "width:150px", data: { confirm: "本当に依頼を削除しますか？"} %>
-          </div>
-          <% end %>
-        <% end %>
-        <table class="table table-striped" style="width: 500px">
+        <table class="table table-striped">
           <tr><th style="width: 100px"></th><th>会員情報</th></tr>
           <tr><td>名前</td>
           <td>
@@ -18,59 +11,61 @@
               <%= @customer.full_name %>
             <% end %>
           </td></tr>
-          <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
-          <tr><td>住所</td><td><%= @customer.open_addres %></td></tr>
-          <tr><td>希望日</td><td><%= @request.preferred_dates %></td></tr>
-          <tr><td>依頼内容</td><td><%= @request.comment %></td></tr>
+          <tr><td>郵便番号 </td><td> <%= @customer.post_code %>      </td></tr>
+          <tr><td>住所     </td><td> <%= @customer.open_addres %>    </td></tr>
+          <tr><td>希望日   </td><td> <%= @request.preferred_dates %> </td></tr>
+          <tr><td>依頼内容 </td><td> <%= @request.comment %>         </td></tr>
           <tr><th style="width: 100px"></th></th><th>愛犬情報</th></tr>
-          <tr><td>名前</td><td><%= @dog.name %></td></tr>
-          <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
-          <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
-          <tr><td>サイズ</td><td><%= @dog.size_i18n %></td></tr>
-          <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
-          <tr><td>誕生日</td><td><%= @dog.birth_day %></td></tr>
-          <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
-          <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
+          <tr><td>名前     </td><td> <%= @dog.name %>            </td></tr>
+          <tr><td>犬種     </td><td> <%= @dog.breed %>           </td></tr>
+          <tr><td>性別     </td><td> <%= sex(@dog) %>            </td></tr>
+          <tr><td>サイズ   </td><td> <%= @dog.size_i18n %>       </td></tr>
+          <tr><td>ワクチン </td><td> <%= is_inoculate(@dog) %>   </td></tr>
+          <tr><td>誕生日   </td><td> <%= @dog.birth_day %>       </td></tr>
+          <tr><td>既往歴   </td><td> <%= @dog.medical_history %> </td></tr>
+          <tr><td>紹介文   </td><td> <%= @dog.introduction %>    </td></tr>
         </table>
       </div>
       <div class="col-6">
         <%= render 'customer/requests/trimmer_show', requesta: @request, application: @application, contracts: @contracts %>
       </div>
     <% else %>
+      <h3 class="col-12 text-center pb-2">依頼詳細</h3>
       <div class="col-6">
-        <h3 class="text-center">依頼詳細</h3>
         <% if @request.customer_id == current_customer.id %>
+          <%# binding.pry %>
           <% if contracts_inprogress(@request) == "false" %>
-          <div class="text-right pr-5">
-            <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1 ", style: "width:150px", data: { confirm: "本当に依頼を削除しますか？"} %>
+
+          <div class="text-right">
+            <%= link_to "依頼削除", request_path(@request), method: :delete, class: "btn btn-danger mb-1 ", style: "width:100px", data: { confirm: "本当に依頼を削除しますか？"} %>
           </div>
           <% end %>
         <% end %>
-        <table class="table table-striped" style="width: 500px">
+        <table class="table table-striped">
           <tr><th style="width: 100px"></th><th>会員情報</th></tr>
           <tr><td>名前</td>
           <td>
-            <%= link_to customer_path(@customer.id) do %>
+            <%= link_to customers_mypage_path do %>
               <%= @customer.full_name %>
             <% end %>
           </td></tr>
-          <tr><td>郵便番号</td><td><%= @customer.post_code %></td></tr>
-          <tr><td>住所</td><td><%= @customer.open_addres %></td></tr>
-          <tr><td>希望日</td><td><%= @request.preferred_dates %></td></tr>
-          <tr><td>依頼内容</td><td><%= @request.comment %></td></tr>
+          <tr><td>郵便番号 </td><td> <%= @customer.post_code %>      </td></tr>
+          <tr><td>住所     </td><td> <%= @customer.open_addres %>    </td></tr>
+          <tr><td>希望日   </td><td> <%= @request.preferred_dates %> </td></tr>
+          <tr><td>依頼内容 </td><td> <%= @request.comment %>         </td></tr>
         </table>
       </div>
       <div class="col-6">
-        <table class="table table-striped" style="width: 500px">
+        <table class="table table-striped">
           <tr><th style="width: 100px"></th></th><th>愛犬情報</th></tr>
-          <tr><td>名前</td><td><%= @dog.name %></td></tr>
-          <tr><td>犬種</td><td><%= @dog.breed %></td></tr>
-          <tr><td>性別</td><td><%= sex(@dog) %></td></tr>
-          <tr><td>サイズ</td><td><%= @dog.size_i18n %></td></tr>
-          <tr><td>ワクチン</td><td><%= is_inoculate(@dog) %></td></tr>
-          <tr><td>誕生日</td><td><%= @dog.birth_day %></td></tr>
-          <tr><td>既往歴</td><td><%= @dog.medical_history %></td></tr>
-          <tr><td>紹介文</td><td><%= @dog.introduction %></td></tr>
+          <tr><td>名前     </td><td> <%= @dog.name %>            </td></tr>
+          <tr><td>犬種     </td><td> <%= @dog.breed %>           </td></tr>
+          <tr><td>性別     </td><td> <%= sex(@dog) %>            </td></tr>
+          <tr><td>サイズ   </td><td> <%= @dog.size_i18n %>       </td></tr>
+          <tr><td>ワクチン </td><td> <%= is_inoculate(@dog) %>   </td></tr>
+          <tr><td>誕生日   </td><td> <%= @dog.birth_day %>       </td></tr>
+          <tr><td>既往歴   </td><td> <%= @dog.medical_history %> </td></tr>
+          <tr><td>紹介文   </td><td> <%= @dog.introduction %>    </td></tr>
         </table>
       </div>
       <div class="col-12">

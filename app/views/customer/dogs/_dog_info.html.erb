@@ -1,12 +1,12 @@
-<!--dog-show-->
-<table class="table table-striped">
-  <tr><th style="width: 100px">名前</th><th><%= dog.name %></th></tr>
-  <tr><td>フリガナ</td><td><%= dog.name_kana %></td></tr>
-  <tr><td>犬種</td><td><%= dog.breed %></td></tr>
-  <tr><td>性別</td><td><%= sex(dog) %></td></tr>
-  <tr><td>サイズ</td><td><%= dog.size_i18n %></td></tr>
-  <tr><td>ワクチン</td><td><%= is_inoculate(dog) %></td></tr>
-  <tr><td>誕生日</td><td><%= dog.birth_day %>(<%= dog.age %>)</td></tr>
-  <tr><td>既往歴</td><td><%= dog.medical_history %></td></tr>
-  <tr><td>紹介文</td><td><p><%= dog.introduction %></p></td></tr>
+<table class="table table-striped table-bordered">
+  <tr><th class="text-center" colspan="2" style="width: 100px">愛犬情報</th></tr>
+  <tr><td>名前     </th><td>    <%= dog.name %>                </td></tr>
+  <tr><td>フリガナ </td><td>    <%= dog.name_kana %>           </td></tr>
+  <tr><td>犬種     </td><td>    <%= dog.breed %>               </td></tr>
+  <tr><td>性別     </td><td>    <%= sex(dog) %>                </td></tr>
+  <tr><td>サイズ   </td><td>    <%= dog.size_i18n %>           </td></tr>
+  <tr><td>ワクチン </td><td>    <%= is_inoculate(dog) %>       </td></tr>
+  <tr><td>誕生日   </td><td>    <%= dog.birth_day %>           </td></tr>
+  <tr><td>既往歴   </td><td>    <%= dog.medical_history %>     </td></tr>
+  <tr><td>紹介文   </td><td><p> <%= dog.introduction %>    </p></td></tr>
 </table>

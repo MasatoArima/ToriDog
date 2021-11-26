@@ -5,26 +5,26 @@
       <div class="col-4">
       <table class="table">
         <tbody>
-          <tr><th>飼い主</th><td><%= @customer.full_name %></td></tr>
-          <tr><th>郵便番号</th><td><%= @customer.post_code %></td></tr>
-          <tr><th>住所</th><td><%= @customer.open_addres %></td></tr>
-          <tr><th></th><td></td></tr>
-          <tr><th>愛犬名</th><td><%= @dog.name %></td></tr>
-          <tr><th>犬種</th><td><%= @dog.breed %></td></tr>
-          <tr><th>性別</th><td><% sex(@dog) %></td></tr>
-          <tr><th>サイズ</th><td><%= @dog.size_i18n %></td></tr>
-          <tr><th>ワクチン</th><td><%= is_inoculate(@dog) %></td></tr>
-          <tr><th>誕生日</th><td><%= @dog.birth_day %>(<%= @dog.age %>)</td></tr>
-          <tr><th>既往歴</th><td><%= @dog.medical_history %></td></tr>
+          <tr><th>飼い主   </th><td> <%= @customer.full_name %>             </td></tr>
+          <tr><th>郵便番号 </th><td> <%= @customer.post_code %>             </td></tr>
+          <tr><th>住所     </th><td> <%= @customer.open_addres %>           </td></tr>
+          <tr><th>         </th><td>                                        </td></tr>
+          <tr><th>愛犬名   </th><td> <%= @dog.name %>                       </td></tr>
+          <tr><th>犬種     </th><td> <%= @dog.breed %>                      </td></tr>
+          <tr><th>性別     </th><td> <% sex(@dog) %>                        </td></tr>
+          <tr><th>サイズ   </th><td> <%= @dog.size_i18n %>                  </td></tr>
+          <tr><th>ワクチン </th><td> <%= is_inoculate(@dog) %>              </td></tr>
+          <tr><th>誕生日   </th><td> <%= @dog.birth_day %>(<%= @dog.age %>) </td></tr>
+          <tr><th>既往歴   </th><td> <%= @dog.medical_history %>            </td></tr>
         </tbody>
       </table>
       </div>
       <div class="col-4">
         <table class="table">
           <tbody>
-            <tr><th>トリマー</th><td><%= @trimmer.full_name %></td></tr>
-            <tr><th>郵便番号</th><td><%= @trimmer.post_code %></td></tr>
-            <tr><th>住所</th><td><%= @trimmer.open_addres %></td></tr>
+            <tr><th>トリマー </th><td> <%= @trimmer.full_name %> </td></tr>
+            <tr><th>郵便番号 </th><td> <%= @trimmer.post_code %> </td></tr>
+            <tr><th>住所     </th><td> <%= @trimmer.open_addres %>   </td></tr>
           </tbody>
         </table>
       </div>
@@ -39,9 +39,10 @@
           <%= f.hidden_field :client_id, :value => @customer.id %>
           <%= f.hidden_field :trimmer_id, :value => @trimmer.id %>
         <div class="actions">
-          <%= f.button '契約書作成', type: 'button', onclick: 'submit();' %>
+          <%= f.submit "契約書作成", class: "clickon btn btn-success" %>
         </div>
       </div>
     </div>
   </div>
 <% end %>
+

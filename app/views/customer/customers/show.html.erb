@@ -2,21 +2,14 @@
   <div class="row">
     <%= render 'customer/customers/customer_info', customer: @customer, applications: @applications, requests: @requests, dogs: @dogs, contracts: @contracts %>
     <div class="col-8">
-      <!--トリマーなら-->
       <% if is_trimmer? %>
         <h3>カット依頼案件</h3>
         <table class="table">
           <thead>
             <tr>
-              <th>
-                依頼日
-              </th>
-              <th>
-                トリミング犬
-              </th>
-              <th>
-                応募数
-              </th>
+              <th>依頼日</th>
+              <th>トリミング犬</th>
+              <th>応募数</th>
             </tr>
           </thead>
           <tbody>
@@ -28,12 +21,8 @@
                       <%= requesta.updated_at.to_s(:datetime_jp) %>
                     <% end %>
                   </td>
-                  <td>
-                    <%= request_dog_name(requesta) %>
-                  </td>
-                  <td>
-                    <%= requesta.applications.count %>
-                  </td>
+                  <td><%= request_dog_name(requesta) %></td>
+                  <td><%= requesta.applications.count %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -54,32 +43,27 @@
                       <%= dog.name %>
                     <% end %>
                   </h5>
-                  <div class="card-text">
-                    <%= dog.breed %>
-                  </div>
-                  <div class="card-text">
-                    <%= dog.age %>
-                  </div>
+                  <div class="card-text"><%= dog.breed %></div>
+                  <div class="card-text"><%= dog.age %></div>
                 </div>
               </div>
             <% end %>
+          <% else %>
+          <div class="mx-auto">
+            <p>まだ愛犬が登録されていません</p>
           </div>
-        <% else %>
-        <div class="mx-auto">
-          <p>まだ愛犬が登録されていません</p>
+          <% end %>
         </div>
-        <% end %>
-      <!--飼い主なら-->
       <% else %>
       <h3>自己紹介文</h3>
-      <div style="word-break : break-all">
-        <% if @customer.introduction.blank? %>
-          <p>紹介文はまだ書かれていません</p>
-        <% else %>
-         <p><%= @customer.introduction %></p>
-        <% end %>
-      </div>
-      <h3 class="mt-5">トリミング画像</h3>
+        <div style="word-break : break-all">
+          <% if @customer.introduction.blank? %>
+            <p>紹介文はまだ書かれていません</p>
+          <% else %>
+           <p><%= @customer.introduction %></p>
+          <% end %>
+        </div>
+        <h3 class="mt-5">トリミング画像</h3>
         <% if @customer.cut_images.attached? %>
           <% @customer.cut_images.each do |image| %>
             <%= image_tag image.variant(resize:'200x200').processed, class: "mb-1" %>

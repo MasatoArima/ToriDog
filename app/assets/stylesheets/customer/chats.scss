@@ -8,3 +8,14 @@
 .chat-font {
   font-size: 13px;
 }
+
+.chatview{
+  // background-image: image-url('image3.jpg');
+  &__title {
+  }
+  &__body {
+    background-color: white;
+    word-break: break-word;
+  }
+
+}

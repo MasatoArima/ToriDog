@@ -21,13 +21,10 @@
           <%= f.hidden_field :prefecture_code, value: current_customer.prefecture_code %>
         </div>
         <div class="actions">
-          <%= f.button '依頼登録', type: 'button', onclick: 'submit();' %>
+          <%= f.submit "依頼登録", class: "clickon btn btn-success" %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
-
-
-
 

@@ -9,23 +9,23 @@
 
     <div class="articles">
       <% @articles["articles"].first(9).each do |article| %>
-        <div class="article">
-          <div class="title">
+        <div class="articles__article">
+          <div class="articles__article__title">
             <%= link_to article["title"], article["url"] %>
           </div>
-          <div class="wrapper">
-            <div class="date">
+          <div class="articles__article__wrapper">
+            <div class="articles__article__wrapper__date">
               <%= article["publishedAt"] %>
             </div>
-            <div class="source">
+            <div class="articles__article__wrapper__source">
               <%= article["source"]["name"]%>
             </div>
-            <div class="image">
+            <div class="articles__article__wrapper__image">
               <% unless article["urlToImage"].nil? %>
                 <%= image_tag article["urlToImage"],:size =>'240x160' %>
               <% end %>
             </div>
-            <div class="content">
+            <div class="articles__article__wrapper__content">
               <%= article["description"] %>
             </div >
           </div>

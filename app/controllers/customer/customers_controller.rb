@@ -1,38 +1,41 @@
 class Customer::CustomersController < ApplicationController
   before_action :authenticate_customer!
+  before_action :setup, only: [:index, :mypage, :show]
+  before_action :correct_contract, only: [:edit]
   def index
-    # @customers = Customer.all
     @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
-      @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5)
+      @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5).includes([:dogs]).includes([:profile_image_attachment])
       @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").page(params[:request_page]).per(5)
       @applications = current_customer.applications
       @dogs = Dog.all
       @q = Customer.left_joins(:dogs).where(user_status: 0).ransack(params[:q])
       unless params[:q].nil?
-        @q.result(distinct: true).page(params[:customer_page]).per(5)
+        # @q.result(distinct: true).page(params[:customer_page]).per(5)
         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
         requests = []
         @dog_owners.each do |dog_owner|
           requests.append(dog_owner.requests.where(is_complete: "false"))
         end
-        if requests.sum() == 0
+        if requests.sum == 0
           requests = []
+          @requests = Kaminari.paginate_array(requests).page(params[:request_page]).per(5)
         else
-          requests.sum()
+          @requests = Kaminari.paginate_array(requests.sum).page(params[:request_page]).per(5)
         end
-        # binding.pry
-        @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
-        # @requests =Kaminari.paginate_array(requests.sum()).page(params[:request_page]).per(5)
       end
     else
       @map_trimmers = Customer.where(user_status: 1)
-      trimmers = Customer.includes(:profile_image_attachment).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).sort { |a, b| b.likers.size <=> a.likers.size }
+      trimmers = Customer.includes([:profile_image_attachment]).where(user_status: 1).where(prefecture_code: current_customer.prefecture_code).left_joins(:likers).group(:id).order(Arel.sql("count(get_like_id) desc"))
       @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
       @q = Customer.left_joins(:info).where(user_status: 1).ransack(params[:q])
       unless params[:q].nil?
-        trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
+        trimmers = @q.result(distinct: true)
         @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
+        if params[:q][:sorts] == "likers_count desc"
+          trimmers = @q.result(distinct: true).sort { |a, b| b.likers.size <=> a.likers.size }
+          @trimmers = Kaminari.paginate_array(trimmers).page(params[:customer_page]).per(5)
+        end
       end
     end
   end
@@ -58,7 +61,6 @@ class Customer::CustomersController < ApplicationController
       @info.save
       @customer.update(info_id: @info.id)
     end
-
   end
 
   def show
@@ -125,4 +127,19 @@ class Customer::CustomersController < ApplicationController
     params.require(:customer).permit(info: [:customer_id, :best_breed, :best_cut, :price_large, :price_medium, :price_small])
   end
 
+  def setup
+    data = Customer.where(user_status: 1)
+    tmp = []
+    data.each do |d|
+      tmp.push(d.id)
+    end
+    gon.trimmers = tmp
+  end
+
+  def correct_contract
+    @customer = Customer.find(params[:id])
+    unless @customer.id == current_customer.id
+      redirect_to customers_mypage_path
+    end
+  end
 end

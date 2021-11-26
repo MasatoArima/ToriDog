@@ -32,11 +32,9 @@ class Customer::RequestsController < ApplicationController
     redirect_to customers_mypage_path, notice: '依頼を削除しました'
   end
 
-
   private
 
   def request_params
     params.require(:request).permit(:comment, :dog_id, :prefecture_code, :first_preferred_date, :last_preferred_date)
   end
-
 end

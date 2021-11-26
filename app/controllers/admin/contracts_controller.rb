@@ -15,10 +15,9 @@ class Admin::ContractsController < ApplicationController
   private
 
   def setup
-    @contracts = Contract.all
+    @contracts = Contract.all.order(id: :DESC)
     @applications = Application.all
     @requests = Request.all
     @customers = Customer.all
   end
-
 end
