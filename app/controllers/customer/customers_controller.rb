@@ -67,7 +67,11 @@ class Customer::CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @dogs = @customer.dogs
     @requests = @customer.requests
-    @contracts = @customer.trimmer_contract
+    if @customer.user_status == "trimmer"
+      @contracts = @customer.trimmer_contract
+    else
+      @contracts = @customer.client_contract
+    end
   end
 
   def edit
