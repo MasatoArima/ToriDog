@@ -29,7 +29,8 @@
 
 ## 設計書
 
-</ToriDog/app/assets/images/ScreenHunter 129.png>
+![ScreenHunter 129](https://user-images.githubusercontent.com/86550121/143770449-a6cd175c-f3e5-49e3-aa03-d44244e662d3.png)
+
 
 ## チャレンジ要素一覧
 
