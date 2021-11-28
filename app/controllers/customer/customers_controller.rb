@@ -94,30 +94,22 @@ class Customer::CustomersController < ApplicationController
         redirect_to customers_mypage_path
       end
     else
-      if Geocoder.search(@customer.open_addres).blank?
-        if @customer.update(customer_params)
-          if @customer.user_status == "trimmer"
-            @info.update(trimmer_info_params[:info])
-          end
+      if @customer.update(customer_params)
+        if @customer.user_status == "trimmer"
+          @info.update(trimmer_info_params[:info])
+        end
+        if Geocoder.search(@customer.open_addres).blank?
           @customer.update(lat: nil, lng: nil)
           redirect_to customers_mypage_path, notice: '更新しました'
         else
-          flash[:alert] = '更新に失敗しました'
-          redirect_to request.referer
-        end
-      else
-        lat = Geocoder.search(@customer.open_addres).first.coordinates[0]
-        lng = Geocoder.search(@customer.open_addres).first.coordinates[1]
-        if @customer.update(customer_params)
-          if @customer.user_status == "trimmer"
-            @info.update(trimmer_info_params[:info])
-          end
+          lat = Geocoder.search(@customer.open_addres).first.coordinates[0]
+          lng = Geocoder.search(@customer.open_addres).first.coordinates[1]
           @customer.update(lat: lat, lng: lng)
           redirect_to customers_mypage_path, notice: '更新しました'
-        else
-          flash[:alert] = '更新に失敗しました'
-          redirect_to request.referer
         end
+      else
+        flash[:alert] = '更新に失敗しました'
+        redirect_to request.referer
       end
     end
   end
