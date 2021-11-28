@@ -143,7 +143,7 @@
             <%= f.check_box :image_ids, {:multiple => true}, image.id, false %>
               <%= image_tag image.variant(resize:'150x150').processed, class: "mb-1" %><br>
           <% end %>
-          <%= f.submit "削除する", class: "clickon btn btn-danjer" %>
+          <%= f.submit "削除する", class: "clickon btn btn-danger" %>
         <% end %>
       </div>
     <% end %>

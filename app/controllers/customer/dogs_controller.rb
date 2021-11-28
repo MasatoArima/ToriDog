@@ -32,15 +32,20 @@ class Customer::DogsController < ApplicationController
 
   def update
     dog = Dog.find(params[:id])
-    if params[:dog][:image_ids].nil?
-      dog.update(dog_params)
-    else
-      params[:dog][:image_ids].each do |image_id|
-        image = dog.trimming_images.find(image_id)
-        image.purge
+    if params[:commit] == "削除する"
+      if params[:dog].nil?
+        redirect_to request.referer
+      else
+        params[:dog][:image_ids].each do |image_id|
+          image = dog.trimming_images.find(image_id)
+          image.purge
+        end
+        redirect_to dog_path(dog.id)
       end
+    else
+      dog.update(dog_params)
+      redirect_to dog_path(dog.id)
     end
-    redirect_to dog_path(dog.id)
   end
 
   def destroy
