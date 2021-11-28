@@ -13,8 +13,9 @@ class Customer::CustomersController < ApplicationController
       unless params[:q].nil?
         # @q.result(distinct: true).page(params[:customer_page]).per(5)
         @dog_owners = @q.result(distinct: true).page(params[:customer_page]).per(5)
+        dog_owners = @q.result(distinct: true)
         requests = []
-        @dog_owners.each do |dog_owner|
+        dog_owners.each do |dog_owner|
           requests.append(dog_owner.requests.where(is_complete: "false"))
         end
         if requests.sum == 0
