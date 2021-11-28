@@ -29,7 +29,7 @@
 
 ## 設計書
 
-<...>
+</ToriDog/app/assets/images/ScreenHunter 129.png>
 
 ## チャレンジ要素一覧
 
