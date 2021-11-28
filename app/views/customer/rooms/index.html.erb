@@ -7,7 +7,13 @@
           <% @user.each do |e| %>
             <tr>
               <td><%= e.full_name %></td>
-              <td><%= notification?(e) %></td>
+              <td>
+                <% if notification?(e) == "有" %>
+                  <h4><strong class="text-danger"><%= notification?(e) %></strong></h4>
+                <% else %>
+                  <%= notification?(e) %>
+                <% end %>
+              </td>
               <td><%= link_to 'chatを始める', chat_path(e.id), class: "btn btn-primary", style: "width:150px" %></td>
             </tr>
           <% end %>
