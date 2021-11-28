@@ -101,7 +101,7 @@
               </div>
               <%= form_with model: contract, url: contract_path(id: contract.id), local: true do |f| %>
                 <%= f.hidden_field :dog_owner_is_consent, :value => "true" %>
-                <%= f.submit "契約を中止するる", class: "clickon btn btn-danger" %>
+                <%= f.submit "契約を中止する", class: "clickon btn btn-danger" %>
               <% end %>
             <% elsif (contract.dog_owner_is_consent == true) && (contract.trimmer_is_consent == false) %>
               <div class="mb-2">

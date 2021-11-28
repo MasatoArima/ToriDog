@@ -51,21 +51,21 @@ module Customer::CustomersHelper
         if (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
           "(契約待機中)"
         elsif (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
-          "(飼い主は契約に同意しています)"
+          "(飼い主は契約に同意済)"
         elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
           "(契約確定中)"
         else
-          "(契約内容を確認してください)"
+          "(要確認)"
         end
       else
         if (data.trimmer_is_consent == false) && (data.dog_owner_is_consent == true)
           "(契約待機中)"
         elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == false)
-          "(トリマーは同意しています)"
+          "(トリマーは同意済)"
         elsif (data.trimmer_is_consent == true) && (data.dog_owner_is_consent == true)
           "(契約を確定できます)"
         else
-          "(契約内容を確認してください)"
+          "(要確認)"
         end
       end
     elsif data.is_status == "in_progress"
@@ -112,4 +112,19 @@ module Customer::CustomersHelper
       end
     end
   end
+
+  def number_of_contract(data)
+    tmp = []
+    data.each do |d|
+      if d.is_status == "completion"
+        tmp.push(d)
+      end
+    end
+    if tmp == []
+      0
+    else
+      return tmp.count
+    end
+  end
+
 end
