@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_170908) do
     t.integer "customer_id", null: false
     t.integer "room_id", null: false
     t.text "message", null: false
+    t.boolean "notification", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_chats_on_customer_id"
