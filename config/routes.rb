@@ -5,9 +5,9 @@ Rails.application.routes.draw do
     registrations: "customer/registrations",
     sessions: 'customer/sessions',
   }
-  devise_scope :customer do
-    get '/customer', to: 'devise/registrations#new'
-  end
+  # devise_scope :customer do
+  #   get '/customer', to: 'customer/registrations#new'
+  # end
 
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions",
