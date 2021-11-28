@@ -78,29 +78,41 @@ class Customer::CustomersController < ApplicationController
   def update
     @customer = current_customer
     @info = Info.find_by(customer_id: @customer.id)
-    if Geocoder.search(@customer.open_addres).blank?
-      if @customer.update(customer_params)
-        if @customer.user_status == "trimmer"
-          @info.update(trimmer_info_params[:info])
-        end
-        @customer.update(lat: nil, lng: nil)
-        redirect_to customers_mypage_path, notice: '更新しました'
-      else
-        flash[:alert] = '更新に失敗しました'
+    if params[:commit] == "削除する"
+      if params[:customer].nil?
         redirect_to request.referer
+      else
+        params[:customer][:image_ids].each do |image_id|
+          image = @customer.cut_images.find(image_id)
+          image.purge
+        end
+        redirect_to customers_mypage_path
       end
     else
-      lat = Geocoder.search(@customer.open_addres).first.coordinates[0]
-      lng = Geocoder.search(@customer.open_addres).first.coordinates[1]
-      if @customer.update(customer_params)
-        if @customer.user_status == "trimmer"
-          @info.update(trimmer_info_params[:info])
+      if Geocoder.search(@customer.open_addres).blank?
+        if @customer.update(customer_params)
+          if @customer.user_status == "trimmer"
+            @info.update(trimmer_info_params[:info])
+          end
+          @customer.update(lat: nil, lng: nil)
+          redirect_to customers_mypage_path, notice: '更新しました'
+        else
+          flash[:alert] = '更新に失敗しました'
+          redirect_to request.referer
         end
-        @customer.update(lat: lat, lng: lng)
-        redirect_to customers_mypage_path, notice: '更新しました'
       else
-        flash[:alert] = '更新に失敗しました'
-        redirect_to request.referer
+        lat = Geocoder.search(@customer.open_addres).first.coordinates[0]
+        lng = Geocoder.search(@customer.open_addres).first.coordinates[1]
+        if @customer.update(customer_params)
+          if @customer.user_status == "trimmer"
+            @info.update(trimmer_info_params[:info])
+          end
+          @customer.update(lat: lat, lng: lng)
+          redirect_to customers_mypage_path, notice: '更新しました'
+        else
+          flash[:alert] = '更新に失敗しました'
+          redirect_to request.referer
+        end
       end
     end
   end
