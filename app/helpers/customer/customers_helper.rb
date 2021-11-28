@@ -123,8 +123,7 @@ module Customer::CustomersHelper
     if tmp == []
       0
     else
-      return tmp.count
+      tmp.count
     end
   end
-
 end

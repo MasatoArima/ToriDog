@@ -5,6 +5,7 @@
       <div class="chat-font" style="text-align: right;">
         <%= chat.updated_at.to_s(:datetime_chat_time) %><br>
         <%= chat.customer.full_name %>
+        <%= read?(chat) %>
         <%= link_to "投稿削除", chat_path(chat), method: :delete, remote: true %>
       </div>
     </div>
@@ -14,6 +15,7 @@
       <div class="chat-font" style="text-align: left;">
         <%= chat.updated_at.to_s(:datetime_chat_time) %><br>
         <%= chat.customer.full_name %>
+        <%= read?(chat) %>
       </div>
     </div>
   <% end %>
