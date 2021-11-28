@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table mt-2 mb-0">
+        <tbody>
+          <tr><td>名前</td><td>新着</td><td></td></tr>
+          <% @user.each do |e| %>
+            <tr>
+              <td><%= e.full_name %></td>
+              <td><%= notification?(e) %></td>
+              <td><%= link_to 'chatを始める', chat_path(e.id), class: "btn btn-primary", style: "width:150px" %></td>
+            </tr>
+          <% end %>
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

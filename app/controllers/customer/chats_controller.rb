@@ -13,7 +13,9 @@ class Customer::ChatsController < ApplicationController
     else
       @room = entries.room
     end
-    @chats = @room.chats.includes([:customer])
+    chats = @room.chats.includes([:customer]).where.not(customer_id: current_customer.id)
+    chats.update(notification: true)
+    @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
   end
 

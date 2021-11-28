@@ -16,6 +16,7 @@
             <li class="nav-item text-center mr-3"><%= link_to dogs_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>愛犬ページ<% end %></li>
           <% end %>
             <li class="nav-item text-center mr-3"><%= link_to customers_mypage_path, class: 'nav-link' do %><i class="fas fa-address-card fa-lg"></i><br>マイページ<% end %></li>
+            <li class="nav-item text-center mr-3"><%= link_to rooms_path, class: 'nav-link' do %><i class="fas fa-address-card fa-lg"></i><br>チャット<% end %></li>
             <li class="nav-item text-center mr-3"><%= link_to destroy_customer_session_path, method: :delete, class: 'nav-link' do %><i class="fas fa-sign-out-alt fa-lg"></i><br>Logout<% end %></li>
         <% elsif admin_signed_in? %>
           <li class="nav-item text-center mr-3"><%= link_to admin_contracts_path, class: 'nav-link' do %><i class="fas fa-paw fa-lg"></i><br>契約一覧<% end %></li>
