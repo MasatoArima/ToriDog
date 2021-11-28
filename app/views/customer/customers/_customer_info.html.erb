@@ -17,8 +17,8 @@
         <tr><td>電話番号 </td><td>                                <%= customer.phone_number %> </td></tr>
         <tr><td>アドレス </td><td>                                <%= customer.email %>        </td></tr>
       <% else %>
-        <tr><td>住所     </td><td style="word-break : break-all"> <%= customer.open_addres %> </td></tr>
-        <tr><td>契約件数 </td><td>                                <%= contracts.count %>      </td></tr>
+        <tr><td>住所     </td><td style="word-break : break-all"> <%= customer.open_addres %>          </td></tr>
+        <tr><td>契約件数 </td><td>                                <%= number_of_contract(contracts) %> </td></tr>
       <% end %>
     </tbody>
   </table>
