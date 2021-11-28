@@ -86,7 +86,8 @@ class Customer::ContractsController < ApplicationController
 
   def correct_contract
     @contract = Contract.find(params[:id])
-    unless @contract.client_id == current_customer.id || @contract.trimmer_id == current_customer.id
+    if @contract.client_id == current_customer.id || @contract.trimmer_id == current_customer.id
+    else
       redirect_to customers_mypage_path
     end
   end
