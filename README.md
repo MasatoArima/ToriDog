@@ -29,7 +29,8 @@
 
 ## 設計書
 
-![ScreenHunter 129](https://user-images.githubusercontent.com/86550121/143770449-a6cd175c-f3e5-49e3-aa03-d44244e662d3.png)
+![ScreenHunter 130](https://user-images.githubusercontent.com/86550121/143814679-990c43dd-7531-483b-979b-06dc41e918e6.png)
+
 
 
 ## チャレンジ要素一覧
