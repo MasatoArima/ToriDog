@@ -32,15 +32,18 @@ class Customer::SessionsController < Devise::SessionsController
   # end
   def reject_login
     @customer = Customer.find_by(email: params[:customer][:email])
-    return if !@customer
-    if @customer.valid_password?(params[:customer][:password])
-      if @customer.is_deleted == true
-        flash[:alert] = "退会済みのアカウントです"
+    if !@customer
+      redirect_to new_customer_session_path
+    else
+      if @customer.valid_password?(params[:customer][:password])
+        if @customer.is_deleted == true
+          flash[:alert] = "退会済みのアカウントです"
+          redirect_to new_customer_session_path
+        end
+      else
+        flash[:alert] = "メールアドレスもしくはパスワードが違います"
         redirect_to new_customer_session_path
       end
-    else
-      flash[:alert] = "メールアドレスもしくはパスワードが違います"
-      redirect_to new_customer_session_path
     end
   end
 end
