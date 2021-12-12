@@ -33,6 +33,7 @@ class Customer::SessionsController < Devise::SessionsController
   def reject_login
     @customer = Customer.find_by(email: params[:customer][:email])
     if !@customer
+      flash[:alert] = "メールアドレスもしくはパスワードが違います"
       redirect_to new_customer_session_path
     else
       if @customer.valid_password?(params[:customer][:password])

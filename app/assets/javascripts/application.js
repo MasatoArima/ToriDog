@@ -53,24 +53,25 @@ $(function(){
 
 // 星表示
 
-
-$(document).on('turbolinks:load', function () {
-  var data = gon.trimmers
-  var array = data, i = 0, len = array.length;
-  while (i < len) {
-    $(".average-rate" + array[i] ).empty();
-    $(".average-rate" + array[i] ).raty({
-      readOnly: true,
-      cancelOff: '/cancel-off.png',
-      cancelOn: '/cancel-on.png',
-      starHalf: '/star-half.png',
-      starOff: '/star-off.png',
-      starOn: '/star-on.png',
-      score: function() {
-        return $(this).attr('data-score');
-      },
-    });
-    console.log(array[i++]);
-  }
-});
-
+if (typeof(gon) == "undefined") {
+}else{
+  $(document).on('turbolinks:load', function () {
+    var data = gon.trimmers
+    var array = data, i = 0, len = array.length;
+    while (i < len) {
+      $(".average-rate" + array[i] ).empty();
+      $(".average-rate" + array[i] ).raty({
+        readOnly: true,
+        cancelOff: '/cancel-off.png',
+        cancelOn: '/cancel-on.png',
+        starHalf: '/star-half.png',
+        starOff: '/star-off.png',
+        starOn: '/star-on.png',
+        score: function() {
+          return $(this).attr('data-score');
+        },
+      });
+      array[i++];
+    }
+  });
+}
