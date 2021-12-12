@@ -6,7 +6,7 @@ class Customer::CustomersController < ApplicationController
     @customers = Customer.includes(:profile_image_attachment)
     if current_customer.user_status == "trimmer"
       @dog_owners = Customer.where(user_status: 0).where(prefecture_code: current_customer.prefecture_code).page(params[:customer_page]).per(5).includes([:dogs]).includes([:profile_image_attachment])
-      @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").order(id: "DESC") .page(params[:request_page]).per(5)
+      @requests = Request.where(prefecture_code: current_customer.prefecture_code, is_complete: "false").order(id: "DESC").page(params[:request_page]).per(5)
       @applications = current_customer.applications
       @dogs = Dog.all
       @q = Customer.left_joins(:dogs).where(user_status: 0).ransack(params[:q])
@@ -16,13 +16,13 @@ class Customer::CustomersController < ApplicationController
         dog_owners = @q.result(distinct: true)
         requests = []
         dog_owners.each do |dog_owner|
-          requests.append(dog_owner.requests.where(is_complete: "false"))
+          requests.append(dog_owner.requests.where(is_complete: "false").order(id: "DESC"))
         end
         if requests.sum == 0
           requests = []
-          @requests = Kaminari.paginate_array(requests).order(id: "DESC") .page(params[:request_page]).per(5)
+          @requests = Kaminari.paginate_array(requests).page(params[:request_page]).per(5)
         else
-          @requests = Kaminari.paginate_array(requests.sum).order(id: "DESC") .page(params[:request_page]).per(5)
+          @requests = Kaminari.paginate_array(requests.sum).page(params[:request_page]).per(5)
         end
       end
     else
