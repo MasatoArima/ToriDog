@@ -42,6 +42,7 @@
 <input type="button" value="Encode" onclick="codeAddress()">
 <div id='map'></div>
 
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script>
 function initMap(){
   geocoder = new google.maps.Geocoder()
@@ -51,21 +52,30 @@ function initMap(){
     zoom: 5,
   });
 
+  var min = -10 ;
+  var max = 10 ;
+  var markers = [];
+  var latMap = [];
   <% map_trimmers.each do |user| %>
     <% unless user.lat.blank? || user.lng.blank? %>
+      var a = Math.floor( Math.random() * (max + 1 - min) ) + min ;
       (function() {
         let marker<%= user.id %> = new google.maps.Marker({
-          position: {lat: <%= user.lat %>, lng: <%= user.lng %>},
+          position: {lat: <%= user.lat %> + (<%= user.id %>/50000), lng: <%= user.lng %> + (a/50000) },
           map: map,
           title: "<%= user.full_name %>",
         });
         google.maps.event.addListener(marker<%= user.id %>, 'click',function() {
           window.location.href = 'customers/<%= user.id %>';
         });
+        markers.push(marker<%= user.id %>);
       })();
     <% end %>
   <% end %>
+  const imagePath = "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m";
+  const markerClusterer = new MarkerClusterer(map, markers, {imagePath: imagePath});
 }
+
 
 let geocoder
 
@@ -81,5 +91,6 @@ function codeAddress(){
     }
   });
 }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['API_KEY'] %>&callback=initMap" async defer></script>
